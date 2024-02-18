@@ -3,6 +3,9 @@ name = "open_shmup"
 version = "0.0.0"
 edition = "2021"
 
+[lib]
+crate-type = ["cdylib", "rlib"]
+
 [features]
 default = ["console_error_panic_hook"]
 
