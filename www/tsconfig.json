@@ -1,0 +1,6 @@
+{
+  "extends": "@softwareventures/webpack-config/tsconfig/general",
+  "compilerOptions": {
+    "types": ["webpack-env", "@softwareventures/webpack-config/webpack-config-runtime"]
+  }
+}

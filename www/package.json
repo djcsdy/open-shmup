@@ -1,0 +1,53 @@
+{
+  "private": true,
+  "name": "open-shmup-app",
+  "version": "0.0.0-development",
+  "author": "Daniel Cassidy <mail@danielcassidy.me.uk>",
+  "homepage": "https://github.com/softwareventures/open-shmup",
+  "bugs": "https://github.com/softwareventures/open-shmup/issues",
+  "repository": "github:softwareventures/open-shmup",
+  "license": "ISC",
+  "type": "module",
+  "scripts": {
+    "build": "webpack --env production",
+    "fix": "tsc && eslint . --fix && prettier --write .",
+    "lint": "tsc && eslint . && prettier --check .",
+    "prepack": "tsc",
+    "start": "webpack serve --open"
+  },
+  "engines": {
+    "node": "^18 || >=20"
+  },
+  "dependencies": {
+    "@types/webpack-env": "1.18.0",
+    "open-shmup": "../pkg",
+    "tslib": "2.5.0"
+  },
+  "devDependencies": {
+    "@softwareventures/eslint-config": "7.1.1",
+    "@softwareventures/prettier-config": "4.0.0",
+    "@softwareventures/webpack-config": "5.0.11",
+    "@types/node": "17.0.45",
+    "@typescript-eslint/eslint-plugin": "5.56.0",
+    "@typescript-eslint/parser": "5.56.0",
+    "eslint": "8.36.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsdoc": "40.1.0",
+    "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-sonarjs": "0.19.0",
+    "prettier": "2.8.7",
+    "ts-loader": "9.4.2",
+    "ts-node": "10.9.1",
+    "typescript": "5.0.2",
+    "webpack": "5.76.3",
+    "webpack-cli": "5.0.1",
+    "webpack-dev-server": "4.13.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "@softwareventures"
+  },
+  "prettier": "@softwareventures/prettier-config",
+  "packageManager": "yarn@4.1.0"
+}
