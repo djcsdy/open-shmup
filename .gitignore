@@ -1,1 +1,6 @@
 /target
+
+# Personal RustRover IDE files
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/shelf
