@@ -1,5 +1,5 @@
 [workspace]
-members = ["engine", "import"]
+members = [ "data","engine", "import"]
 resolver = "2"
 
 [profile.release]

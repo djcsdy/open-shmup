@@ -1,0 +1,6 @@
+[package]
+name = "open_shmup_data"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
