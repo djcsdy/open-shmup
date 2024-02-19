@@ -1,7 +1,7 @@
 extern crate wee_alloc;
 
-use wasm_bindgen::prelude::wasm_bindgen;
 use gloo_console::log;
+use wasm_bindgen::prelude::wasm_bindgen;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
