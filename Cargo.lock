@@ -107,6 +107,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "open_shmup_import"
+version = "0.0.0"
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
