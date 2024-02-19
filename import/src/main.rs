@@ -59,7 +59,7 @@ fn main() {
         .unwrap();
     file.read_exact(&mut attack_wave_patterns).unwrap();
 
-    let mut sound_effects = [0u8; 23296];
+    let mut sound_effects = [0u8; 2432];
     file.seek(SeekFrom::Start(SOUND_EFFECTS - PRG_START))
         .unwrap();
     file.read_exact(&mut sound_effects).unwrap();
