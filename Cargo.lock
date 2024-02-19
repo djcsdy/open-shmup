@@ -222,6 +222,7 @@ version = "0.0.0"
 dependencies = [
  "byteorder",
  "clap",
+ "open_shmup_data",
 ]
 
 [[package]]
