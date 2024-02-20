@@ -1,5 +1,5 @@
 use std::io;
-use std::io::{ErrorKind, Read};
+use std::io::{ErrorKind, Read, Write};
 
 use byteorder::{LittleEndian, ReadBytesExt};
 
@@ -69,5 +69,19 @@ impl Game {
             sprite_graphics,
             background_tiles,
         })
+    }
+
+    pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+        writer.write_all(SIGNATURE)?;
+        writer.write_all(&self.background_scroll_data)?;
+        writer.write_all(&self.block_colours)?;
+        writer.write_all(&self.block_data)?;
+        writer.write_all(&self.object_pointers)?;
+        writer.write_all(&self.title_screen)?;
+        writer.write_all(&self.attack_wave_patterns)?;
+        writer.write_all(&self.sound_effects)?;
+        writer.write_all(&self.sprite_graphics)?;
+        writer.write_all(&self.background_tiles)?;
+        Ok(())
     }
 }
