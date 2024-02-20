@@ -14,6 +14,7 @@ const TITLE_SCREEN: u64 = 0x3204;
 const ATTACK_WAVE_PATTERNS: u64 = 0x33e0;
 const SOUND_EFFECTS: u64 = 0xb680;
 const SPRITE_GRAPHICS: u64 = 0xc000;
+const TITLE_FONT: u64 = 0xf400;
 const BACKGROUND_TILES: u64 = 0xf800;
 
 impl Game {
@@ -55,6 +56,10 @@ impl Game {
         reader.seek(SeekFrom::Start(SPRITE_GRAPHICS - PRG_START))?;
         reader.read_exact(&mut sprite_graphics)?;
 
+        let mut title_font = [0u8; 512];
+        reader.seek(SeekFrom::Start(TITLE_FONT - PRG_START))?;
+        reader.read_exact(&mut title_font)?;
+
         let mut background_tiles = [0u8; 2040];
         reader.seek(SeekFrom::Start(BACKGROUND_TILES - PRG_START))?;
         reader.read_exact(&mut background_tiles)?;
@@ -68,6 +73,7 @@ impl Game {
             attack_wave_patterns,
             sound_effects,
             sprite_graphics,
+            title_font,
             background_tiles,
         })
     }

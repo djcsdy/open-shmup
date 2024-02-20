@@ -3,7 +3,7 @@ mod c64;
 use std::io;
 use std::io::{ErrorKind, Read, Write};
 
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 
 pub struct Game {
     pub background_scroll_data: [u8; 4096],
@@ -14,6 +14,7 @@ pub struct Game {
     pub attack_wave_patterns: [u8; 3100],
     pub sound_effects: [u8; 2432],
     pub sprite_graphics: [u8; 8192],
+    pub title_font: [u8; 512],
     pub background_tiles: [u8; 2040],
 }
 
@@ -57,6 +58,9 @@ impl Game {
         let mut sprite_graphics = [0u8; 8192];
         reader.read_exact(&mut sprite_graphics)?;
 
+        let mut title_font = [0u8; 512];
+        reader.read_exact(&mut title_font)?;
+
         let mut background_tiles = [0u8; 2040];
         reader.read_exact(&mut background_tiles)?;
 
@@ -69,6 +73,7 @@ impl Game {
             attack_wave_patterns,
             sound_effects,
             sprite_graphics,
+            title_font,
             background_tiles,
         })
     }
@@ -84,6 +89,7 @@ impl Game {
         writer.write_all(&self.attack_wave_patterns)?;
         writer.write_all(&self.sound_effects)?;
         writer.write_all(&self.sprite_graphics)?;
+        writer.write_all(&self.title_font)?;
         writer.write_all(&self.background_tiles)?;
         Ok(())
     }
