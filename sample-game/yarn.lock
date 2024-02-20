@@ -5576,8 +5576,8 @@ __metadata:
 
 "open-shmup@file:../engine/pkg::locator=open-shmup-app%40workspace%3A.":
   version: 0.0.0
-  resolution: "open-shmup@file:../engine/pkg#../engine/pkg::hash=e10acb&locator=open-shmup-app%40workspace%3A."
-  checksum: 10c0/e96e65c619fbeb20520199ae6c78f457fb6e1b305d2fa2cac1c6eff29274ce865268646bb1dd680ef50c9eee1c917003ceb38c9e101ff9f830224bf96f4313be
+  resolution: "open-shmup@file:../engine/pkg#../engine/pkg::hash=c51443&locator=open-shmup-app%40workspace%3A."
+  checksum: 10c0/a38068108a564d4544a3e0b6b1dceb15338311a005e95ad18a29887543e4790ab3e14e210571338822a73760d740a81ec63b93e3fc391af02218bfc38c521e48
   languageName: node
   linkType: hard
 

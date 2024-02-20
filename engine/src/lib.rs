@@ -1,4 +1,5 @@
 mod ext;
+mod tile_set;
 
 extern crate wee_alloc;
 
