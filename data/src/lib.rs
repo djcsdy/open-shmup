@@ -75,6 +75,7 @@ impl Game {
 
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write_all(SIGNATURE)?;
+        writer.write_u32::<LittleEndian>(1)?;
         writer.write_all(&self.background_scroll_data)?;
         writer.write_all(&self.block_colours)?;
         writer.write_all(&self.block_data)?;
