@@ -1,3 +1,5 @@
+mod c64;
+
 use std::io;
 use std::io::{ErrorKind, Read, Write};
 
