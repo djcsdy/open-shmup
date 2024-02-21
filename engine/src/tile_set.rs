@@ -3,7 +3,7 @@ use wasm_bindgen::{Clamped, JsValue};
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{window, ImageBitmap, ImageBitmapOptions, ImageData, PremultiplyAlpha};
 
-pub struct TileSet(ImageBitmap);
+pub struct TileSet(pub ImageBitmap);
 
 impl TileSet {
     pub async fn new(tile_data: &[u8; 2040]) -> Result<Self, JsValue> {
@@ -15,7 +15,7 @@ impl TileSet {
                 for tile_x in 0..4 {
                     let out_x = tile_index * 8 + tile_x * 2;
                     let out_offset = out_x * 4;
-                    let colour = (line >> (8 - tile_x * 2)) & 3;
+                    let colour = line.wrapping_shr((8 - tile_x * 2) as u32) & 3;
                     image_data[out_offset + colour as usize] = 255;
                 }
             }
