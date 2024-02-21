@@ -1,18 +1,23 @@
-mod ext;
-mod tile_set;
-
 extern crate wee_alloc;
 
-use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsValue;
+use web_sys::js_sys::Error;
 use web_sys::{window, CanvasRenderingContext2d, HtmlCanvasElement};
+
+use open_shmup_data::Game;
+
+use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
+use crate::tile_set::TileSet;
+
+mod ext;
+mod tile_set;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-pub fn start(canvas: Option<HtmlCanvasElement>) -> Result<(), JsValue> {
+pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(), JsValue> {
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
 
@@ -29,9 +34,10 @@ pub fn start(canvas: Option<HtmlCanvasElement>) -> Result<(), JsValue> {
         .get_context_2d()?
         .ok_or_type_error()?;
 
-    context.set_text_baseline("top");
-    context.set_font("32px sans-serif");
-    context.fill_text("Hello, World!", 0.0, 0.0)?;
+    let game = Game::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
+
+    let tile_set = TileSet::new(&game.background_tiles).await?;
+    context.draw_image_with_image_bitmap(&tile_set.0, 0.0, 0.0)?;
 
     Ok(())
 }

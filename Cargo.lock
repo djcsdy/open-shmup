@@ -214,6 +214,7 @@ version = "0.0.0"
 dependencies = [
  "console_error_panic_hook",
  "gloo-console",
+ "open_shmup_data",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-bindgen-test",

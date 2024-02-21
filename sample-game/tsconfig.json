@@ -1,6 +1,10 @@
 {
   "extends": "@softwareventures/webpack-config/tsconfig/general",
   "compilerOptions": {
-    "types": ["webpack-env", "@softwareventures/webpack-config/webpack-config-runtime"]
+    "types": [
+      "./types/asset-loaders.d.ts",
+      "webpack-env",
+      "@softwareventures/webpack-config/webpack-config-runtime"
+    ]
   }
 }
