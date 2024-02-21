@@ -7,20 +7,24 @@ pub struct TileSet(pub ImageBitmap);
 
 impl TileSet {
     pub async fn new(tile_data: &[u8; 2040]) -> Result<Self, JsValue> {
-        let mut image_data = [0u8; 253 * 8 * 8];
+        let mut image_data = [0u8; 254 * 8 * 8 * 4];
         for tile_index in 0..254 {
             let tile_offset = tile_index * 8;
             for tile_y in 0..8 {
                 let line = tile_data[tile_offset + tile_y];
                 for tile_x in 0..4 {
-                    let out_x = tile_index * 8 + tile_x * 2;
-                    let out_offset = out_x * 4;
+                    let out_x_1 = tile_index * 8 + tile_x * 2;
+                    let out_x_2 = out_x_1 + 1;
+                    let out_pixel_y_offset = tile_y * 254 * 8;
+                    let out_pixel_offset_l = out_pixel_y_offset + out_x_1;
+                    let out_pixel_offset_r = out_pixel_y_offset + out_x_2;
                     let colour = line.wrapping_shr((8 - tile_x * 2) as u32) & 3;
-                    image_data[out_offset + colour as usize] = 255;
+                    image_data[out_pixel_offset_l * 4 + colour as usize] = 255;
+                    image_data[out_pixel_offset_r * 4 + colour as usize] = 255;
                 }
             }
         }
-        let image_data = ImageData::new_with_u8_clamped_array(Clamped(&image_data), 253 * 8)?;
+        let image_data = ImageData::new_with_u8_clamped_array(Clamped(&image_data), 254 * 8)?;
         let image_bitmap: ImageBitmap = JsFuture::from(
             window()
                 .ok_or_type_error()?
