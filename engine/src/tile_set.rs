@@ -1,10 +1,12 @@
+use crate::ext::OptionExt;
 use wasm_bindgen::{Clamped, JsValue};
-use web_sys::ImageData;
+use wasm_bindgen_futures::JsFuture;
+use web_sys::{window, ImageBitmap, ImageBitmapOptions, ImageData, PremultiplyAlpha};
 
-pub struct TileSet(ImageData);
+pub struct TileSet(ImageBitmap);
 
 impl TileSet {
-    pub fn new(tile_data: &[u8; 2040]) -> Result<Self, JsValue> {
+    pub async fn new(tile_data: &[u8; 2040]) -> Result<Self, JsValue> {
         let mut image_data = [0u8; 253 * 8 * 8];
         for tile_index in 0..254 {
             let tile_offset = tile_index * 8;
@@ -18,9 +20,17 @@ impl TileSet {
                 }
             }
         }
-        Ok(Self(ImageData::new_with_u8_clamped_array(
-            Clamped(&image_data),
-            253 * 8,
-        )?))
+        let image_data = ImageData::new_with_u8_clamped_array(Clamped(&image_data), 253 * 8)?;
+        let image_bitmap: ImageBitmap = JsFuture::from(
+            window()
+                .ok_or_type_error()?
+                .create_image_bitmap_with_image_data_and_image_bitmap_options(
+                    &image_data,
+                    ImageBitmapOptions::new().premultiply_alpha(PremultiplyAlpha::None),
+                )?,
+        )
+        .await?
+        .into();
+        Ok(Self(image_bitmap))
     }
 }
