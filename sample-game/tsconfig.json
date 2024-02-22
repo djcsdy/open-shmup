@@ -1,6 +1,8 @@
 {
   "extends": "@softwareventures/webpack-config/tsconfig/general",
   "compilerOptions": {
+    "module": "ES2020",
+    "moduleResolution": "Bundler",
     "types": [
       "./types/asset-loaders.d.ts",
       "webpack-env",

@@ -1,4 +1,4 @@
-import {start} from "open-shmup";
+import {start} from "open-shmup-engine";
 import * as gameUrl from "./atomsmash.openshmup";
 
 void fetch(gameUrl)

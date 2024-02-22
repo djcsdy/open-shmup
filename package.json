@@ -1,0 +1,20 @@
+{
+  "name": "open-shmup",
+  "author": "Daniel Cassidy <mail@danielcassidy.me.uk>",
+  "homepage": "https://github.com/softwareventures/open-shmup",
+  "bugs": "https://github.com/softwareventures/open-shmup/issues",
+  "repository": "github:softwareventures/open-shmup",
+  "license": "ISC",
+  "workspaces": [
+    "engine",
+    "sample-game"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "yarn workspaces foreach --all run build",
+    "fix": "yarn workspaces foreach --all run fix",
+    "lint": "yarn workspaces foreach --all run lint",
+    "test": "yarn workspaces foreach --all run test"
+  },
+  "packageManager": "yarn@4.1.0"
+}

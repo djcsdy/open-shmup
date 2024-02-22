@@ -1,12 +1,7 @@
 {
   "private": true,
-  "name": "open-shmup-app",
+  "name": "open-shmup-sample-game",
   "version": "0.0.0-development",
-  "author": "Daniel Cassidy <mail@danielcassidy.me.uk>",
-  "homepage": "https://github.com/softwareventures/open-shmup",
-  "bugs": "https://github.com/softwareventures/open-shmup/issues",
-  "repository": "github:softwareventures/open-shmup",
-  "license": "ISC",
   "type": "module",
   "scripts": {
     "build": "webpack --env production",
@@ -20,7 +15,7 @@
   },
   "dependencies": {
     "@types/webpack-env": "1.18.0",
-    "open-shmup": "../engine",
+    "open-shmup-engine": "workspace:^",
     "tslib": "2.5.0"
   },
   "devDependencies": {
@@ -48,6 +43,5 @@
     "root": true,
     "extends": "@softwareventures"
   },
-  "prettier": "@softwareventures/prettier-config",
-  "packageManager": "yarn@4.1.0"
+  "prettier": "@softwareventures/prettier-config"
 }
