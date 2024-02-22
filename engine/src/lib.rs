@@ -10,6 +10,7 @@ use open_shmup_data::Game;
 use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
 use crate::tile_set::TileSet;
 
+mod colour;
 mod ext;
 mod tile_set;
 
