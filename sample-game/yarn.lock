@@ -5562,7 +5562,7 @@ __metadata:
     eslint-plugin-jsdoc: "npm:40.1.0"
     eslint-plugin-prefer-arrow: "npm:1.2.3"
     eslint-plugin-sonarjs: "npm:0.19.0"
-    open-shmup: ../engine/pkg
+    open-shmup: ../engine
     prettier: "npm:2.8.7"
     ts-loader: "npm:9.4.2"
     ts-node: "npm:10.9.1"
@@ -5574,10 +5574,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"open-shmup@file:../engine/pkg::locator=open-shmup-app%40workspace%3A.":
-  version: 0.0.0
-  resolution: "open-shmup@file:../engine/pkg#../engine/pkg::hash=0ab5f4&locator=open-shmup-app%40workspace%3A."
-  checksum: 10c0/899499e986f217dd035188bc9478774bb948158424be8a7a6be26690582cfe3b0c79ab9b6f13b350a5c7503aa0b732deceb032b6a78a12080f55e7608f04950a
+"open-shmup@file:../engine::locator=open-shmup-app%40workspace%3A.":
+  version: 0.0.0-development
+  resolution: "open-shmup@file:../engine#../engine::hash=b02337&locator=open-shmup-app%40workspace%3A."
+  checksum: 10c0/41e1a09f43de465bffb593e42eedb8c911db5df3eda6a764034569ebd12e648b9127597238a6e43d17e4d0cc78b76d04103776dfaae3aba84a1d3b0a9760f428
   languageName: node
   linkType: hard
 

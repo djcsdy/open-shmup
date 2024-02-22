@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@types/webpack-env": "1.18.0",
-    "open-shmup": "../engine/pkg",
+    "open-shmup": "../engine",
     "tslib": "2.5.0"
   },
   "devDependencies": {

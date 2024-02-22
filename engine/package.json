@@ -1,0 +1,35 @@
+{
+  "name": "open-shmup-engine",
+  "version": "0.0.0-development",
+  "description": "Play SEUCK games in the browser",
+  "keywords": [
+    "SEUCK",
+    "C64",
+    "browser"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "yarn build-bundler && yarn build-bundler-dev",
+    "build-bundler": "wasm-pack build --release --weak-refs --out-dir dist/bundler",
+    "build-bundler-dev": "wasm-pack build --dev --weak-refs --out-dir dist/bundler-dev",
+    "fix": "cargo fmt",
+    "lint": "cargo fmt --check && cargo check",
+    "prepack": "yarn build",
+    "test": "wasm-pack test --firefox --headless"
+  },
+  "sideEffects": [
+    "./dist/*/open_shmup_engine.js",
+    "./dist/*/snippets/*"
+  ],
+  "exports": {
+    "development": "./dist/bundler-dev/open_shmup_engine.js",
+    "default": "./dist/bundler/open_shmup_engine.js"
+  },
+  "files": [
+    "/dist/**"
+  ],
+  "devDependencies": {
+    "wasm-pack": "0.12.1"
+  },
+  "packageManager": "yarn@4.1.0"
+}
