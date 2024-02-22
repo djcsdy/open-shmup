@@ -1,9 +1,11 @@
 use crate::colour::Colour;
 use std::f32::consts::PI;
 
-pub struct Palette([Colour; 16]);
+pub struct Palette16([Colour; 16]);
 
-impl Palette {
+pub struct Palette4([Colour; 4]);
+
+impl Palette16 {
     /// Generates a Colodore Palette as documented at https://www.pepto.de/projects/colorvic/
     pub fn new_colodore() -> Self {
         let brightness_percent = 50.0;
