@@ -7,6 +7,8 @@
       <sourceFolder url="file://$MODULE_DIR$/engine/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/import/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/data/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/engine/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/sample-game/dist" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
