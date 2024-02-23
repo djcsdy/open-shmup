@@ -5,6 +5,7 @@ use std::io::{ErrorKind, Read, Write};
 
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 
+#[derive(Eq, PartialEq, Clone, Hash)]
 pub struct Game {
     pub background_scroll_data: [u8; 4096],
     pub block_colours: [u8; 128],
