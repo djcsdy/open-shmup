@@ -10,9 +10,9 @@ pub struct Palette4([Colour; 4]);
 impl Palette16 {
     /// Generates a Colodore Palette as documented at https://www.pepto.de/projects/colorvic/
     pub fn new_colodore() -> Self {
-        let brightness_percent = 50.0;
-        let contrast_percent = 100.0;
-        let saturation_percent = 50.0;
+        let brightness = 0.5;
+        let contrast = 1.0;
+        let saturation = 0.5;
 
         let luma = [
             0.0, 32.0, 10.0, 20.0, 12.0, 16.0, 8.0, 24.0, 12.0, 8.0, 16.0, 10.0, 15.0, 24.0, 15.0,
@@ -26,10 +26,6 @@ impl Palette16 {
         let origin = sector / 2.0;
         let screen = 0.2;
 
-        let brightness = brightness_percent - 50.0;
-        let contrast = contrast_percent / 100.0;
-        let saturation = saturation_percent * (1.0 - screen);
-
         let source_gamma = 2.8; // PAL
         let target_gamma = 2.2; // sRGB
 
@@ -41,9 +37,9 @@ impl Palette16 {
 
         for i in 0..palette.len() {
             let angle = origin + chroma[i] * sector;
-            let y = (8.0 * luma[i] + brightness) * (contrast + screen);
-            let u = angle.cos() * saturation * (contrast + screen);
-            let v = angle.sin() * saturation * (contrast + screen);
+            let y = (8.0 * luma[i] + 100 * (brightness - 0.5)) * (contrast + screen);
+            let u = angle.cos() * saturation * 100 * (1.0 - screen) * (contrast + screen);
+            let v = angle.sin() * saturation * 100 * (1.0 - screen) * (contrast + screen);
 
             palette[i].red = Self::gamma_correct(
                 (y + 1.140 * v).clamp(0.0, 255.0),
