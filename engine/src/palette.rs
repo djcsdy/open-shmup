@@ -1,8 +1,10 @@
 use crate::colour::Colour;
 use std::f32::consts::PI;
 
+#[derive(Eq, PartialEq, Clone, Hash, Debug)]
 pub struct Palette16([Colour; 16]);
 
+#[derive(Eq, PartialEq, Clone, Hash, Debug)]
 pub struct Palette4([Colour; 4]);
 
 impl Palette16 {
