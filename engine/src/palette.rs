@@ -1,5 +1,6 @@
 use crate::colour::Colour;
 use std::f32::consts::PI;
+use std::ops::Index;
 
 #[derive(PartialEq, Clone, Debug)]
 pub struct Palette<const S: usize>([Colour; S]);
@@ -56,5 +57,13 @@ impl Palette<16> {
 
     fn gamma_correct(value: f32, source_gamma: f32, target_gamma: f32) -> f32 {
         value.powf(source_gamma).powf(1.0 / target_gamma)
+    }
+}
+
+impl<const S: usize> Index<usize> for Palette<S> {
+    type Output = Colour;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.0[index]
     }
 }
