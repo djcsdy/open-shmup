@@ -2,12 +2,9 @@ use crate::colour::Colour;
 use std::f32::consts::PI;
 
 #[derive(PartialEq, Clone, Debug)]
-pub struct Palette16([Colour; 16]);
+pub struct Palette<const S: usize>([Colour; S]);
 
-#[derive(PartialEq, Clone, Debug)]
-pub struct Palette4([Colour; 4]);
-
-impl Palette16 {
+impl Palette<16> {
     /// Generates a Colodore Palette as documented at https://www.pepto.de/projects/colorvic/
     pub fn new_colodore() -> Self {
         let brightness = 0.5;
