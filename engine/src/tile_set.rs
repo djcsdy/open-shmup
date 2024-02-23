@@ -3,6 +3,7 @@ use wasm_bindgen::{Clamped, JsValue};
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{window, ImageBitmap, ImageBitmapOptions, ImageData, PremultiplyAlpha};
 
+#[derive(Eq, PartialEq, Clone)]
 pub struct TileSet(pub ImageBitmap);
 
 impl TileSet {
