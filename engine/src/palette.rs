@@ -9,6 +9,10 @@ impl<const S: usize> Palette<S> {
     pub fn new(colours: [Colour; S]) -> Self {
         Self(colours)
     }
+
+    pub fn len(&self) -> usize {
+        S
+    }
 }
 
 impl Palette<16> {
