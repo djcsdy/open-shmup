@@ -1,6 +1,7 @@
 use crate::colour::Colour;
 use std::f32::consts::PI;
 use std::ops::Index;
+use std::slice::Iter;
 
 #[derive(PartialEq, Clone, Debug)]
 pub struct Palette<const S: usize>([Colour; S]);
@@ -12,6 +13,10 @@ impl<const S: usize> Palette<S> {
 
     pub fn len(&self) -> usize {
         S
+    }
+
+    pub fn iter(&self) -> Iter<'_, Colour> {
+        self.0.iter()
     }
 }
 
