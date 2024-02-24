@@ -6,7 +6,7 @@ use web_sys::{window, Blob, BlobPropertyBag, Url, XmlSerializer};
 
 pub struct PaletteFilter {
     blob_url: String,
-    filter_url: String,
+    css: String,
 }
 
 impl PaletteFilter {
@@ -79,17 +79,18 @@ impl PaletteFilter {
         .unwrap();
 
         let blob_url = Url::create_object_url_with_blob(&blob).unwrap();
-        let filter_url = String::from_iter([&blob_url, "#f"]);
+        let css = String::from_iter(["url(", &blob_url, "#f)"]);
 
         // The Blob URL does not become usable until the next turn of the event loop
         JsFuture::from(Promise::resolve(&JsValue::undefined()))
             .await
             .unwrap();
 
-        Self {
-            blob_url,
-            filter_url,
-        }
+        Self { blob_url, css }
+    }
+
+    pub fn as_css(&self) -> &str {
+        &self.css
     }
 }
 
