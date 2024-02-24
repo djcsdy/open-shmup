@@ -5,6 +5,12 @@ use std::ops::Index;
 #[derive(PartialEq, Clone, Debug)]
 pub struct Palette<const S: usize>([Colour; S]);
 
+impl<const S: usize> Palette<S> {
+    pub fn new(colours: [Colour; S]) -> Self {
+        Self(colours)
+    }
+}
+
 impl Palette<16> {
     /// Generates a Colodore Palette as documented at https://www.pepto.de/projects/colorvic/
     pub fn new_colodore() -> Self {
