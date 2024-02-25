@@ -459,6 +459,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/domready@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@types/domready@npm:1.0.2"
+  checksum: 10c0/8b57c580e0a931f26d54f7c0ffc34e69b36c8e7b88e4f1ccdc023859f7a953c45a819d4e5b8f845f45457a31a62c95db4dfb82446491eeb479ad76c0d743deb2
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.7
   resolution: "@types/eslint-scope@npm:3.7.7"
@@ -2863,6 +2870,13 @@ __metadata:
   dependencies:
     domelementtype: "npm:^2.2.0"
   checksum: 10c0/5c199c7468cb052a8b5ab80b13528f0db3d794c64fc050ba793b574e158e67c93f8336e87fd81e9d5ee43b0e04aea4d8b93ed7be4899cb726a1601b3ba18538b
+  languageName: node
+  linkType: hard
+
+"domready@npm:1.0.8":
+  version: 1.0.8
+  resolution: "domready@npm:1.0.8"
+  checksum: 10c0/b63587a684f73786c5a10236b878b6b4509133a7a79d07ce609fe212a8a08668b6399e8ddab0dc371a5e5545ab83567983b3232e9972b60916d54a4fe219ce5a
   languageName: node
   linkType: hard
 
@@ -5582,10 +5596,12 @@ __metadata:
     "@softwareventures/eslint-config": "npm:7.1.1"
     "@softwareventures/prettier-config": "npm:4.0.0"
     "@softwareventures/webpack-config": "npm:5.0.11"
+    "@types/domready": "npm:1.0.2"
     "@types/node": "npm:17.0.45"
     "@types/webpack-env": "npm:1.18.0"
     "@typescript-eslint/eslint-plugin": "npm:5.56.0"
     "@typescript-eslint/parser": "npm:5.56.0"
+    domready: "npm:1.0.8"
     eslint: "npm:8.36.0"
     eslint-config-prettier: "npm:8.8.0"
     eslint-plugin-import: "npm:2.27.5"
