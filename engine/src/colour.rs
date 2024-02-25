@@ -31,4 +31,17 @@ impl Colour {
     pub fn blue(&self) -> f32 {
         self.blue
     }
+
+    pub fn css(&self) -> String {
+        let max = 256.0 - f32::EPSILON;
+        String::from_iter([
+            "rgb(",
+            &(self.red * max).floor().to_string(),
+            " ",
+            &(self.green * max).floor().to_string(),
+            " ",
+            &(self.blue * max).floor().to_string(),
+            ")",
+        ])
+    }
 }
