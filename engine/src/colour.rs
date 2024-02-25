@@ -13,7 +13,11 @@ impl Colour {
     };
 
     pub fn new(red: f32, green: f32, blue: f32) -> Self {
-        Self { red, green, blue }
+        Self {
+            red: red.clamp(0.0, 1.0),
+            green: green.clamp(0.0, 1.0),
+            blue: blue.clamp(0.0, 1.0),
+        }
     }
 
     pub fn red(&self) -> f32 {
