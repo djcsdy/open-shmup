@@ -42,11 +42,7 @@ impl Palette<16> {
         let source_gamma = 2.8; // PAL
         let target_gamma = 2.2; // sRGB
 
-        let mut palette = [Colour {
-            red: 0.0,
-            green: 0.0,
-            blue: 0.0,
-        }; 16];
+        let mut palette = [Colour::BLACK; 16];
 
         for i in 0..palette.len() {
             let angle = origin + chroma[i] * sector;
@@ -54,17 +50,15 @@ impl Palette<16> {
             let u = angle.cos() * saturation * 0.390625 * (1.0 - screen) * (contrast + screen);
             let v = angle.sin() * saturation * 0.390625 * (1.0 - screen) * (contrast + screen);
 
-            palette[i].red =
-                Self::gamma_correct((y + 1.140 * v).clamp(0.0, 1.0), source_gamma, target_gamma);
-
-            palette[i].green = Self::gamma_correct(
-                (y - 0.396 * u - 0.581 * v).clamp(0.0, 1.0),
-                source_gamma,
-                target_gamma,
+            palette[i] = Colour::new(
+                Self::gamma_correct((y + 1.140 * v).clamp(0.0, 1.0), source_gamma, target_gamma),
+                Self::gamma_correct(
+                    (y - 0.396 * u - 0.581 * v).clamp(0.0, 1.0),
+                    source_gamma,
+                    target_gamma,
+                ),
+                Self::gamma_correct((y + 2.029 * u).clamp(0.0, 1.0), source_gamma, target_gamma),
             );
-
-            palette[i].blue =
-                Self::gamma_correct((y + 2.029 * u).clamp(0.0, 1.0), source_gamma, target_gamma);
         }
 
         Self(palette)
