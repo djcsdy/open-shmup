@@ -31,6 +31,8 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         .ok_or_type_error()
         .or_else(|_| {
             let canvas: HtmlCanvasElement = document.create_canvas_element()?;
+            canvas.set_width(384);
+            canvas.set_height(288);
             body.append_child(&canvas)?;
             Ok::<HtmlCanvasElement, JsValue>(canvas)
         })?
