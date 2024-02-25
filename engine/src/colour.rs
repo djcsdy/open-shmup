@@ -32,15 +32,26 @@ impl Colour {
         self.blue
     }
 
+    pub fn red_u8(&self) -> u8 {
+        (self.red * (256.0 - f32::EPSILON)).floor() as u8
+    }
+
+    pub fn green_u8(&self) -> u8 {
+        (self.green * (256.0 - f32::EPSILON)).floor() as u8
+    }
+
+    pub fn blue_u8(&self) -> u8 {
+        (self.blue * (256.0 - f32::EPSILON)).floor() as u8
+    }
+
     pub fn css(&self) -> String {
-        let max = 256.0 - f32::EPSILON;
         String::from_iter([
             "rgb(",
-            &(self.red * max).floor().to_string(),
+            &self.red_u8().to_string(),
             " ",
-            &(self.green * max).floor().to_string(),
+            &self.green_u8().to_string(),
             " ",
-            &(self.blue * max).floor().to_string(),
+            &self.blue_u8().to_string(),
             ")",
         ])
     }
