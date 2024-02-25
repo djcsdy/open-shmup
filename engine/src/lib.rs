@@ -8,6 +8,7 @@ use web_sys::{window, CanvasRenderingContext2d, HtmlCanvasElement};
 use open_shmup_data::Game;
 
 use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
+use crate::palette::Palette;
 use crate::tile_set::TileSet;
 
 mod colour;
@@ -41,8 +42,15 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
 
     let game = Game::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
 
+    let palette = Palette::new_colodore();
+    for i in 0..palette.len() {
+        let colour = palette[i];
+        context.set_fill_style(&JsValue::from_str(&colour.css()));
+        context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
+    }
+
     let tile_set = TileSet::new(&game.background_tiles).await?;
-    context.draw_image_with_image_bitmap(&tile_set.0, 0.0, 0.0)?;
+    context.draw_image_with_image_bitmap(&tile_set.0, 0.0, 20.0)?;
 
     Ok(())
 }
