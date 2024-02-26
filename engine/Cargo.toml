@@ -10,6 +10,7 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
+base64 = "=0.21.7"
 console_error_panic_hook = { version = "=0.1.7", optional = true }
 gloo-console = "=0.3.0"
 open_shmup_data = { path = "../data" }
@@ -24,6 +25,7 @@ features = [
     "Blob",
     "BlobPropertyBag",
     "CanvasRenderingContext2d",
+    "Crypto",
     "Document",
     "DomImplementation",
     "HtmlCanvasElement",

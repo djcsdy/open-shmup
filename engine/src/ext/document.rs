@@ -1,11 +1,20 @@
 use crate::ext::element::ElementExt;
 use crate::xml_namespace;
-use web_sys::{Document, HtmlCanvasElement, SvgDefsElement, SvgElement};
+use base64::prelude::BASE64_URL_SAFE_NO_PAD;
+use base64::Engine;
+use std::cell::Cell;
+use web_sys::{window, Document, HtmlCanvasElement, SvgDefsElement, SvgElement};
 
 pub trait DocumentExt {
     fn create_canvas_element(&self) -> HtmlCanvasElement;
     fn create_svg_element(&self) -> SvgElement;
     fn create_svg_defs_element(&self) -> SvgDefsElement;
+    fn new_unique_id(&self) -> String;
+}
+
+thread_local! {
+    static UNIQUE_ID_PREFIX: Cell<Option<String>> = Cell::new(None);
+    static UNIQUE_ID_NEXT: Cell<u64> = Cell::new(0);
 }
 
 impl DocumentExt for Document {
@@ -23,5 +32,48 @@ impl DocumentExt for Document {
         self.create_element_ns(Some(xml_namespace::SVG), "defs")
             .unwrap()
             .into_svg_defs()
+    }
+
+    fn new_unique_id(&self) -> String {
+        let mut prefix = UNIQUE_ID_PREFIX.take();
+        let next = UNIQUE_ID_NEXT.take();
+
+        let window = window().unwrap();
+        let crypto = window.crypto().unwrap();
+
+        if prefix
+            .as_ref()
+            .and_then(|prefix| {
+                self.get_element_by_id(&String::from_iter([
+                    prefix.as_str(),
+                    next.to_string().as_str(),
+                ]))
+            })
+            .is_some()
+        {
+            prefix = None;
+        }
+
+        while (&prefix).is_none() {
+            let mut buffer = [0u8; 8];
+            crypto.get_random_values_with_u8_array(&mut buffer).unwrap();
+            let candidate_prefix = BASE64_URL_SAFE_NO_PAD.encode(&buffer);
+            if self
+                .get_element_by_id(&String::from_iter([
+                    candidate_prefix.as_str(),
+                    next.to_string().as_str(),
+                ]))
+                .is_none()
+            {
+                prefix = Some(candidate_prefix);
+            }
+        }
+
+        let id = String::from_iter([prefix.clone().unwrap().as_str(), next.to_string().as_str()]);
+
+        UNIQUE_ID_PREFIX.set(prefix);
+        UNIQUE_ID_NEXT.set(next + 1);
+
+        id
     }
 }
