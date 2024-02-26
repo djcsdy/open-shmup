@@ -25,20 +25,20 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
 
-    let document = window().ok_or_type_error()?.document().ok_or_type_error()?;
-    let body = document.body().ok_or_type_error()?;
+    let document = window().unwrap().document().unwrap();
+    let body = document.body().unwrap();
 
     let context: CanvasRenderingContext2d = canvas
-        .ok_or_type_error()
-        .or_else(|_| {
-            let canvas: HtmlCanvasElement = document.create_canvas_element()?;
+        .unwrap_or_else(|| {
+            let canvas = document.create_canvas_element();
             canvas.set_width(384);
             canvas.set_height(288);
-            body.append_child(&canvas)?;
-            Ok::<HtmlCanvasElement, JsValue>(canvas)
-        })?
-        .get_context_2d()?
-        .ok_or_type_error()?;
+            body.append_child(&canvas).unwrap();
+            canvas
+        })
+        .get_context_2d()
+        .unwrap()
+        .unwrap();
 
     let game = Game::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
 
@@ -49,8 +49,10 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
     }
 
-    let tile_set = TileSet::new(&game.background_tiles).await?;
-    context.draw_image_with_image_bitmap(&tile_set.0, 0.0, 20.0)?;
+    let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
+    context
+        .draw_image_with_image_bitmap(&tile_set.0, 0.0, 20.0)
+        .unwrap();
 
     Ok(())
 }
