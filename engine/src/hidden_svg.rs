@@ -24,7 +24,14 @@ impl HiddenSvg {
             let document = window().unwrap().document().unwrap();
             let body = document.body().unwrap();
             let svg = document.create_svg_element();
-            svg.set_attribute("style", "display: none").unwrap();
+            let style = svg.style();
+            style.set_property("position", "absolute").unwrap();
+            style.set_property("display", "block").unwrap();
+            style.set_property("visibility", "hidden").unwrap();
+            style.set_property("left", "-9000px").unwrap();
+            style.set_property("top", "0px").unwrap();
+            style.set_property("width", "1px").unwrap();
+            style.set_property("height", "1px").unwrap();
             let defs = document.create_svg_defs_element();
             svg.append_child(&defs).unwrap();
             body.append_child(&svg).unwrap();

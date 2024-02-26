@@ -26,6 +26,7 @@ features = [
     "BlobPropertyBag",
     "CanvasRenderingContext2d",
     "Crypto",
+    "CssStyleDeclaration",
     "Document",
     "DomImplementation",
     "HtmlCanvasElement",
