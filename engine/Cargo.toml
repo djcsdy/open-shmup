@@ -35,6 +35,7 @@ features = [
     "PremultiplyAlpha",
     "SvgElement",
     "SvgDefsElement",
+    "SvgfeColorMatrixElement",
     "SvgFilterElement",
     "Url",
     "XmlSerializer"
