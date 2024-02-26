@@ -13,6 +13,7 @@ use crate::tile_set::TileSet;
 
 mod colour;
 mod ext;
+mod hidden_svg;
 mod palette;
 mod palette_filter;
 mod tile_set;
