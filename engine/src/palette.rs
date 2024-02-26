@@ -41,9 +41,6 @@ impl Palette<16> {
         let origin = sector / 2.0;
         let screen = 0.2;
 
-        let source_gamma = 2.8; // PAL
-        let target_gamma = 2.2; // sRGB
-
         let mut palette = [Colour::BLACK; 16];
 
         for i in 0..palette.len() {
@@ -53,21 +50,17 @@ impl Palette<16> {
             let v = angle.sin() * saturation[i] * 0.390625 * (1.0 - screen) * (contrast + screen);
 
             palette[i] = Colour::new(
-                Self::gamma_correct((y + 1.140 * v).clamp(0.0, 1.0), source_gamma, target_gamma),
-                Self::gamma_correct(
-                    (y - 0.396 * u - 0.581 * v).clamp(0.0, 1.0),
-                    source_gamma,
-                    target_gamma,
-                ),
-                Self::gamma_correct((y + 2.029 * u).clamp(0.0, 1.0), source_gamma, target_gamma),
+                Self::pal_to_linear((y + 1.140 * v).clamp(0.0, 1.0)),
+                Self::pal_to_linear((y - 0.396 * u - 0.581 * v).clamp(0.0, 1.0)),
+                Self::pal_to_linear((y + 2.029 * u).clamp(0.0, 1.0)),
             );
         }
 
         Self(palette)
     }
 
-    fn gamma_correct(value: f32, source_gamma: f32, target_gamma: f32) -> f32 {
-        value.powf(source_gamma).powf(1.0 / target_gamma)
+    fn pal_to_linear(value: f32) -> f32 {
+        value.powf(2.8)
     }
 }
 
