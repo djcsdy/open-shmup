@@ -9,6 +9,7 @@ use open_shmup_data::Game;
 
 use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
 use crate::palette::Palette;
+use crate::palette_filter::PaletteFilter;
 use crate::tile_set::TileSet;
 
 mod colour;
@@ -51,10 +52,27 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
     }
 
+    let background_palette = Palette::new([palette[0], palette[9], palette[8], palette[7]]);
+
+    let background_filter = PaletteFilter::new(background_palette).await;
+    context.set_filter(background_filter.css());
+
     let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
     context
         .draw_image_with_image_bitmap(&tile_set.0, 0.0, 20.0)
         .unwrap();
+
+    context.set_fill_style(&JsValue::from_str("#000"));
+    context.fill_rect(0.0, 40.0, 20.0, 20.0);
+
+    context.set_fill_style(&JsValue::from_str("#f00"));
+    context.fill_rect(20.0, 40.0, 20.0, 20.0);
+
+    context.set_fill_style(&JsValue::from_str("#0f0"));
+    context.fill_rect(40.0, 40.0, 20.0, 20.0);
+
+    context.set_fill_style(&JsValue::from_str("#00f"));
+    context.fill_rect(60.0, 40.0, 20.0, 20.0);
 
     Ok(())
 }
