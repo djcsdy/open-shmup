@@ -61,7 +61,7 @@ impl PaletteFilter {
         Self(Rc::new(Internal { element: filter, css }))
     }
 
-    pub fn as_css(&self) -> &str {
+    pub fn css(&self) -> &str {
         &self.0.css
     }
 }
