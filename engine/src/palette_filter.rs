@@ -1,42 +1,24 @@
+use crate::ext::DocumentExt;
+use crate::hidden_svg::HiddenSvg;
 use crate::palette::Palette;
-use crate::xml_namespace;
-use wasm_bindgen::JsValue;
-use wasm_bindgen_futures::JsFuture;
-use web_sys::js_sys::{Array, Promise};
-use web_sys::{window, Blob, BlobPropertyBag, Url, XmlSerializer};
+use web_sys::{window, SvgFilterElement};
 
 pub struct PaletteFilter {
-    blob_url: String,
+    element: SvgFilterElement,
     css: String,
 }
 
 impl PaletteFilter {
     pub async fn new(palette: Palette<4>) -> Self {
-        let document = window()
-            .unwrap()
-            .document()
-            .unwrap()
-            .implementation()
-            .unwrap()
-            .create_document(Some(xml_namespace::SVG), "svg")
-            .unwrap();
+        let hidden_svg = HiddenSvg::get();
+        let document = window().unwrap().document().unwrap();
+        let id = document.new_unique_id();
 
-        let svg = document.document_element().unwrap();
+        let filter = document.create_svg_filter_element();
+        filter.set_id(&id);
+        hidden_svg.defs().append_child(&filter).unwrap();
 
-        let defs = document
-            .create_element_ns(Some(xml_namespace::SVG), "defs")
-            .unwrap();
-        svg.append_child(&defs).unwrap();
-
-        let filter = document
-            .create_element_ns(Some(xml_namespace::SVG), "filter")
-            .unwrap();
-        filter.set_id("f");
-        defs.append_child(&filter).unwrap();
-
-        let fe_color_matrix = document
-            .create_element_ns(Some(xml_namespace::SVG), "feColorMatrix")
-            .unwrap();
+        let fe_color_matrix = document.create_svg_fe_color_matrix();
         fe_color_matrix
             .set_attribute("in", "SourceGraphic")
             .unwrap();
@@ -70,26 +52,9 @@ impl PaletteFilter {
             .set_attribute("values", &values.map(|value| value.to_string()).join(" "))
             .unwrap();
 
-        let svg_text = XmlSerializer::new()
-            .unwrap()
-            .serialize_to_string(&svg)
-            .unwrap();
+        let css = String::from_iter(["url(#", &id, ")"]);
 
-        let blob = Blob::new_with_str_sequence_and_options(
-            &Array::from_iter(&[&JsValue::from_str(&svg_text)]),
-            BlobPropertyBag::new().type_("image/svg+xml"),
-        )
-        .unwrap();
-
-        let blob_url = Url::create_object_url_with_blob(&blob).unwrap();
-        let css = String::from_iter(["url(", &blob_url, "#f)"]);
-
-        // The Blob URL does not become usable until the next turn of the event loop
-        JsFuture::from(Promise::resolve(&JsValue::undefined()))
-            .await
-            .unwrap();
-
-        Self { blob_url, css }
+        Self { element: filter, css }
     }
 
     pub fn as_css(&self) -> &str {
@@ -99,6 +64,11 @@ impl PaletteFilter {
 
 impl Drop for PaletteFilter {
     fn drop(&mut self) {
-        Url::revoke_object_url(&self.blob_url).unwrap();
+        match self.element.parent_element() {
+            None => {}
+            Some(parent) => {
+                parent.remove_child(&self.element).unwrap();
+            }
+        }
     }
 }
