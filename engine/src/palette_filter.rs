@@ -1,4 +1,5 @@
 use crate::palette::Palette;
+use crate::xml_namespace;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::js_sys::{Array, Promise};
@@ -11,28 +12,30 @@ pub struct PaletteFilter {
 
 impl PaletteFilter {
     pub async fn new(palette: Palette<4>) -> Self {
-        let namespace = Some("http://www.w3.org/2000/svg");
-
         let document = window()
             .unwrap()
             .document()
             .unwrap()
             .implementation()
             .unwrap()
-            .create_document(namespace, "svg")
+            .create_document(Some(xml_namespace::SVG), "svg")
             .unwrap();
 
         let svg = document.document_element().unwrap();
 
-        let defs = document.create_element_ns(namespace, "defs").unwrap();
+        let defs = document
+            .create_element_ns(Some(xml_namespace::SVG), "defs")
+            .unwrap();
         svg.append_child(&defs).unwrap();
 
-        let filter = document.create_element_ns(namespace, "filter").unwrap();
+        let filter = document
+            .create_element_ns(Some(xml_namespace::SVG), "filter")
+            .unwrap();
         filter.set_id("f");
         defs.append_child(&filter).unwrap();
 
         let fe_color_matrix = document
-            .create_element_ns(namespace, "feColorMatrix")
+            .create_element_ns(Some(xml_namespace::SVG), "feColorMatrix")
             .unwrap();
         fe_color_matrix
             .set_attribute("in", "SourceGraphic")

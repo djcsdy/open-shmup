@@ -16,6 +16,7 @@ mod ext;
 mod palette;
 mod palette_filter;
 mod tile_set;
+mod xml_namespace;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
