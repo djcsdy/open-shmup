@@ -38,6 +38,10 @@ impl HiddenSvg {
 
         Self(Rc::new(Internal(cache)))
     }
+
+    pub fn defs(&self) -> &SvgDefsElement {
+        &self.0 .0.defs
+    }
 }
 
 impl Drop for Internal {
