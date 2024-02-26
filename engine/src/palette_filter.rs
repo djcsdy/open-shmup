@@ -1,9 +1,13 @@
 use crate::ext::DocumentExt;
 use crate::hidden_svg::HiddenSvg;
 use crate::palette::Palette;
+use std::rc::Rc;
 use web_sys::{window, SvgFilterElement};
 
-pub struct PaletteFilter {
+pub struct PaletteFilter(Rc<Internal>);
+
+#[derive(Clone)]
+struct Internal {
     element: SvgFilterElement,
     css: String,
 }
@@ -54,15 +58,15 @@ impl PaletteFilter {
 
         let css = String::from_iter(["url(#", &id, ")"]);
 
-        Self { element: filter, css }
+        Self(Rc::new(Internal { element: filter, css }))
     }
 
     pub fn as_css(&self) -> &str {
-        &self.css
+        &self.0.css
     }
 }
 
-impl Drop for PaletteFilter {
+impl Drop for Internal {
     fn drop(&mut self) {
         match self.element.parent_element() {
             None => {}
