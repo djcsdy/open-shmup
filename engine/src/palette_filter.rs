@@ -8,6 +8,7 @@ pub struct PaletteFilter(Rc<Internal>);
 
 #[derive(Clone)]
 struct Internal {
+    _hidden_svg: HiddenSvg,
     element: SvgFilterElement,
     css: String,
 }
@@ -58,7 +59,11 @@ impl PaletteFilter {
 
         let css = String::from_iter(["url(#", &id, ")"]);
 
-        Self(Rc::new(Internal { element: filter, css }))
+        Self(Rc::new(Internal {
+            _hidden_svg: hidden_svg,
+            element: filter,
+            css,
+        }))
     }
 
     pub fn css(&self) -> &str {
