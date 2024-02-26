@@ -3,12 +3,13 @@ use crate::xml_namespace;
 use base64::prelude::BASE64_URL_SAFE_NO_PAD;
 use base64::Engine;
 use std::cell::Cell;
-use web_sys::{window, Document, HtmlCanvasElement, SvgDefsElement, SvgElement};
+use web_sys::{window, Document, HtmlCanvasElement, SvgDefsElement, SvgElement, SvgFilterElement};
 
 pub trait DocumentExt {
     fn create_canvas_element(&self) -> HtmlCanvasElement;
     fn create_svg_element(&self) -> SvgElement;
     fn create_svg_defs_element(&self) -> SvgDefsElement;
+    fn create_svg_filter_element(&self) -> SvgFilterElement;
     fn new_unique_id(&self) -> String;
 }
 
@@ -32,6 +33,12 @@ impl DocumentExt for Document {
         self.create_element_ns(Some(xml_namespace::SVG), "defs")
             .unwrap()
             .into_svg_defs()
+    }
+
+    fn create_svg_filter_element(&self) -> SvgFilterElement {
+        self.create_element_ns(Some(xml_namespace::SVG), "filter")
+            .unwrap()
+            .into_svg_filter()
     }
 
     fn new_unique_id(&self) -> String {
