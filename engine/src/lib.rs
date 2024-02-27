@@ -52,27 +52,24 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     context.set_fill_style(&JsValue::from(&palette[0].css()));
     context.fill_rect(0.0, 0.0, 384.0, 288.0);
 
-    for i in 0..palette.len() {
-        let colour = palette[i];
-        context.set_fill_style(&JsValue::from_str(&colour.css()));
-        context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
-    }
-
-    let tile_subpalettes = palette
-        .new_tile_subpalettes(&game.background_colours)
-        .map(|subpalette| PaletteFilter::new(&subpalette));
     let tile_set = TileSet::new(&game.background_tiles).await;
-    let tile_block_set = TileBlockSet::new(
-        tile_set,
-        tile_subpalettes,
-        &game.block_colours,
-        &game.block_data,
-    );
-    for i in 0..128 {
-        let x = (i & 7) as f64 * 40.0;
-        let y = 20.0 + (i / 8) as f64 * 40.0;
-        tile_block_set[i].draw(&context, x, y);
-    }
+
+    screen.with_play_area(&context, |context| {
+        let tile_subpalettes = palette
+            .new_tile_subpalettes(&game.background_colours)
+            .map(|subpalette| PaletteFilter::new(&subpalette));
+        let tile_block_set = TileBlockSet::new(
+            tile_set,
+            tile_subpalettes,
+            &game.block_colours,
+            &game.block_data,
+        );
+        for i in 0..128 {
+            let x = (i & 7) as f64 * 40.0;
+            let y = (i / 8) as f64 * 40.0;
+            tile_block_set[i].draw(&context, x, y);
+        }
+    });
 
     Ok(())
 }
