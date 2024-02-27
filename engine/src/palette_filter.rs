@@ -4,6 +4,7 @@ use crate::palette::Palette;
 use std::rc::Rc;
 use web_sys::{window, SvgFilterElement};
 
+#[derive(Clone)]
 pub struct PaletteFilter(Rc<Internal>);
 
 #[derive(Clone)]
