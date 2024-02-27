@@ -64,6 +64,16 @@ impl Palette<16> {
     }
 }
 
+impl Palette<3> {
+    pub fn new_common_tile_subpalette(palette: &Palette<16>, sub_palette_data: &[u8; 3]) -> Self {
+        Self([
+            palette[sub_palette_data[0] as usize],
+            palette[sub_palette_data[1] as usize],
+            palette[sub_palette_data[2] as usize],
+        ])
+    }
+}
+
 impl<const S: usize> Index<usize> for Palette<S> {
     type Output = Colour;
 

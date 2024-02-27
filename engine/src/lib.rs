@@ -52,10 +52,13 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
     }
 
+    let common_tile_subpalette =
+        Palette::new_common_tile_subpalette(&palette, &game.background_colours);
+
     let background_palette = Palette::new([
-        palette[game.background_colours[0] as usize],
-        palette[game.background_colours[1] as usize],
-        palette[game.background_colours[2] as usize],
+        common_tile_subpalette[0],
+        common_tile_subpalette[1],
+        common_tile_subpalette[2],
         palette[7],
     ]);
 
