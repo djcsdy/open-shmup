@@ -16,7 +16,8 @@ impl TileBlockSet {
     ) -> Self {
         Self(array::from_fn(|block_index| {
             TileBlock::new(
-                palettes[block_colour_data[block_index] as usize].clone(),
+                // FIXME: If the eighth bit is not set, we should render the block as hires
+                palettes[(block_colour_data[block_index] & 7) as usize].clone(),
                 array::from_fn(|row_index| {
                     array::from_fn(|tile_index| {
                         tile_set[tile_block_data[block_index * 25 + row_index * 5 + tile_index]
