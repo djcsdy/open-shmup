@@ -16,6 +16,7 @@ use crate::tile::TileSet;
 mod ext;
 mod hidden_svg;
 mod palette;
+mod screen;
 mod tile;
 mod xml_namespace;
 
