@@ -1,7 +1,7 @@
 use std::cell::Cell;
 use std::rc::{Rc, Weak};
 
-use web_sys::{window, Element, SvgDefsElement, SvgElement};
+use web_sys::{window, SvgDefsElement, SvgElement};
 
 use crate::ext::DocumentExt;
 
