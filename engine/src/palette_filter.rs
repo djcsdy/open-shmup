@@ -14,7 +14,7 @@ struct Internal {
 }
 
 impl PaletteFilter {
-    pub async fn new(palette: Palette<4>) -> Self {
+    pub async fn new(palette: &Palette<4>) -> Self {
         let hidden_svg = HiddenSvg::get();
         let document = window().unwrap().document().unwrap();
         let id = document.new_unique_id();

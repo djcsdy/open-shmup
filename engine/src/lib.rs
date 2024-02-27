@@ -63,7 +63,7 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         palette[7],
     ]);
 
-    let background_filter = PaletteFilter::new(background_palette).await;
+    let background_filter = PaletteFilter::new(&background_palette).await;
     context.set_filter(background_filter.css());
 
     let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
