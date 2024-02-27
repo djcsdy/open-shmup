@@ -18,6 +18,7 @@ mod hidden_svg;
 mod palette;
 mod palette_filter;
 mod tile;
+mod tile_block;
 mod tile_block_set;
 mod tile_set;
 mod xml_namespace;
