@@ -52,7 +52,12 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
     }
 
-    let background_palette = Palette::new([palette[0], palette[9], palette[8], palette[7]]);
+    let background_palette = Palette::new([
+        palette[game.background_colours[0] as usize],
+        palette[game.background_colours[1] as usize],
+        palette[game.background_colours[2] as usize],
+        palette[7],
+    ]);
 
     let background_filter = PaletteFilter::new(background_palette).await;
     context.set_filter(background_filter.css());
