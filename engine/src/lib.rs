@@ -11,8 +11,8 @@ use crate::ext::{DocumentExt, HtmlCanvasElementExt};
 use crate::palette::Palette;
 use crate::palette::PaletteFilter;
 use crate::screen::Screen;
-use crate::tile::TileBlockSet;
 use crate::tile::TileSet;
+use crate::tile::{TileBlockMap, TileBlockSet};
 
 mod ext;
 mod hidden_svg;
@@ -53,22 +53,19 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     context.fill_rect(0.0, 0.0, 384.0, 288.0);
 
     let tile_set = TileSet::new(&game.background_tiles).await;
+    let tile_subpalettes = palette
+        .new_tile_subpalettes(&game.background_colours)
+        .map(|subpalette| PaletteFilter::new(&subpalette));
+    let tile_block_set = TileBlockSet::new(
+        tile_set,
+        tile_subpalettes,
+        &game.block_colours,
+        &game.block_data,
+    );
+    let tile_block_map = TileBlockMap::new(tile_block_set, &game.background_scroll_data);
 
     screen.with_play_area(&context, |context| {
-        let tile_subpalettes = palette
-            .new_tile_subpalettes(&game.background_colours)
-            .map(|subpalette| PaletteFilter::new(&subpalette));
-        let tile_block_set = TileBlockSet::new(
-            tile_set,
-            tile_subpalettes,
-            &game.block_colours,
-            &game.block_data,
-        );
-        for i in 0..128 {
-            let x = (i & 7) as f64 * 40.0;
-            let y = (i / 8) as f64 * 40.0;
-            tile_block_set[i].draw(&context, x, y);
-        }
+        tile_block_map.draw(context, 800.0);
     });
 
     Ok(())
