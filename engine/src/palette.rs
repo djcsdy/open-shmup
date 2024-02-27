@@ -1,4 +1,5 @@
 use crate::colour::Colour;
+use std::array;
 use std::f32::consts::PI;
 use std::ops::Index;
 use std::slice::Iter;
@@ -59,18 +60,19 @@ impl Palette<16> {
         Self(palette)
     }
 
+    pub fn new_tile_subpalettes(&self, tile_palette_data: &[u8; 3]) -> [Palette<4>; 8] {
+        array::from_fn(|index| {
+            Palette([
+                self[tile_palette_data[0] as usize],
+                self[tile_palette_data[1] as usize],
+                self[tile_palette_data[2] as usize],
+                self[index],
+            ])
+        })
+    }
+
     fn pal_to_linear(value: f32) -> f32 {
         value.powf(2.8)
-    }
-}
-
-impl Palette<3> {
-    pub fn new_common_tile_subpalette(palette: &Palette<16>, sub_palette_data: &[u8; 3]) -> Self {
-        Self([
-            palette[sub_palette_data[0] as usize],
-            palette[sub_palette_data[1] as usize],
-            palette[sub_palette_data[2] as usize],
-        ])
     }
 }
 
