@@ -54,7 +54,7 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     let tile_subpalettes = palette
         .new_tile_subpalettes(&game.background_colours)
         .map(|subpalette| PaletteFilter::new(&subpalette));
-    let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
+    let tile_set = TileSet::new(&game.background_tiles).await;
     let tile_block_set = TileBlockSet::new(
         tile_set,
         tile_subpalettes,
