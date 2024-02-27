@@ -1,5 +1,6 @@
 extern crate wee_alloc;
 
+use futures::future;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Error;
@@ -10,6 +11,7 @@ use open_shmup_data::Game;
 use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
 use crate::palette::Palette;
 use crate::palette_filter::PaletteFilter;
+use crate::tile_block_set::TileBlockSet;
 use crate::tile_set::TileSet;
 
 mod colour;
@@ -56,28 +58,27 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     }
 
     let tile_subpalettes = palette.new_tile_subpalettes(&game.background_colours);
-
-    let background_filter = PaletteFilter::new(&tile_subpalettes[7]).await;
-    context.set_filter(background_filter.css());
-
+    let tile_subpalette_filters = future::join_all(
+        tile_subpalettes
+            .iter()
+            .map(|subpalette| PaletteFilter::new(subpalette)),
+    )
+    .await
+    .try_into()
+    .ok()
+    .unwrap();
     let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
-    for i in 0..254 {
-        let x = (i & 31) as f64 * 8.0;
-        let y = 20.0 + (i / 32) as f64 * 8.0;
-        tile_set[i].draw(&context, x, y);
+    let tile_block_set = TileBlockSet::new(
+        tile_set,
+        tile_subpalette_filters,
+        &game.block_colours,
+        &game.block_data,
+    );
+    for i in 0..128 {
+        let x = (i & 7) as f64 * 40.0;
+        let y = 20.0 + (i / 8) as f64 * 40.0;
+        tile_block_set[i].draw(&context, x, y);
     }
-
-    context.set_fill_style(&JsValue::from_str("#000"));
-    context.fill_rect(0.0, 84.0, 20.0, 20.0);
-
-    context.set_fill_style(&JsValue::from_str("#f00"));
-    context.fill_rect(20.0, 84.0, 20.0, 20.0);
-
-    context.set_fill_style(&JsValue::from_str("#0f0"));
-    context.fill_rect(40.0, 84.0, 20.0, 20.0);
-
-    context.set_fill_style(&JsValue::from_str("#00f"));
-    context.fill_rect(60.0, 84.0, 20.0, 20.0);
 
     Ok(())
 }
