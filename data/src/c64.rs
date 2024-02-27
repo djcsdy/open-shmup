@@ -33,7 +33,7 @@ impl Game {
         reader.seek(SeekFrom::Start(BLOCK_COLOURS - PRG_START))?;
         reader.read_exact(&mut block_colours)?;
 
-        let mut block_data = [0u8; 3072];
+        let mut block_data = [0u8; 3200];
         reader.seek(SeekFrom::Start(BLOCK_DATA - PRG_START))?;
         reader.read_exact(&mut block_data)?;
 

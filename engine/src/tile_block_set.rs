@@ -12,7 +12,7 @@ impl TileBlockSet {
         tile_set: TileSet,
         palettes: [PaletteFilter; 8],
         block_colour_data: &[u8; 128],
-        tile_block_data: &[u8; 3072],
+        tile_block_data: &[u8; 3200],
     ) -> Self {
         Self(array::from_fn(|block_index| {
             TileBlock::new(

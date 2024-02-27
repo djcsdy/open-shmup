@@ -9,7 +9,7 @@ use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 pub struct Game {
     pub background_scroll_data: [u8; 4096],
     pub block_colours: [u8; 128],
-    pub block_data: [u8; 3072],
+    pub block_data: [u8; 3200],
     pub object_pointers: [u8; 1412],
     pub title_screen: [u8; 480],
     pub attack_wave_patterns: [u8; 3100],
@@ -42,7 +42,7 @@ impl Game {
         let mut block_colours = [0u8; 128];
         reader.read_exact(&mut block_colours)?;
 
-        let mut block_data = [0u8; 3072];
+        let mut block_data = [0u8; 3200];
         reader.read_exact(&mut block_data)?;
 
         let mut object_pointers = [0u8; 1412];
