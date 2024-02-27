@@ -10,6 +10,7 @@ use open_shmup_data::Game;
 use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
 use crate::palette::Palette;
 use crate::palette::PaletteFilter;
+use crate::screen::Screen;
 use crate::tile::TileBlockSet;
 use crate::tile::TileSet;
 
@@ -31,17 +32,18 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     let document = window().unwrap().document().unwrap();
     let body = document.body().unwrap();
 
-    let context: CanvasRenderingContext2d = canvas
-        .unwrap_or_else(|| {
-            let canvas = document.create_canvas_element();
-            canvas.set_width(384);
-            canvas.set_height(288);
-            body.append_child(&canvas).unwrap();
-            canvas
-        })
-        .get_context_2d()
-        .unwrap()
-        .unwrap();
+    let screen = Screen::C64_PAL;
+
+    let canvas2 = canvas.unwrap_or_else(|| {
+        let canvas = document.create_canvas_element();
+        body.append_child(&canvas).unwrap();
+        canvas
+    });
+
+    canvas2.set_width(screen.width());
+    canvas2.set_height(screen.height());
+
+    let context: CanvasRenderingContext2d = canvas2.get_context_2d().unwrap().unwrap();
 
     let game = Game::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
 
