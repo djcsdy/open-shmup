@@ -45,6 +45,10 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     let game = Game::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
 
     let palette = Palette::new_colodore();
+
+    context.set_fill_style(&JsValue::from(&palette[0].css()));
+    context.fill_rect(0.0, 0.0, 384.0, 288.0);
+
     for i in 0..palette.len() {
         let colour = palette[i];
         context.set_fill_style(&JsValue::from_str(&colour.css()));
