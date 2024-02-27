@@ -13,6 +13,7 @@ pub struct Game {
     pub object_pointers: [u8; 1412],
     pub title_screen: [u8; 480],
     pub attack_wave_patterns: [u8; 3100],
+    pub background_colours: [u8; 3],
     pub sound_effects: [u8; 2432],
     pub sprite_graphics: [u8; 8192],
     pub title_font: [u8; 512],
@@ -53,6 +54,9 @@ impl Game {
         let mut attack_wave_patterns = [0u8; 3100];
         reader.read_exact(&mut attack_wave_patterns)?;
 
+        let mut background_colours = [0u8; 3];
+        reader.read_exact(&mut background_colours)?;
+
         let mut sound_effects = [0u8; 2432];
         reader.read_exact(&mut sound_effects)?;
 
@@ -72,6 +76,7 @@ impl Game {
             object_pointers,
             title_screen,
             attack_wave_patterns,
+            background_colours,
             sound_effects,
             sprite_graphics,
             title_font,
@@ -88,6 +93,7 @@ impl Game {
         writer.write_all(&self.object_pointers)?;
         writer.write_all(&self.title_screen)?;
         writer.write_all(&self.attack_wave_patterns)?;
+        writer.write_all(&self.background_colours)?;
         writer.write_all(&self.sound_effects)?;
         writer.write_all(&self.sprite_graphics)?;
         writer.write_all(&self.title_font)?;

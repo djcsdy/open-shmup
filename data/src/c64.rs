@@ -12,6 +12,7 @@ const BLOCK_DATA: u64 = 0x1a00;
 const OBJECT_POINTERS: u64 = 0x2c80;
 const TITLE_SCREEN: u64 = 0x3204;
 const ATTACK_WAVE_PATTERNS: u64 = 0x33e0;
+const BACKGROUND_COLOURS: u64 = 0x4085;
 const SOUND_EFFECTS: u64 = 0xb680;
 const SPRITE_GRAPHICS: u64 = 0xc000;
 const TITLE_FONT: u64 = 0xf400;
@@ -48,6 +49,10 @@ impl Game {
         reader.seek(SeekFrom::Start(ATTACK_WAVE_PATTERNS - PRG_START))?;
         reader.read_exact(&mut attack_wave_patterns)?;
 
+        let mut background_colours = [0u8; 3];
+        reader.seek(SeekFrom::Start(BACKGROUND_COLOURS - PRG_START))?;
+        reader.read_exact(&mut background_colours)?;
+
         let mut sound_effects = [0u8; 2432];
         reader.seek(SeekFrom::Start(SOUND_EFFECTS - PRG_START))?;
         reader.read_exact(&mut sound_effects)?;
@@ -71,6 +76,7 @@ impl Game {
             object_pointers,
             title_screen,
             attack_wave_patterns,
+            background_colours,
             sound_effects,
             sprite_graphics,
             title_font,
