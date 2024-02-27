@@ -58,21 +58,23 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     context.set_filter(background_filter.css());
 
     let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
-    context
-        .draw_image_with_image_bitmap(&tile_set.0, 0.0, 20.0)
-        .unwrap();
+    for i in 0..254 {
+        let x = (i & 31) as f64 * 8.0;
+        let y = 20.0 + (i / 32) as f64 * 8.0;
+        tile_set.draw_tile(&context, i, x, y);
+    }
 
     context.set_fill_style(&JsValue::from_str("#000"));
-    context.fill_rect(0.0, 40.0, 20.0, 20.0);
+    context.fill_rect(0.0, 84.0, 20.0, 20.0);
 
     context.set_fill_style(&JsValue::from_str("#f00"));
-    context.fill_rect(20.0, 40.0, 20.0, 20.0);
+    context.fill_rect(20.0, 84.0, 20.0, 20.0);
 
     context.set_fill_style(&JsValue::from_str("#0f0"));
-    context.fill_rect(40.0, 40.0, 20.0, 20.0);
+    context.fill_rect(40.0, 84.0, 20.0, 20.0);
 
     context.set_fill_style(&JsValue::from_str("#00f"));
-    context.fill_rect(60.0, 40.0, 20.0, 20.0);
+    context.fill_rect(60.0, 84.0, 20.0, 20.0);
 
     Ok(())
 }

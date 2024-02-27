@@ -6,7 +6,7 @@ use web_sys::{
 };
 
 #[derive(Eq, PartialEq, Clone)]
-pub struct TileSet(pub ImageBitmap);
+pub struct TileSet(ImageBitmap);
 
 impl TileSet {
     pub async fn new(tile_data: &[u8; 2040]) -> Result<Self, JsValue> {
