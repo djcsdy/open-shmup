@@ -10,15 +10,13 @@ use open_shmup_data::Game;
 
 use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
 use crate::palette::Palette;
-use crate::palette_filter::PaletteFilter;
+use crate::palette::PaletteFilter;
 use crate::tile::TileBlockSet;
 use crate::tile::TileSet;
 
-mod colour;
 mod ext;
 mod hidden_svg;
 mod palette;
-mod palette_filter;
 mod tile;
 mod xml_namespace;
 

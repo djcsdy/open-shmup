@@ -1,4 +1,4 @@
-use crate::palette_filter::PaletteFilter;
+use crate::palette::PaletteFilter;
 use crate::tile::TileBlock;
 use crate::tile::TileSet;
 use std::array;

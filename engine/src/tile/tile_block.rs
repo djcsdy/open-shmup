@@ -1,4 +1,4 @@
-use crate::palette_filter::PaletteFilter;
+use crate::palette::PaletteFilter;
 use crate::tile::Tile;
 use web_sys::CanvasRenderingContext2d;
 

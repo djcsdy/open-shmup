@@ -1,4 +1,4 @@
-use crate::colour::Colour;
+use crate::palette::Colour;
 use std::array;
 use std::f32::consts::PI;
 use std::ops::Index;
