@@ -7,7 +7,7 @@ use web_sys::{window, CanvasRenderingContext2d, HtmlCanvasElement};
 
 use open_shmup_data::Game;
 
-use crate::ext::{DocumentExt, HtmlCanvasElementExt, OptionExt};
+use crate::ext::{DocumentExt, HtmlCanvasElementExt};
 use crate::palette::Palette;
 use crate::palette::PaletteFilter;
 use crate::screen::Screen;
