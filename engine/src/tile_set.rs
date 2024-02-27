@@ -1,7 +1,9 @@
 use crate::ext::OptionExt;
 use wasm_bindgen::{Clamped, JsValue};
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{window, ImageBitmap, ImageBitmapOptions, ImageData, PremultiplyAlpha};
+use web_sys::{
+    window, CanvasRenderingContext2d, ImageBitmap, ImageBitmapOptions, ImageData, PremultiplyAlpha,
+};
 
 #[derive(Eq, PartialEq, Clone)]
 pub struct TileSet(pub ImageBitmap);
@@ -41,5 +43,21 @@ impl TileSet {
         .await?
         .into();
         Ok(Self(image_bitmap))
+    }
+
+    pub fn draw_tile(&self, context: &CanvasRenderingContext2d, tile_index: u8, x: f64, y: f64) {
+        context
+            .draw_image_with_image_bitmap_and_sw_and_sh_and_dx_and_dy_and_dw_and_dh(
+                &self.0,
+                tile_index as f64 * 8.0,
+                0.0,
+                8.0,
+                8.0,
+                x,
+                y,
+                8.0,
+                8.0,
+            )
+            .unwrap();
     }
 }
