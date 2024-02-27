@@ -1,6 +1,6 @@
 use crate::palette_filter::PaletteFilter;
-use crate::tile_block::TileBlock;
-use crate::tile_set::TileSet;
+use crate::tile::TileBlock;
+use crate::tile::TileSet;
 use std::array;
 use std::ops::Index;
 
