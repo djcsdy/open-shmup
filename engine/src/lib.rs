@@ -17,6 +17,7 @@ mod ext;
 mod hidden_svg;
 mod palette;
 mod palette_filter;
+mod tile;
 mod tile_set;
 mod xml_namespace;
 
@@ -69,7 +70,7 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     for i in 0..254 {
         let x = (i & 31) as f64 * 8.0;
         let y = 20.0 + (i / 32) as f64 * 8.0;
-        tile_set.draw_tile(&context, i, x, y);
+        tile_set[i].draw(&context, x, y);
     }
 
     context.set_fill_style(&JsValue::from_str("#000"));
