@@ -22,7 +22,7 @@ impl TileSet {
                     let out_pixel_y_offset = tile_y * 254 * 8;
                     let out_pixel_offset_l = out_pixel_y_offset + out_x_1;
                     let out_pixel_offset_r = out_pixel_y_offset + out_x_2;
-                    let colour = line.wrapping_shr((8 - tile_x * 2) as u32) & 3;
+                    let colour = line.wrapping_shr((6 - tile_x * 2) as u32) & 3;
                     if colour > 0 {
                         image_data[out_pixel_offset_l * 4 + colour as usize - 1] = 255;
                         image_data[out_pixel_offset_r * 4 + colour as usize - 1] = 255;
