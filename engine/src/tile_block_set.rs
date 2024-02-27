@@ -2,6 +2,7 @@ use crate::palette_filter::PaletteFilter;
 use crate::tile_block::TileBlock;
 use crate::tile_set::TileSet;
 use std::array;
+use std::ops::Index;
 
 #[derive(Clone)]
 pub struct TileBlockSet([TileBlock; 128]);
@@ -25,5 +26,13 @@ impl TileBlockSet {
                 }),
             )
         }))
+    }
+}
+
+impl Index<usize> for TileBlockSet {
+    type Output = TileBlock;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.0[index]
     }
 }
