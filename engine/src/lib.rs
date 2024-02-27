@@ -1,6 +1,5 @@
 extern crate wee_alloc;
 
-use futures::future;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsValue;
 use web_sys::js_sys::Error;
@@ -52,20 +51,13 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         context.fill_rect(i as f64 * 20.0, 0.0, 20.0, 20.0);
     }
 
-    let tile_subpalettes = palette.new_tile_subpalettes(&game.background_colours);
-    let tile_subpalette_filters = future::join_all(
-        tile_subpalettes
-            .iter()
-            .map(|subpalette| PaletteFilter::new(subpalette)),
-    )
-    .await
-    .try_into()
-    .ok()
-    .unwrap();
+    let tile_subpalettes = palette
+        .new_tile_subpalettes(&game.background_colours)
+        .map(|subpalette| PaletteFilter::new(&subpalette));
     let tile_set = TileSet::new(&game.background_tiles).await.unwrap();
     let tile_block_set = TileBlockSet::new(
         tile_set,
-        tile_subpalette_filters,
+        tile_subpalettes,
         &game.block_colours,
         &game.block_data,
     );
