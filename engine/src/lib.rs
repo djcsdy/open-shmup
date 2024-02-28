@@ -12,13 +12,11 @@ use open_shmup_data::Game;
 
 use crate::ext::{DocumentExt, HtmlCanvasElementExt};
 use crate::palette::Palette;
-use crate::palette::PaletteFilter;
 use crate::screen::Screen;
 use crate::tile::TileSet;
 use crate::tile::{TileBlockMap, TileBlockSet};
 
 mod ext;
-mod hidden_svg;
 mod palette;
 mod screen;
 mod tile;
@@ -55,17 +53,17 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     context.set_fill_style(&JsValue::from(&palette[0].css()));
     context.fill_rect(0.0, 0.0, 384.0, 288.0);
 
-    let tile_set = TileSet::new(&game.background_tiles).await;
-    let tile_subpalettes = palette
-        .new_tile_subpalettes(&game.background_colours)
-        .map(|subpalette| PaletteFilter::new(&subpalette));
+    let tile_set = TileSet::new(&game.background_tiles);
+    let shared_tile_palette = palette.new_shared_tile_palette(&game.background_colours);
+    let tile_subpalettes = palette.new_tile_subpalettes(&shared_tile_palette);
     let tile_block_set = TileBlockSet::new(
-        tile_set,
-        tile_subpalettes,
+        &tile_set,
+        &tile_subpalettes,
         &game.block_colours,
         &game.block_data,
-    );
-    let tile_block_map = TileBlockMap::new(tile_block_set, &game.background_scroll_data);
+    )
+    .await;
+    let tile_block_map = TileBlockMap::new(&tile_block_set, &game.background_scroll_data);
 
     let start_time = Date::now();
 

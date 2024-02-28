@@ -1,26 +1,14 @@
-use crate::palette::PaletteFilter;
-use crate::tile::Tile;
-use web_sys::CanvasRenderingContext2d;
+use web_sys::{CanvasRenderingContext2d, ImageBitmap};
 
 #[derive(Clone)]
-pub struct TileBlock {
-    palette: PaletteFilter,
-    tiles: [[Tile; 5]; 5],
-}
+pub struct TileBlock(ImageBitmap);
 
 impl TileBlock {
-    pub fn new(palette: PaletteFilter, tiles: [[Tile; 5]; 5]) -> Self {
-        Self { palette, tiles }
+    pub fn new(bitmap: ImageBitmap) -> Self {
+        Self(bitmap)
     }
 
     pub fn draw(&self, context: &CanvasRenderingContext2d, x: f64, y: f64) {
-        context.save();
-        context.set_filter(self.palette.css());
-        for row in 0..5 {
-            for tile in 0..5 {
-                self.tiles[row][tile].draw(context, x + tile as f64 * 8.0, y + row as f64 * 8.0);
-            }
-        }
-        context.restore();
+        context.draw_image_with_image_bitmap(&self.0, x, y).unwrap();
     }
 }

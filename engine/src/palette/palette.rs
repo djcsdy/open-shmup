@@ -45,12 +45,20 @@ impl Palette<16> {
         Self(palette)
     }
 
-    pub fn new_tile_subpalettes(&self, tile_palette_data: &[u8; 3]) -> [Palette<4>; 8] {
+    pub fn new_shared_tile_palette(&self, tile_palette_data: &[u8; 3]) -> Palette<3> {
+        Palette([
+            self[tile_palette_data[0] as usize],
+            self[tile_palette_data[1] as usize],
+            self[tile_palette_data[2] as usize],
+        ])
+    }
+
+    pub fn new_tile_subpalettes(&self, shared_palette: &Palette<3>) -> [Palette<4>; 8] {
         array::from_fn(|index| {
             Palette([
-                self[tile_palette_data[0] as usize],
-                self[tile_palette_data[1] as usize],
-                self[tile_palette_data[2] as usize],
+                shared_palette[0],
+                shared_palette[1],
+                shared_palette[2],
                 self[index],
             ])
         })

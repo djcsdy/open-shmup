@@ -6,7 +6,7 @@ pub struct TileBlockMap {
 }
 
 impl TileBlockMap {
-    pub fn new(tile_block_set: TileBlockSet, map_data: &[u8; 4096]) -> Self {
+    pub fn new(tile_block_set: &TileBlockSet, map_data: &[u8; 4096]) -> Self {
         TileBlockMap {
             tile_blocks: (0..512)
                 .map(|row_index| {

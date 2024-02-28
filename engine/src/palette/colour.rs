@@ -32,6 +32,18 @@ impl Colour {
         self.blue
     }
 
+    pub fn red_simple_srgb(&self) -> u8 {
+        (self.red.powf(1.0 / 2.2) * (256.0 - f32::EPSILON)) as u8
+    }
+
+    pub fn green_simple_srgb(&self) -> u8 {
+        (self.green.powf(1.0 / 2.2) * (256.0 - f32::EPSILON)) as u8
+    }
+
+    pub fn blue_simple_srgb(&self) -> u8 {
+        (self.blue.powf(1.0 / 2.2) * (256.0 - f32::EPSILON)) as u8
+    }
+
     pub fn css(&self) -> String {
         String::from_iter([
             "color(srgb-linear ",
