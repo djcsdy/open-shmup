@@ -2,24 +2,9 @@ use crate::palette::Colour;
 use std::array;
 use std::f32::consts::PI;
 use std::ops::Index;
-use std::slice::Iter;
 
 #[derive(PartialEq, Clone, Debug)]
 pub struct Palette<const S: usize>([Colour; S]);
-
-impl<const S: usize> Palette<S> {
-    pub fn new(colours: [Colour; S]) -> Self {
-        Self(colours)
-    }
-
-    pub fn len(&self) -> usize {
-        S
-    }
-
-    pub fn iter(&self) -> Iter<'_, Colour> {
-        self.0.iter()
-    }
-}
 
 impl Palette<16> {
     /// Generates a Colodore Palette as documented at https://www.pepto.de/projects/colorvic/
