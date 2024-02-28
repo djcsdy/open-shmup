@@ -1,8 +1,11 @@
 extern crate wee_alloc;
 
+use std::cell::RefCell;
+use std::rc::Rc;
+use wasm_bindgen::closure::Closure;
 use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::JsValue;
-use web_sys::js_sys::Error;
+use web_sys::js_sys::{Date, Error, Function};
 use web_sys::{window, CanvasRenderingContext2d, HtmlCanvasElement};
 
 use open_shmup_data::Game;
@@ -64,9 +67,27 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     );
     let tile_block_map = TileBlockMap::new(tile_block_set, &game.background_scroll_data);
 
-    screen.with_play_area(&context, |context| {
-        tile_block_map.draw(context, 800.0);
-    });
+    let start_time = Date::now();
+
+    let on_animation_frame: Rc<RefCell<Option<Function>>> = Rc::new(RefCell::new(None));
+    let on_animation_frame_2 = on_animation_frame.clone();
+    *on_animation_frame.borrow_mut() = Some(Function::from(
+        Closure::<dyn Fn() -> ()>::new(move || {
+            let frame = (Date::now() - start_time) / (1000.0 / 50.0);
+            screen.with_play_area(&context, |context| {
+                tile_block_map.draw(context, frame.floor());
+            });
+            window()
+                .unwrap()
+                .request_animation_frame(on_animation_frame_2.borrow().as_ref().unwrap())
+                .unwrap();
+        })
+        .into_js_value(),
+    ));
+    window()
+        .unwrap()
+        .request_animation_frame(on_animation_frame.borrow().as_ref().unwrap())
+        .unwrap();
 
     Ok(())
 }
