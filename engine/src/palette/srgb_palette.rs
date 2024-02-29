@@ -50,9 +50,9 @@ impl SrgbPalette<16> {
 
     pub fn new_shared_tile_palette(&self, tile_palette_data: &[u8; 3]) -> SrgbPalette<3> {
         SrgbPalette([
-            self[tile_palette_data[0] as usize],
-            self[tile_palette_data[1] as usize],
-            self[tile_palette_data[2] as usize],
+            self[(tile_palette_data[0] & 15) as usize],
+            self[(tile_palette_data[1] & 15) as usize],
+            self[(tile_palette_data[2] & 15) as usize],
         ])
     }
 
