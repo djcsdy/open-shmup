@@ -1,12 +1,13 @@
-use crate::palette::Colour;
+use crate::palette::pal_colour::PalColour;
+use crate::palette::SrgbColour;
 use std::array;
 use std::f32::consts::PI;
 use std::ops::Index;
 
 #[derive(PartialEq, Clone, Debug)]
-pub struct Palette<const S: usize>([Colour; S]);
+pub struct SrgbPalette<const S: usize>([SrgbColour; S]);
 
-impl Palette<16> {
+impl SrgbPalette<16> {
     /// Generates a Colodore Palette as documented at https://www.pepto.de/projects/colorvic/
     pub fn new_colodore() -> Self {
         let brightness = 0.5;
@@ -27,7 +28,7 @@ impl Palette<16> {
         let origin = sector / 2.0;
         let screen = 0.2;
 
-        let mut palette = [Colour::BLACK; 16];
+        let mut palette = [SrgbColour::BLACK; 16];
 
         for i in 0..palette.len() {
             let angle = origin + chroma[i] * sector;
@@ -35,27 +36,29 @@ impl Palette<16> {
             let u = angle.cos() * saturation[i] * 0.390625 * (1.0 - screen) * (contrast + screen);
             let v = angle.sin() * saturation[i] * 0.390625 * (1.0 - screen) * (contrast + screen);
 
-            palette[i] = Colour::new(
-                Self::pal_to_linear((y + 1.140 * v).clamp(0.0, 1.0)),
-                Self::pal_to_linear((y - 0.396 * u - 0.581 * v).clamp(0.0, 1.0)),
-                Self::pal_to_linear((y + 2.029 * u).clamp(0.0, 1.0)),
-            );
+            palette[i] = PalColour::new(
+                ((y + 1.140 * v) * (256.0 - f32::EPSILON)) as u8,
+                ((y - 0.396 * u - 0.581 * v) * (256.0 - f32::EPSILON)) as u8,
+                ((y + 2.029 * u) * (256.0 - f32::EPSILON)) as u8,
+            )
+            .to_linear_rgb()
+            .to_srgb();
         }
 
         Self(palette)
     }
 
-    pub fn new_shared_tile_palette(&self, tile_palette_data: &[u8; 3]) -> Palette<3> {
-        Palette([
+    pub fn new_shared_tile_palette(&self, tile_palette_data: &[u8; 3]) -> SrgbPalette<3> {
+        SrgbPalette([
             self[tile_palette_data[0] as usize],
             self[tile_palette_data[1] as usize],
             self[tile_palette_data[2] as usize],
         ])
     }
 
-    pub fn new_tile_subpalettes(&self, shared_palette: &Palette<3>) -> [Palette<4>; 8] {
+    pub fn new_tile_subpalettes(&self, shared_palette: &SrgbPalette<3>) -> [SrgbPalette<4>; 8] {
         array::from_fn(|index| {
-            Palette([
+            SrgbPalette([
                 shared_palette[0],
                 shared_palette[1],
                 shared_palette[2],
@@ -63,14 +66,10 @@ impl Palette<16> {
             ])
         })
     }
-
-    fn pal_to_linear(value: f32) -> f32 {
-        value.powf(2.8)
-    }
 }
 
-impl<const S: usize> Index<usize> for Palette<S> {
-    type Output = Colour;
+impl<const S: usize> Index<usize> for SrgbPalette<S> {
+    type Output = SrgbColour;
 
     fn index(&self, index: usize) -> &Self::Output {
         &self.0[index]

@@ -1,4 +1,4 @@
-use crate::palette::Palette;
+use crate::palette::SrgbPalette;
 use crate::tile::TileBlock;
 use crate::tile::TileSet;
 use futures::future;
@@ -13,7 +13,7 @@ pub struct TileBlockSet(Vec<TileBlock>);
 impl TileBlockSet {
     pub async fn new(
         tile_set: &TileSet,
-        palettes: &[Palette<4>; 8],
+        palettes: &[SrgbPalette<4>; 8],
         block_colour_data: &[u8; 128],
         tile_block_data: &[u8; 3200],
     ) -> Self {
@@ -44,17 +44,13 @@ impl TileBlockSet {
                                     let colour =
                                         palette[(line.wrapping_shr((6 - x_in_tile * 2) as u32) & 3)
                                             as usize];
-                                    image_data_bytes[out_byte_offset_l] = colour.red_simple_srgb();
-                                    image_data_bytes[out_byte_offset_l + 1] =
-                                        colour.green_simple_srgb();
-                                    image_data_bytes[out_byte_offset_l + 2] =
-                                        colour.blue_simple_srgb();
+                                    image_data_bytes[out_byte_offset_l] = colour.red();
+                                    image_data_bytes[out_byte_offset_l + 1] = colour.green();
+                                    image_data_bytes[out_byte_offset_l + 2] = colour.blue();
                                     image_data_bytes[out_byte_offset_l + 3] = 255;
-                                    image_data_bytes[out_byte_offset_r] = colour.red_simple_srgb();
-                                    image_data_bytes[out_byte_offset_r + 1] =
-                                        colour.green_simple_srgb();
-                                    image_data_bytes[out_byte_offset_r + 2] =
-                                        colour.blue_simple_srgb();
+                                    image_data_bytes[out_byte_offset_r] = colour.red();
+                                    image_data_bytes[out_byte_offset_r + 1] = colour.green();
+                                    image_data_bytes[out_byte_offset_r + 2] = colour.blue();
                                     image_data_bytes[out_byte_offset_r + 3] = 255;
                                 }
                             }
