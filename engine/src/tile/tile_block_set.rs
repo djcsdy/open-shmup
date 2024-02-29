@@ -17,12 +17,17 @@ impl TileBlockSet {
     ) -> Self {
         Self(
             future::join_all((0..128).map(|block_index| {
-                TileBlock::decode_multicolour(
-                    &tile_set,
-                    // FIXME: If the eighth bit is not set, we should render the block as hires
-                    &palettes[(block_colour_data[block_index] & 7) as usize],
-                    array_ref![tile_block_data, block_index * 25, 25],
-                )
+                let colour_data = block_colour_data[block_index];
+                let block_data = array_ref![tile_block_data, block_index * 25, 25];
+                let palette = &palettes[(colour_data & 7) as usize];
+
+                async move {
+                    if (colour_data & 8) == 8 {
+                        TileBlock::decode_multicolour(&tile_set, palette, block_data).await
+                    } else {
+                        TileBlock::decode_hires(&tile_set, palette, block_data).await
+                    }
+                }
             }))
             .await,
         )
