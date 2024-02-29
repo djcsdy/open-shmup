@@ -11,11 +11,19 @@ impl LinearRgbColour {
         Self { red, green, blue }
     }
 
+    pub fn red(&self) -> f32 {
+        self.red
+    }
+
+    pub fn green(&self) -> f32 {
+        self.green
+    }
+
+    pub fn blue(&self) -> f32 {
+        self.blue
+    }
+
     pub fn to_srgb(&self) -> SrgbColour {
-        SrgbColour::new(
-            (self.red.clamp(0.0, 1.0).powf(1.0 / 2.2) * (256.0 - f32::EPSILON)) as u8,
-            (self.green.clamp(0.0, 1.0).powf(1.0 / 2.2) * (256.0 - f32::EPSILON)) as u8,
-            (self.blue.clamp(0.0, 1.0).powf(1.0 / 2.2) * (256.0 - f32::EPSILON)) as u8,
-        )
+        SrgbColour::from_linear(&self)
     }
 }
