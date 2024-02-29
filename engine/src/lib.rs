@@ -72,7 +72,7 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     *on_animation_frame.borrow_mut() = Some(Closure::<dyn Fn() -> ()>::new(move || {
         let frame = (Date::now() - start_time) / (1000.0 / 50.0);
         screen.with_play_area(&context, |context| {
-            tile_block_map.draw(context, frame.floor());
+            tile_block_map.draw(context, frame as i32);
         });
         window()
             .unwrap()

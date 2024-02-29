@@ -20,16 +20,16 @@ impl TileBlockMap {
         }
     }
 
-    pub fn draw(&self, context: &CanvasRenderingContext2d, scroll_y: f64) {
-        let first_row = (scroll_y / 40.0) as usize;
-        let y_offset = scroll_y - (first_row as f64 * 40.0);
+    pub fn draw(&self, context: &CanvasRenderingContext2d, scroll_y: i32) {
+        let first_row = scroll_y / 40;
+        let y_offset = scroll_y - first_row * 40;
 
-        for row in first_row..usize::min(first_row + 6, 512) {
+        for row in first_row.max(0)..(first_row + 6).min(512) {
             for tile in 0..8 {
-                self.tile_blocks[row][tile].draw(
+                self.tile_blocks[row as usize][tile].draw(
                     context,
                     tile as f64 * 40.0,
-                    152.0 - ((row - first_row) as f64 * 40.0) + y_offset,
+                    (152 - ((row - first_row) * 40) + y_offset) as f64,
                 );
             }
         }
