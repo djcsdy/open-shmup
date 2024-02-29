@@ -10,6 +10,7 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
+arrayref = "=0.3.7"
 base64 = "=0.21.7"
 console_error_panic_hook = { version = "=0.1.7", optional = true }
 futures = "=0.3.30"
