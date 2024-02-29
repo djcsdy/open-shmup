@@ -20,7 +20,6 @@ mod ext;
 mod palette;
 mod screen;
 mod tile;
-mod xml_namespace;
 
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
