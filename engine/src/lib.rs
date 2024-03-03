@@ -15,6 +15,7 @@ use web_sys::{window, CanvasRenderingContext2d, HtmlCanvasElement};
 mod ext;
 mod game;
 mod palette;
+mod point;
 mod screen;
 mod stage;
 mod tile;
