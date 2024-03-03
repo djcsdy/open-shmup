@@ -16,6 +16,7 @@ mod ext;
 mod game;
 mod palette;
 mod point;
+mod rect;
 mod screen;
 mod stage;
 mod tile;
