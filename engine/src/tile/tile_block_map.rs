@@ -1,3 +1,5 @@
+use crate::point::Point;
+use crate::rect::Rect;
 use crate::tile::{TileBlock, TileBlockSet};
 use web_sys::CanvasRenderingContext2d;
 
@@ -28,8 +30,16 @@ impl TileBlockMap {
             for tile in 0..8 {
                 self.tile_blocks[row as usize][tile].draw(
                     context,
-                    tile as f64 * 40.0,
-                    (152 - ((row - first_row) * 40) + y_offset) as f64,
+                    &Rect {
+                        x: 0,
+                        y: 0,
+                        width: 40,
+                        height: 40,
+                    },
+                    &Point {
+                        x: tile as i32 * 40,
+                        y: 152 - ((row - first_row) * 40) + y_offset,
+                    },
                 );
             }
         }
