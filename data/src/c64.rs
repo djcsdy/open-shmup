@@ -3,7 +3,7 @@ use std::io::{ErrorKind, Read, Seek, SeekFrom};
 
 use byteorder::{LittleEndian, ReadBytesExt};
 
-use crate::Game;
+use crate::GameData;
 
 const PRG_START: u64 = 0x8fe;
 const BACKGROUND_SCROLL_DATA: u64 = 0x900;
@@ -19,7 +19,7 @@ const SPRITE_GRAPHICS: u64 = 0xc000;
 const TITLE_FONT: u64 = 0xf400;
 const BACKGROUND_TILES: u64 = 0xf800;
 
-impl Game {
+impl GameData {
     pub fn read_c64_prg<R: Read + Seek>(reader: &mut R) -> io::Result<Self> {
         let signature = reader.read_u16::<LittleEndian>()?;
         if signature != 0x42 {

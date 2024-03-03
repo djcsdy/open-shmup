@@ -8,7 +8,7 @@ use wasm_bindgen::{JsCast, JsValue};
 use web_sys::js_sys::{Date, Error};
 use web_sys::{window, CanvasRenderingContext2d, HtmlCanvasElement};
 
-use open_shmup_data::Game;
+use open_shmup_data::GameData;
 
 use crate::ext::{DocumentExt, HtmlCanvasElementExt};
 use crate::palette::SrgbPalette;
@@ -46,7 +46,8 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
 
     let context: CanvasRenderingContext2d = canvas2.get_context_2d().unwrap().unwrap();
 
-    let game = Game::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
+    let game =
+        GameData::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
 
     let palette = SrgbPalette::new_colodore();
 

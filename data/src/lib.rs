@@ -6,7 +6,7 @@ use std::io::{ErrorKind, Read, Write};
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
-pub struct Game {
+pub struct GameData {
     pub background_scroll_data: [u8; 4096],
     pub block_colours: [u8; 128],
     pub block_data: [u8; 3200],
@@ -23,7 +23,7 @@ pub struct Game {
 
 const SIGNATURE: &[u8; 20] = b"\x00open_shmup_game\xff\xfe\xfd\xfc";
 
-impl Game {
+impl GameData {
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
         let mut signature = [0u8; SIGNATURE.len()];
         reader.read_exact(&mut signature)?;

@@ -3,7 +3,7 @@ use std::path::Path;
 
 use clap::Parser;
 
-use open_shmup_data::Game;
+use open_shmup_data::GameData;
 
 use crate::options::Options;
 
@@ -20,7 +20,7 @@ fn main() {
     }
 
     let mut in_file = File::open(in_path).unwrap();
-    let game = Game::read_c64_prg(&mut in_file).unwrap();
+    let game = GameData::read_c64_prg(&mut in_file).unwrap();
 
     let mut out_file = OpenOptions::new()
         .create(true)
