@@ -19,6 +19,7 @@ use crate::tile::{TileBlockMap, TileBlockSet};
 mod ext;
 mod palette;
 mod screen;
+mod stage;
 mod tile;
 
 #[global_allocator]
