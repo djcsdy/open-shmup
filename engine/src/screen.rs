@@ -1,23 +1,23 @@
+use crate::rect::Rect;
 use web_sys::CanvasRenderingContext2d;
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Screen {
     width: u32,
     height: u32,
-    play_area_x: u32,
-    play_area_y: u32,
-    play_area_width: u32,
-    play_area_height: u32,
+    play_area: Rect,
 }
 
 impl Screen {
     pub const C64_PAL: Self = Self {
         width: 384,
         height: 288,
-        play_area_x: 32,
-        play_area_y: 48,
-        play_area_width: 320,
-        play_area_height: 192,
+        play_area: Rect {
+            x: 32,
+            y: 48,
+            width: 320,
+            height: 192,
+        },
     };
 
     pub fn width(&self) -> u32 {
@@ -35,14 +35,14 @@ impl Screen {
     ) {
         context.save();
         context.rect(
-            self.play_area_x as f64,
-            self.play_area_y as f64,
-            self.play_area_width as f64,
-            self.play_area_height as f64,
+            self.play_area.x as f64,
+            self.play_area.y as f64,
+            self.play_area.width as f64,
+            self.play_area.height as f64,
         );
         context.clip();
         context
-            .translate(self.play_area_x as f64, self.play_area_y as f64)
+            .translate(self.play_area.x as f64, self.play_area.y as f64)
             .unwrap();
         draw(context);
         context.restore();
