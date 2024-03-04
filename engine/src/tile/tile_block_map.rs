@@ -33,6 +33,12 @@ impl TileBlockMap {
             self.draw_row(
                 context,
                 row as usize,
+                &Rect {
+                    x: 0,
+                    y: 0,
+                    width: 320,
+                    height: 40,
+                },
                 &Point {
                     x: 0,
                     y: ((row - top_row) * 40) + y_offset,
@@ -41,18 +47,56 @@ impl TileBlockMap {
         }
     }
 
-    fn draw_row(&self, context: &CanvasRenderingContext2d, row: usize, dest_pos: &Point) {
-        for tile in 0..8 {
-            self.tile_blocks[row][tile].draw(
+    fn draw_row(
+        &self,
+        context: &CanvasRenderingContext2d,
+        row: usize,
+        src_rect: &Rect,
+        dest_pos: &Point,
+    ) {
+        let left_tile = src_rect.x / 40;
+        let right_tile = (src_rect.x + src_rect.width as i32 - 1) / 40;
+        let tile_count = right_tile - left_tile + 1;
+
+        let left_rect = Rect {
+            x: src_rect.x - left_tile * 40,
+            y: src_rect.y,
+            width: if tile_count == 1 { src_rect.width } else { 40 },
+            height: src_rect.height,
+        };
+
+        let mid_rect = Rect {
+            x: 0,
+            y: src_rect.y,
+            width: 40,
+            height: src_rect.height,
+        };
+
+        let src_right = src_rect.x as u32 + src_rect.width;
+
+        let right_rect = Rect {
+            x: 0,
+            y: src_rect.y,
+            width: if src_right % 40 == 0 {
+                40
+            } else {
+                src_right % 40
+            },
+            height: src_rect.height,
+        };
+
+        for tile_index in 0..tile_count {
+            self.tile_blocks[row][(left_tile + tile_index) as usize].draw(
                 context,
-                &Rect {
-                    x: 0,
-                    y: 0,
-                    width: 40,
-                    height: 40,
+                if tile_index == 0 {
+                    &left_rect
+                } else if tile_index == tile_count - 1 {
+                    &right_rect
+                } else {
+                    &mid_rect
                 },
                 &Point {
-                    x: tile as i32 * 40 + dest_pos.x,
+                    x: dest_pos.x + tile_index * 40 - if tile_index == 0 { 0 } else { left_rect.x },
                     y: dest_pos.y,
                 },
             )
