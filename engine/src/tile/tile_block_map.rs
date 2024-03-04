@@ -16,7 +16,8 @@ impl TileBlockMap {
                 .map(|row_index| {
                     (0..8)
                         .map(|block_index| {
-                            tile_block_set[map_data[row_index * 8 + block_index] as usize].clone()
+                            tile_block_set[map_data[(511 - row_index) * 8 + block_index] as usize]
+                                .clone()
                         })
                         .collect()
                 })
@@ -25,10 +26,10 @@ impl TileBlockMap {
     }
 
     pub fn draw(&self, context: &CanvasRenderingContext2d, src_y: i32) {
-        let bottom_row = (Self::HEIGHT_PX as i32 - src_y) / 40;
-        let y_offset = (Self::HEIGHT_PX as i32 - src_y) - bottom_row * 40;
+        let top_row = src_y / 40;
+        let y_offset = top_row * 40 - src_y;
 
-        for row in bottom_row.max(0)..(bottom_row + 6).min(512) {
+        for row in top_row.max(0)..(top_row + 6).min(512) {
             for tile in 0..8 {
                 self.tile_blocks[row as usize][tile].draw(
                     context,
@@ -40,7 +41,7 @@ impl TileBlockMap {
                     },
                     &Point {
                         x: tile as i32 * 40,
-                        y: 152 - ((row - bottom_row) * 40) + y_offset,
+                        y: ((row - top_row) * 40) + y_offset,
                     },
                 );
             }
