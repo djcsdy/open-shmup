@@ -25,23 +25,52 @@ impl TileBlockMap {
         }
     }
 
-    pub fn draw(&self, context: &CanvasRenderingContext2d, src_y: i32) {
-        let top_row = src_y / 40;
-        let y_offset = top_row * 40 - src_y;
+    pub fn draw(&self, context: &CanvasRenderingContext2d, src_rect: &Rect) {
+        let top_row = src_rect.y / 40;
+        let bottom_row = (src_rect.y + src_rect.height as i32 - 1) / 40;
+        let row_count = bottom_row - top_row + 1;
 
-        for row in top_row.max(0)..(top_row + 6).min(512) {
+        let top_rect = Rect {
+            x: src_rect.x,
+            y: src_rect.y - top_row * 40,
+            width: src_rect.width,
+            height: if row_count == 1 { src_rect.height } else { 40 },
+        };
+
+        let mid_rect = Rect {
+            x: src_rect.x,
+            y: 0,
+            width: src_rect.width,
+            height: 40,
+        };
+
+        let src_bottom = src_rect.y as u32 + src_rect.height;
+
+        let bottom_rect = Rect {
+            x: src_rect.x,
+            y: 0,
+            width: src_rect.width,
+            height: if src_bottom % 40 == 0 {
+                40
+            } else {
+                src_bottom % 40
+            },
+        };
+
+        for row_index in 0..row_count {
             self.draw_row(
                 context,
-                row as usize,
-                &Rect {
-                    x: 0,
-                    y: 0,
-                    width: 320,
-                    height: 40,
+                (top_row + row_index) as usize,
+                if row_index == 0 {
+                    &top_rect
+                } else if row_index == row_count - 1 {
+                    &bottom_rect
+                } else {
+                    &mid_rect
                 },
                 &Point {
                     x: 0,
-                    y: ((row - top_row) * 40) + y_offset,
+                    y: row_index * 40 - if row_index == 0 { 0 } else { top_rect.y },
                 },
             );
         }

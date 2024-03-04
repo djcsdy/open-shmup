@@ -1,4 +1,5 @@
 use crate::palette::SrgbPalette;
+use crate::rect::Rect;
 use crate::screen::Screen;
 use crate::tile::{TileBlockMap, TileBlockSet, TileSet};
 use open_shmup_data::GameData;
@@ -49,8 +50,15 @@ impl Game {
         );
 
         self.screen.with_play_area(context, |context| {
-            self.tile_block_map
-                .draw(context, TileBlockMap::HEIGHT_PX as i32 - self.frame as i32);
+            self.tile_block_map.draw(
+                context,
+                &Rect {
+                    x: 0,
+                    y: TileBlockMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
+                    width: 320,
+                    height: 192,
+                },
+            );
         })
     }
 }
