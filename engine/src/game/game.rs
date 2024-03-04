@@ -46,8 +46,8 @@ impl Game {
         context.fill_rect(
             0.0,
             0.0,
-            self.screen.width() as f64,
-            self.screen.height() as f64,
+            self.screen.width as f64,
+            self.screen.height as f64,
         );
 
         self.screen.with_play_area(context, |context| {

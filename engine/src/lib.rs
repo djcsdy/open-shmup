@@ -40,8 +40,8 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
         canvas
     });
 
-    canvas2.set_width(screen.width());
-    canvas2.set_height(screen.height());
+    canvas2.set_width(screen.width);
+    canvas2.set_height(screen.height);
 
     let game_data =
         GameData::read(&mut game.as_slice()).map_err(|error| Error::new(&error.to_string()))?;
