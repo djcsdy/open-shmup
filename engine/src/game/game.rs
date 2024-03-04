@@ -1,5 +1,4 @@
 use crate::palette::SrgbPalette;
-use crate::point::Point;
 use crate::rect::Rect;
 use crate::screen::Screen;
 use crate::tile::{TileBlockMap, TileBlockSet, TileSet};
@@ -50,17 +49,15 @@ impl Game {
             self.screen.height as f64,
         );
 
-        self.screen.with_play_area(context, |context| {
-            self.tile_block_map.draw(
-                context,
-                &Rect {
-                    x: 0,
-                    y: TileBlockMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
-                    width: 320,
-                    height: 192,
-                },
-                &Point { x: 0, y: 0 },
-            );
-        })
+        self.tile_block_map.draw(
+            context,
+            &Rect {
+                x: 0,
+                y: TileBlockMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
+                width: 320,
+                height: 192,
+            },
+            &self.screen.play_area.top_left(),
+        );
     }
 }
