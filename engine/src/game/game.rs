@@ -1,4 +1,5 @@
 use crate::palette::SrgbPalette;
+use crate::point::Point;
 use crate::rect::Rect;
 use crate::screen::Screen;
 use crate::tile::{TileBlockMap, TileBlockSet, TileSet};
@@ -58,6 +59,7 @@ impl Game {
                     width: 320,
                     height: 192,
                 },
+                &Point { x: 0, y: 0 },
             );
         })
     }

@@ -25,7 +25,7 @@ impl TileBlockMap {
         }
     }
 
-    pub fn draw(&self, context: &CanvasRenderingContext2d, src_rect: &Rect) {
+    pub fn draw(&self, context: &CanvasRenderingContext2d, src_rect: &Rect, dest_pos: &Point) {
         let top_row = src_rect.y / 40;
         let bottom_row = (src_rect.y + src_rect.height as i32 - 1) / 40;
         let row_count = bottom_row - top_row + 1;
@@ -69,8 +69,8 @@ impl TileBlockMap {
                     &mid_rect
                 },
                 &Point {
-                    x: 0,
-                    y: row_index * 40 - if row_index == 0 { 0 } else { top_rect.y },
+                    x: dest_pos.x,
+                    y: dest_pos.y + row_index * 40 - if row_index == 0 { 0 } else { top_rect.y },
                 },
             );
         }
