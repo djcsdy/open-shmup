@@ -8,6 +8,8 @@ pub struct TileBlockMap {
 }
 
 impl TileBlockMap {
+    pub const HEIGHT_PX: u32 = 512 * 40;
+
     pub fn new(tile_block_set: &TileBlockSet, map_data: &[u8; 4096]) -> Self {
         TileBlockMap {
             tile_blocks: (0..512)
@@ -22,11 +24,11 @@ impl TileBlockMap {
         }
     }
 
-    pub fn draw(&self, context: &CanvasRenderingContext2d, scroll_y: i32) {
-        let first_row = scroll_y / 40;
-        let y_offset = scroll_y - first_row * 40;
+    pub fn draw(&self, context: &CanvasRenderingContext2d, src_y: i32) {
+        let bottom_row = (Self::HEIGHT_PX as i32 - src_y) / 40;
+        let y_offset = (Self::HEIGHT_PX as i32 - src_y) - bottom_row * 40;
 
-        for row in first_row.max(0)..(first_row + 6).min(512) {
+        for row in bottom_row.max(0)..(bottom_row + 6).min(512) {
             for tile in 0..8 {
                 self.tile_blocks[row as usize][tile].draw(
                     context,
@@ -38,7 +40,7 @@ impl TileBlockMap {
                     },
                     &Point {
                         x: tile as i32 * 40,
-                        y: 152 - ((row - first_row) * 40) + y_offset,
+                        y: 152 - ((row - bottom_row) * 40) + y_offset,
                     },
                 );
             }

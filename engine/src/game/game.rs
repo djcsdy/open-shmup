@@ -49,7 +49,8 @@ impl Game {
         );
 
         self.screen.with_play_area(context, |context| {
-            self.tile_block_map.draw(context, self.frame as i32);
+            self.tile_block_map
+                .draw(context, TileBlockMap::HEIGHT_PX as i32 - self.frame as i32);
         })
     }
 }
