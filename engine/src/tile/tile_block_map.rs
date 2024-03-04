@@ -30,11 +30,18 @@ impl TileBlockMap {
         let y_offset = top_row * 40 - src_y;
 
         for row in top_row.max(0)..(top_row + 6).min(512) {
-            self.draw_row(context, row as usize, ((row - top_row) * 40) + y_offset);
+            self.draw_row(
+                context,
+                row as usize,
+                &Point {
+                    x: 0,
+                    y: ((row - top_row) * 40) + y_offset,
+                },
+            );
         }
     }
 
-    fn draw_row(&self, context: &CanvasRenderingContext2d, row: usize, y: i32) {
+    fn draw_row(&self, context: &CanvasRenderingContext2d, row: usize, dest_pos: &Point) {
         for tile in 0..8 {
             self.tile_blocks[row][tile].draw(
                 context,
@@ -45,8 +52,8 @@ impl TileBlockMap {
                     height: 40,
                 },
                 &Point {
-                    x: tile as i32 * 40,
-                    y,
+                    x: tile as i32 * 40 + dest_pos.x,
+                    y: dest_pos.y,
                 },
             )
         }
