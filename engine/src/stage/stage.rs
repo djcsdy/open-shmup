@@ -1,3 +1,4 @@
+use crate::stage::EndBehaviour;
 use crate::stage::ScrollType;
 use binary_layout::prelude::*;
 
@@ -8,5 +9,5 @@ binary_layout!(layout, LittleEndian, {
     end_position: u16,
     duration: u8,
     scroll_type: ScrollType as u8,
-    end_behaviour: u8
+    end_behaviour: EndBehaviour as u8
 });
