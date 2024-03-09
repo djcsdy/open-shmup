@@ -1,3 +1,4 @@
+use crate::c64::C64TileSetData;
 use crate::GameData;
 use byteorder::{LittleEndian, ReadBytesExt};
 use std::io;
@@ -73,18 +74,20 @@ impl GameData {
         reader.read_exact(&mut background_tiles)?;
 
         Ok(Self {
+            tile_set: C64TileSetData {
+                block_colours,
+                block_data,
+                shared_colours: background_colours,
+                tiles: background_tiles,
+            },
             background_scroll_data,
-            block_colours,
-            block_data,
             object_pointers,
             title_screen,
             attack_wave_patterns,
-            background_colours,
             stage_data,
             sound_effects,
             sprite_graphics,
             title_font,
-            background_tiles,
         })
     }
 }

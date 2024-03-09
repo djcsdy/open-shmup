@@ -1,21 +1,19 @@
+use crate::c64::C64TileSetData;
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use std::io;
 use std::io::{ErrorKind, Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct GameData {
+    pub tile_set: C64TileSetData,
     pub background_scroll_data: [u8; 4096],
-    pub block_colours: [u8; 128],
-    pub block_data: [u8; 3200],
     pub object_pointers: [u8; 1412],
     pub title_screen: [u8; 480],
     pub attack_wave_patterns: [u8; 3100],
-    pub background_colours: [u8; 3],
     pub stage_data: [u8; 154],
     pub sound_effects: [u8; 2432],
     pub sprite_graphics: [u8; 8192],
     pub title_font: [u8; 512],
-    pub background_tiles: [u8; 2032],
 }
 
 const SIGNATURE: &[u8; 20] = b"\x00open_shmup_game\xff\xfe\xfd\xfc";
@@ -71,18 +69,20 @@ impl GameData {
         reader.read_exact(&mut background_tiles)?;
 
         Ok(Self {
+            tile_set: C64TileSetData {
+                block_colours,
+                block_data,
+                shared_colours: background_colours,
+                tiles: background_tiles,
+            },
             background_scroll_data,
-            block_colours,
-            block_data,
             object_pointers,
             title_screen,
             attack_wave_patterns,
-            background_colours,
             stage_data,
             sound_effects,
             sprite_graphics,
             title_font,
-            background_tiles,
         })
     }
 
@@ -90,17 +90,17 @@ impl GameData {
         writer.write_all(SIGNATURE)?;
         writer.write_u32::<LittleEndian>(1)?;
         writer.write_all(&self.background_scroll_data)?;
-        writer.write_all(&self.block_colours)?;
-        writer.write_all(&self.block_data)?;
+        writer.write_all(&self.tile_set.block_colours)?;
+        writer.write_all(&self.tile_set.block_data)?;
         writer.write_all(&self.object_pointers)?;
         writer.write_all(&self.title_screen)?;
         writer.write_all(&self.attack_wave_patterns)?;
-        writer.write_all(&self.background_colours)?;
+        writer.write_all(&self.tile_set.shared_colours)?;
         writer.write_all(&self.stage_data)?;
         writer.write_all(&self.sound_effects)?;
         writer.write_all(&self.sprite_graphics)?;
         writer.write_all(&self.title_font)?;
-        writer.write_all(&self.background_tiles)?;
+        writer.write_all(&self.tile_set.tiles)?;
         Ok(())
     }
 }

@@ -16,14 +16,14 @@ pub struct Game {
 impl Game {
     pub async fn new(data: GameData) -> Self {
         let palette = SrgbPalette::new_colodore();
-        let tile_set = TileSet::new(&data.background_tiles);
-        let shared_tile_palette = palette.new_shared_tile_palette(&data.background_colours);
+        let tile_set = TileSet::new(&data.tile_set.tiles);
+        let shared_tile_palette = palette.new_shared_tile_palette(&data.tile_set.shared_colours);
         let tile_subpalettes = palette.new_tile_subpalettes(&shared_tile_palette);
         let tile_block_set = TileBlockSet::new(
             &tile_set,
             &tile_subpalettes,
-            &data.block_colours,
-            &data.block_data,
+            &data.tile_set.block_colours,
+            &data.tile_set.block_data,
         )
         .await;
         let tile_block_map = TileBlockMap::new(&tile_block_set, &data.background_scroll_data);
