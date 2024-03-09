@@ -15,7 +15,7 @@ pub struct GameData {
     pub sound_effects: [u8; 2432],
     pub sprite_graphics: [u8; 8192],
     pub title_font: [u8; 512],
-    pub background_tiles: [u8; 2040],
+    pub background_tiles: [u8; 2032],
 }
 
 const SIGNATURE: &[u8; 20] = b"\x00open_shmup_game\xff\xfe\xfd\xfc";
@@ -67,7 +67,7 @@ impl GameData {
         let mut title_font = [0u8; 512];
         reader.read_exact(&mut title_font)?;
 
-        let mut background_tiles = [0u8; 2040];
+        let mut background_tiles = [0u8; 2032];
         reader.read_exact(&mut background_tiles)?;
 
         Ok(Self {

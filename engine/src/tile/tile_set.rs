@@ -5,7 +5,7 @@ use std::ops::Index;
 pub struct TileSet(Vec<Tile>);
 
 impl TileSet {
-    pub fn new(tile_data: &[u8; 2040]) -> Self {
+    pub fn new(tile_data: &[u8; 2032]) -> Self {
         Self(
             tile_data
                 .chunks_exact(8)

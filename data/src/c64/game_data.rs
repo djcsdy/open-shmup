@@ -68,7 +68,7 @@ impl GameData {
         reader.seek(SeekFrom::Start(TITLE_FONT - PRG_START))?;
         reader.read_exact(&mut title_font)?;
 
-        let mut background_tiles = [0u8; 2040];
+        let mut background_tiles = [0u8; 2032];
         reader.seek(SeekFrom::Start(BACKGROUND_TILES - PRG_START))?;
         reader.read_exact(&mut background_tiles)?;
 
