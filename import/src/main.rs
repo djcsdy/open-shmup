@@ -25,6 +25,7 @@ fn main() {
     let mut out_file = OpenOptions::new()
         .create(true)
         .write(true)
+        .truncate(true)
         .open(out_path)
         .unwrap();
     game.write(&mut out_file).unwrap();
