@@ -32,17 +32,7 @@ impl GameData {
             return Err(io::Error::from(ErrorKind::InvalidData));
         }
 
-        let mut block_colours = [0u8; 128];
-        reader.read_exact(&mut block_colours)?;
-
-        let mut block_data = [0u8; 3200];
-        reader.read_exact(&mut block_data)?;
-
-        let mut background_colours = [0u8; 3];
-        reader.read_exact(&mut background_colours)?;
-
-        let mut background_tiles = [0u8; 2032];
-        reader.read_exact(&mut background_tiles)?;
+        let tile_set = C64TileSetData::read(reader)?;
 
         let mut background_scroll_data = [0u8; 4096];
         reader.read_exact(&mut background_scroll_data)?;
@@ -69,12 +59,7 @@ impl GameData {
         reader.read_exact(&mut title_font)?;
 
         Ok(Self {
-            tile_set: C64TileSetData {
-                block_colours,
-                block_data,
-                shared_colours: background_colours,
-                tiles: background_tiles,
-            },
+            tile_set,
             background_scroll_data,
             object_pointers,
             title_screen,
