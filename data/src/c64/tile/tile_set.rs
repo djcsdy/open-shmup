@@ -3,24 +3,32 @@ use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct C64TileSetData {
-    pub block_colours: [u8; 128],
-    pub block_data: [u8; 3200],
-    pub shared_colours: [u8; 3],
-    pub tiles: [u8; 2032],
+    pub block_colours: [u8; Self::BLOCK_COUNT],
+    pub block_data: [u8; Self::BLOCK_COUNT * Self::BLOCK_SIZE_BYTES],
+    pub shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
+    pub tiles: [u8; Self::TILE_COUNT * Self::TILE_SIZE_BYTES],
 }
 
 impl C64TileSetData {
+    const TILE_COUNT: usize = 254;
+    const TILE_SIZE_BYTES: usize = 8;
+    const BLOCK_COUNT: usize = 128;
+    const BLOCK_WIDTH_TILES: usize = 5;
+    const BLOCK_HEIGHT_TILES: usize = 5;
+    const BLOCK_SIZE_BYTES: usize = Self::BLOCK_WIDTH_TILES * Self::BLOCK_HEIGHT_TILES;
+    const SHARED_COLOUR_COUNT: usize = 3;
+
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
-        let mut block_colours = [0u8; 128];
+        let mut block_colours = [0u8; Self::BLOCK_COUNT];
         reader.read_exact(&mut block_colours)?;
 
-        let mut block_data = [0u8; 3200];
+        let mut block_data = [0u8; Self::BLOCK_COUNT * Self::BLOCK_SIZE_BYTES];
         reader.read_exact(&mut block_data)?;
 
-        let mut shared_colours = [0u8; 3];
+        let mut shared_colours = [0u8; Self::SHARED_COLOUR_COUNT];
         reader.read_exact(&mut shared_colours)?;
 
-        let mut tiles = [0u8; 2032];
+        let mut tiles = [0u8; Self::TILE_COUNT * Self::TILE_SIZE_BYTES];
         reader.read_exact(&mut tiles)?;
 
         Ok(Self {
