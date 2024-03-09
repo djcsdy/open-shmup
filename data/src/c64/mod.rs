@@ -1,4 +1,4 @@
 mod game_data;
-mod tile_set;
+mod tile;
 
-pub use tile_set::C64TileSetData;
+pub use tile::C64TileSetData;
