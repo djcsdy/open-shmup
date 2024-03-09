@@ -32,14 +32,20 @@ impl GameData {
             return Err(io::Error::from(ErrorKind::InvalidData));
         }
 
-        let mut background_scroll_data = [0u8; 4096];
-        reader.read_exact(&mut background_scroll_data)?;
-
         let mut block_colours = [0u8; 128];
         reader.read_exact(&mut block_colours)?;
 
         let mut block_data = [0u8; 3200];
         reader.read_exact(&mut block_data)?;
+
+        let mut background_colours = [0u8; 3];
+        reader.read_exact(&mut background_colours)?;
+
+        let mut background_tiles = [0u8; 2032];
+        reader.read_exact(&mut background_tiles)?;
+
+        let mut background_scroll_data = [0u8; 4096];
+        reader.read_exact(&mut background_scroll_data)?;
 
         let mut object_pointers = [0u8; 1412];
         reader.read_exact(&mut object_pointers)?;
@@ -49,9 +55,6 @@ impl GameData {
 
         let mut attack_wave_patterns = [0u8; 3100];
         reader.read_exact(&mut attack_wave_patterns)?;
-
-        let mut background_colours = [0u8; 3];
-        reader.read_exact(&mut background_colours)?;
 
         let mut stage_data = [0u8; 154];
         reader.read_exact(&mut stage_data)?;
@@ -64,9 +67,6 @@ impl GameData {
 
         let mut title_font = [0u8; 512];
         reader.read_exact(&mut title_font)?;
-
-        let mut background_tiles = [0u8; 2032];
-        reader.read_exact(&mut background_tiles)?;
 
         Ok(Self {
             tile_set: C64TileSetData {
@@ -89,18 +89,18 @@ impl GameData {
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write_all(SIGNATURE)?;
         writer.write_u32::<LittleEndian>(1)?;
-        writer.write_all(&self.background_scroll_data)?;
         writer.write_all(&self.tile_set.block_colours)?;
         writer.write_all(&self.tile_set.block_data)?;
+        writer.write_all(&self.tile_set.shared_colours)?;
+        writer.write_all(&self.tile_set.tiles)?;
+        writer.write_all(&self.background_scroll_data)?;
         writer.write_all(&self.object_pointers)?;
         writer.write_all(&self.title_screen)?;
         writer.write_all(&self.attack_wave_patterns)?;
-        writer.write_all(&self.tile_set.shared_colours)?;
         writer.write_all(&self.stage_data)?;
         writer.write_all(&self.sound_effects)?;
         writer.write_all(&self.sprite_graphics)?;
         writer.write_all(&self.title_font)?;
-        writer.write_all(&self.tile_set.tiles)?;
         Ok(())
     }
 }
