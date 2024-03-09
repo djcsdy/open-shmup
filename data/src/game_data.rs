@@ -74,10 +74,7 @@ impl GameData {
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write_all(SIGNATURE)?;
         writer.write_u32::<LittleEndian>(1)?;
-        writer.write_all(&self.tile_set.block_colours)?;
-        writer.write_all(&self.tile_set.block_data)?;
-        writer.write_all(&self.tile_set.shared_colours)?;
-        writer.write_all(&self.tile_set.tiles)?;
+        self.tile_set.write(writer)?;
         writer.write_all(&self.background_scroll_data)?;
         writer.write_all(&self.object_pointers)?;
         writer.write_all(&self.title_screen)?;

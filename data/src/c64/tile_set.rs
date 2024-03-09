@@ -1,5 +1,5 @@
 use std::io;
-use std::io::Read;
+use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct C64TileSetData {
@@ -29,5 +29,13 @@ impl C64TileSetData {
             shared_colours,
             tiles,
         })
+    }
+
+    pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+        writer.write_all(&self.block_colours)?;
+        writer.write_all(&self.block_data)?;
+        writer.write_all(&self.shared_colours)?;
+        writer.write_all(&self.tiles)?;
+        Ok(())
     }
 }
