@@ -1,3 +1,3 @@
-mod tile_set;
+mod tile_block_set;
 
-pub use tile_set::C64TileSetData;
+pub use tile_block_set::C64TileBlockSetData;

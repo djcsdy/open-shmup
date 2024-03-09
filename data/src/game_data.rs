@@ -1,11 +1,11 @@
-use crate::c64::C64TileSetData;
+use crate::c64::C64TileBlockSetData;
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use std::io;
 use std::io::{ErrorKind, Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct GameData {
-    pub tile_set: C64TileSetData,
+    pub tile_set: C64TileBlockSetData,
     pub background_scroll_data: [u8; 4096],
     pub object_pointers: [u8; 1412],
     pub title_screen: [u8; 480],
@@ -32,7 +32,7 @@ impl GameData {
             return Err(io::Error::from(ErrorKind::InvalidData));
         }
 
-        let tile_set = C64TileSetData::read(reader)?;
+        let tile_set = C64TileBlockSetData::read(reader)?;
 
         let mut background_scroll_data = [0u8; 4096];
         reader.read_exact(&mut background_scroll_data)?;

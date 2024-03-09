@@ -2,14 +2,14 @@ use std::io;
 use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
-pub struct C64TileSetData {
+pub struct C64TileBlockSetData {
     pub block_colours: [u8; Self::BLOCK_COUNT],
     pub block_data: [u8; Self::BLOCK_COUNT * Self::BLOCK_SIZE_BYTES],
     pub shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
     pub tiles: [u8; Self::TILE_COUNT * Self::TILE_SIZE_BYTES],
 }
 
-impl C64TileSetData {
+impl C64TileBlockSetData {
     const TILE_COUNT: usize = 254;
     const TILE_SIZE_BYTES: usize = 8;
     const BLOCK_COUNT: usize = 128;
