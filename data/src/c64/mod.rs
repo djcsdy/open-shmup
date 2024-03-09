@@ -3,7 +3,7 @@ use std::io::{ErrorKind, Read, Seek, SeekFrom};
 
 use byteorder::{LittleEndian, ReadBytesExt};
 
-use crate::GameData;
+use crate::game_data::GameData;
 
 const PRG_START: u64 = 0x8fe;
 const BACKGROUND_SCROLL_DATA: u64 = 0x900;
