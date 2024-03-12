@@ -1,8 +1,8 @@
-use crate::palette::SrgbPalette;
 use crate::tile::TileBlock;
 use crate::tile::TileSet;
 use arrayref::array_ref;
 use futures::future;
+use open_shmup_data::palette::SrgbPalette;
 use std::ops::Index;
 
 #[derive(Clone)]

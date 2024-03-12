@@ -1,7 +1,7 @@
-use crate::palette::SrgbPalette;
 use crate::point::Point;
 use crate::rect::Rect;
 use crate::tile::TileSet;
+use open_shmup_data::palette::SrgbPalette;
 use wasm_bindgen::Clamped;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{

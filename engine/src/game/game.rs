@@ -1,7 +1,7 @@
-use crate::palette::SrgbPalette;
 use crate::rect::Rect;
 use crate::screen::Screen;
 use crate::tile::{TileBlockMap, TileBlockSet, TileSet};
+use open_shmup_data::palette::SrgbPalette;
 use open_shmup_data::GameData;
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
