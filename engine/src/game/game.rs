@@ -19,13 +19,8 @@ impl Game {
         let tile_set = TileSet::new(&data.tile_set.tile_set);
         let shared_tile_palette = palette.new_shared_tile_palette(&data.tile_set.shared_colours);
         let tile_subpalettes = palette.new_tile_subpalettes(&shared_tile_palette);
-        let tile_block_set = TileBlockSet::new(
-            &tile_set,
-            &tile_subpalettes,
-            &data.tile_set.block_colours,
-            &data.tile_set.block_data,
-        )
-        .await;
+        let tile_block_set =
+            TileBlockSet::new(&tile_set, &tile_subpalettes, &data.tile_set.blocks).await;
         let tile_block_map = TileBlockMap::new(&tile_block_set, &data.background_scroll_data);
 
         Self {

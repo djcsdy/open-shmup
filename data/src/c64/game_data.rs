@@ -1,5 +1,6 @@
 use crate::c64::tile::C64TileSetData;
-use crate::c64::C64TileBlockSetData;
+use crate::c64::{C64TileBlockData, C64TileBlockSetData};
+use crate::ext::array::array_from_fallible_fn;
 use crate::GameData;
 use byteorder::{LittleEndian, ReadBytesExt};
 use std::io;
@@ -34,9 +35,8 @@ impl GameData {
         reader.seek(SeekFrom::Start(BLOCK_COLOURS - PRG_START))?;
         reader.read_exact(&mut block_colours)?;
 
-        let mut block_data = [0u8; 3200];
         reader.seek(SeekFrom::Start(BLOCK_DATA - PRG_START))?;
-        reader.read_exact(&mut block_data)?;
+        let blocks = array_from_fallible_fn(|i| C64TileBlockData::read(reader, block_colours[i]))?;
 
         let mut object_pointers = [0u8; 1412];
         reader.seek(SeekFrom::Start(OBJECT_POINTERS - PRG_START))?;
@@ -75,8 +75,7 @@ impl GameData {
 
         Ok(Self {
             tile_set: C64TileBlockSetData {
-                block_colours,
-                block_data,
+                blocks,
                 shared_colours: background_colours,
                 tile_set,
             },

@@ -1,28 +1,26 @@
+use crate::c64::tile::tile_block::C64TileBlockData;
 use crate::c64::tile::C64TileSetData;
+use crate::ext::array::array_from_fallible_fn;
+use byteorder::WriteBytesExt;
 use std::io;
 use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct C64TileBlockSetData {
-    pub block_colours: [u8; Self::BLOCK_COUNT],
-    pub block_data: [u8; Self::BLOCK_COUNT * Self::BLOCK_SIZE_BYTES],
+    pub blocks: [C64TileBlockData; Self::BLOCK_COUNT],
     pub shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
     pub tile_set: C64TileSetData,
 }
 
 impl C64TileBlockSetData {
     const BLOCK_COUNT: usize = 128;
-    const BLOCK_WIDTH_TILES: usize = 5;
-    const BLOCK_HEIGHT_TILES: usize = 5;
-    const BLOCK_SIZE_BYTES: usize = Self::BLOCK_WIDTH_TILES * Self::BLOCK_HEIGHT_TILES;
     const SHARED_COLOUR_COUNT: usize = 3;
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
         let mut block_colours = [0u8; Self::BLOCK_COUNT];
         reader.read_exact(&mut block_colours)?;
 
-        let mut block_data = [0u8; Self::BLOCK_COUNT * Self::BLOCK_SIZE_BYTES];
-        reader.read_exact(&mut block_data)?;
+        let blocks = array_from_fallible_fn(|i| C64TileBlockData::read(reader, block_colours[i]))?;
 
         let mut shared_colours = [0u8; Self::SHARED_COLOUR_COUNT];
         reader.read_exact(&mut shared_colours)?;
@@ -30,16 +28,19 @@ impl C64TileBlockSetData {
         let tile_set = C64TileSetData::read(reader)?;
 
         Ok(Self {
-            block_colours,
-            block_data,
+            blocks,
             shared_colours,
             tile_set,
         })
     }
 
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
-        writer.write_all(&self.block_colours)?;
-        writer.write_all(&self.block_data)?;
+        for block in &self.blocks {
+            writer.write_u8(block.colour_data)?;
+        }
+        for block in &self.blocks {
+            block.write(writer)?;
+        }
         writer.write_all(&self.shared_colours)?;
         self.tile_set.write(writer)?;
         Ok(())

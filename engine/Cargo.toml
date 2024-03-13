@@ -10,7 +10,6 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
-arrayref = "=0.3.7"
 base64 = "=0.21.7"
 binary-layout = "=4.0.1"
 bitflags = "=2.4.2"
