@@ -39,7 +39,7 @@ impl TileBlock {
         for tile_index_in_block in 0..25 {
             let tile_x_in_block = (tile_index_in_block % 5) * 8;
             let tile_y_in_block = (tile_index_in_block / 5) * 8;
-            let tile_data = tile_set[tile_block_data[tile_index_in_block] as usize].tile_data();
+            let tile_data = tile_set[tile_block_data[tile_index_in_block] as usize].as_array();
 
             for y_in_tile in 0..8 {
                 let line = tile_data[y_in_tile];
