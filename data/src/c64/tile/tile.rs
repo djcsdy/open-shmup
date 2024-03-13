@@ -6,7 +6,9 @@ use std::io::{Read, Write};
 pub struct C64TileData(pub(super) [u8; Self::SIZE_BYTES]);
 
 impl C64TileData {
-    const SIZE_BYTES: usize = 8;
+    pub(super) const WIDTH: usize = 8;
+    pub(super) const HEIGHT: usize = 8;
+    const SIZE_BYTES: usize = Self::HEIGHT;
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
         let mut buffer = [0u8; Self::SIZE_BYTES];

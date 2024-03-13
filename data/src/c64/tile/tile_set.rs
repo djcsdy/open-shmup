@@ -2,6 +2,7 @@ use crate::c64::tile::C64TileData;
 use crate::ext::array::array_from_fallible_fn;
 use std::io;
 use std::io::{Read, Write};
+use std::ops::Index;
 use std::slice::Iter;
 
 #[derive(Eq, PartialEq, Clone, Hash)]
@@ -23,5 +24,13 @@ impl C64TileSetData {
 
     pub fn iter(&self) -> Iter<'_, C64TileData> {
         self.0.iter()
+    }
+}
+
+impl Index<usize> for C64TileSetData {
+    type Output = C64TileData;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.0[index]
     }
 }
