@@ -8,9 +8,9 @@ use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct C64TileBlockSetData {
-    pub blocks: [C64TileBlockData; Self::BLOCK_COUNT],
-    pub shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
-    pub tile_set: C64TileSetData,
+    pub(in crate::c64) blocks: [C64TileBlockData; Self::BLOCK_COUNT],
+    pub(in crate::c64) shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
+    pub(in crate::c64) tile_set: C64TileSetData,
 }
 
 impl C64TileBlockSetData {
