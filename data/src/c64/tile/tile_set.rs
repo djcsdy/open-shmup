@@ -2,6 +2,7 @@ use crate::c64::tile::C64TileData;
 use crate::ext::array::array_from_fallible_fn;
 use std::io;
 use std::io::{Read, Write};
+use std::slice::Iter;
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct C64TileSetData([C64TileData; Self::TILE_COUNT]);
@@ -18,5 +19,9 @@ impl C64TileSetData {
             tile.write(writer)?;
         }
         Ok(())
+    }
+
+    pub fn iter(&self) -> Iter<'_, C64TileData> {
+        self.0.iter()
     }
 }
