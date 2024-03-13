@@ -1,4 +1,4 @@
-use crate::c64::C64MulticolourTileData;
+use crate::c64::{C64HiresTileData, C64MulticolourTileData};
 use std::io;
 use std::io::{Read, Write};
 
@@ -24,5 +24,9 @@ impl C64TileData {
 
     pub fn as_multicolour(&self) -> C64MulticolourTileData {
         return C64MulticolourTileData::new(self);
+    }
+
+    pub fn as_hires(&self) -> C64HiresTileData {
+        return C64HiresTileData::new(self);
     }
 }
