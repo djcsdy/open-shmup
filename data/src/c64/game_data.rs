@@ -1,3 +1,4 @@
+use crate::c64::tile::C64TileSetData;
 use crate::c64::C64TileBlockSetData;
 use crate::GameData;
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -69,16 +70,15 @@ impl GameData {
         reader.seek(SeekFrom::Start(TITLE_FONT - PRG_START))?;
         reader.read_exact(&mut title_font)?;
 
-        let mut background_tiles = [0u8; 2032];
         reader.seek(SeekFrom::Start(BACKGROUND_TILES - PRG_START))?;
-        reader.read_exact(&mut background_tiles)?;
+        let tile_set = C64TileSetData::read(reader)?;
 
         Ok(Self {
             tile_set: C64TileBlockSetData {
                 block_colours,
                 block_data,
                 shared_colours: background_colours,
-                tiles: background_tiles,
+                tile_set,
             },
             background_scroll_data,
             object_pointers,

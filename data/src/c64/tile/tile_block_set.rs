@@ -1,3 +1,4 @@
+use crate::c64::tile::C64TileSetData;
 use std::io;
 use std::io::{Read, Write};
 
@@ -6,12 +7,10 @@ pub struct C64TileBlockSetData {
     pub block_colours: [u8; Self::BLOCK_COUNT],
     pub block_data: [u8; Self::BLOCK_COUNT * Self::BLOCK_SIZE_BYTES],
     pub shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
-    pub tiles: [u8; Self::TILE_COUNT * Self::TILE_SIZE_BYTES],
+    pub tile_set: C64TileSetData,
 }
 
 impl C64TileBlockSetData {
-    const TILE_COUNT: usize = 254;
-    const TILE_SIZE_BYTES: usize = 8;
     const BLOCK_COUNT: usize = 128;
     const BLOCK_WIDTH_TILES: usize = 5;
     const BLOCK_HEIGHT_TILES: usize = 5;
@@ -28,14 +27,13 @@ impl C64TileBlockSetData {
         let mut shared_colours = [0u8; Self::SHARED_COLOUR_COUNT];
         reader.read_exact(&mut shared_colours)?;
 
-        let mut tiles = [0u8; Self::TILE_COUNT * Self::TILE_SIZE_BYTES];
-        reader.read_exact(&mut tiles)?;
+        let tile_set = C64TileSetData::read(reader)?;
 
         Ok(Self {
             block_colours,
             block_data,
             shared_colours,
-            tiles,
+            tile_set,
         })
     }
 
@@ -43,7 +41,7 @@ impl C64TileBlockSetData {
         writer.write_all(&self.block_colours)?;
         writer.write_all(&self.block_data)?;
         writer.write_all(&self.shared_colours)?;
-        writer.write_all(&self.tiles)?;
+        self.tile_set.write(writer)?;
         Ok(())
     }
 }

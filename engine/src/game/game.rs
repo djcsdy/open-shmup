@@ -16,7 +16,7 @@ pub struct Game {
 impl Game {
     pub async fn new(data: GameData) -> Self {
         let palette = SrgbPalette::new_colodore();
-        let tile_set = TileSet::new(&data.tile_set.tiles);
+        let tile_set = TileSet::new(&data.tile_set.tile_set);
         let shared_tile_palette = palette.new_shared_tile_palette(&data.tile_set.shared_colours);
         let tile_subpalettes = palette.new_tile_subpalettes(&shared_tile_palette);
         let tile_block_set = TileBlockSet::new(
