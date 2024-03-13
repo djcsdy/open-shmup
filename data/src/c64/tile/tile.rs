@@ -16,4 +16,8 @@ impl C64TileData {
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write_all(&self.0)
     }
+
+    pub fn as_array(&self) -> &[u8; Self::SIZE_BYTES] {
+        &self.0
+    }
 }
