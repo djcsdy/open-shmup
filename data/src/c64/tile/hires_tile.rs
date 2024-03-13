@@ -9,6 +9,14 @@ impl<'tile_data> C64HiresTileData<'tile_data> {
 }
 
 impl C64TileDecode for C64HiresTileData<'_> {
+    fn width(&self) -> usize {
+        C64TileData::WIDTH
+    }
+
+    fn height(&self) -> usize {
+        C64TileData::HEIGHT
+    }
+
     fn colour_index_at(&self, x: usize, y: usize) -> u8 {
         let line = self.0 .0[y];
         if line & (128 >> x) == 0 {

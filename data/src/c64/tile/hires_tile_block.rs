@@ -18,6 +18,14 @@ impl<'tile_block, 'tile_set> C64HiresTileBlockData<'tile_block, 'tile_set> {
 }
 
 impl C64TileDecode for C64HiresTileBlockData<'_, '_> {
+    fn width(&self) -> usize {
+        C64TileBlockData::WIDTH_PX
+    }
+
+    fn height(&self) -> usize {
+        C64TileBlockData::HEIGHT_PX
+    }
+
     fn colour_index_at(&self, x: usize, y: usize) -> u8 {
         let tile_index = self
             .tile_block

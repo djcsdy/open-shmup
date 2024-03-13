@@ -9,6 +9,14 @@ impl<'tile_data> C64MulticolourTileData<'tile_data> {
 }
 
 impl C64TileDecode for C64MulticolourTileData<'_> {
+    fn width(&self) -> usize {
+        C64TileData::WIDTH
+    }
+
+    fn height(&self) -> usize {
+        C64TileData::HEIGHT
+    }
+
     fn colour_index_at(&self, x: usize, y: usize) -> u8 {
         let x_in_tile = x / 2;
         let line = self.0 .0[y];
