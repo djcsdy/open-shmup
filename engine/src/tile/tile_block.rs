@@ -1,6 +1,7 @@
 use crate::point::Point;
 use crate::rect::Rect;
 use crate::tile::TileSet;
+use open_shmup_data::c64::C64TileDecode;
 use open_shmup_data::palette::SrgbPalette;
 use wasm_bindgen::Clamped;
 use wasm_bindgen_futures::JsFuture;
@@ -39,40 +40,24 @@ impl TileBlock {
         for tile_index_in_block in 0..25 {
             let tile_x_in_block = (tile_index_in_block % 5) * 8;
             let tile_y_in_block = (tile_index_in_block / 5) * 8;
-            let tile_data = tile_set[tile_block_data[tile_index_in_block] as usize].as_array();
+            let tile_data = &tile_set[tile_block_data[tile_index_in_block] as usize];
 
-            for y_in_tile in 0..8 {
-                let line = tile_data[y_in_tile];
-                if multicolour {
-                    for x_in_tile in 0..4 {
-                        let out_x_l = tile_x_in_block + x_in_tile * 2;
-                        let out_x_r = out_x_l + 1;
-                        let out_y_pixel_offset = (tile_y_in_block + y_in_tile) * 40;
-                        let out_byte_offset_l = (out_y_pixel_offset + out_x_l) * 4;
-                        let out_byte_offset_r = (out_y_pixel_offset + out_x_r) * 4;
-                        let colour =
-                            palette[(line.wrapping_shr((6 - x_in_tile * 2) as u32) & 3) as usize];
-                        image_data_bytes[out_byte_offset_l] = colour.red();
-                        image_data_bytes[out_byte_offset_l + 1] = colour.green();
-                        image_data_bytes[out_byte_offset_l + 2] = colour.blue();
-                        image_data_bytes[out_byte_offset_l + 3] = 255;
-                        image_data_bytes[out_byte_offset_r] = colour.red();
-                        image_data_bytes[out_byte_offset_r + 1] = colour.green();
-                        image_data_bytes[out_byte_offset_r + 2] = colour.blue();
-                        image_data_bytes[out_byte_offset_r + 3] = 255;
-                    }
-                } else {
-                    for x_in_tile in 0..8 {
-                        let out_x = tile_x_in_block + x_in_tile;
-                        let out_y_pixel_offset = (tile_y_in_block + y_in_tile) * 40;
-                        let out_byte_offset = (out_y_pixel_offset + out_x) * 4;
-                        let colour = palette[if line & (128 >> x_in_tile) == 0 { 0 } else { 3 }];
-                        image_data_bytes[out_byte_offset] = colour.red();
-                        image_data_bytes[out_byte_offset + 1] = colour.green();
-                        image_data_bytes[out_byte_offset + 2] = colour.blue();
-                        image_data_bytes[out_byte_offset + 3] = 255;
-                    }
-                }
+            if multicolour {
+                Self::decode_tile(
+                    tile_data.as_multicolour(),
+                    palette,
+                    tile_x_in_block,
+                    tile_y_in_block,
+                    &mut image_data_bytes,
+                );
+            } else {
+                Self::decode_tile(
+                    tile_data.as_hires(),
+                    palette,
+                    tile_x_in_block,
+                    tile_y_in_block,
+                    &mut image_data_bytes,
+                );
             }
         }
 
@@ -91,6 +76,27 @@ impl TileBlock {
             .unwrap()
             .into(),
         )
+    }
+
+    fn decode_tile<D: C64TileDecode>(
+        tile_decode: D,
+        palette: &SrgbPalette<4>,
+        tile_x_in_block: usize,
+        tile_y_in_block: usize,
+        image_data_bytes: &mut [u8; 40 * 40 * 4],
+    ) {
+        for y_in_tile in 0..8 {
+            for x_in_tile in 0..8 {
+                let out_x = tile_x_in_block + x_in_tile;
+                let out_y_pixel_offset = (tile_y_in_block + y_in_tile) * 40;
+                let out_byte_offset = (out_y_pixel_offset + out_x) * 4;
+                let colour = palette[tile_decode.colour_index_at(x_in_tile, y_in_tile) as usize];
+                image_data_bytes[out_byte_offset] = colour.red();
+                image_data_bytes[out_byte_offset + 1] = colour.green();
+                image_data_bytes[out_byte_offset + 2] = colour.blue();
+                image_data_bytes[out_byte_offset + 3] = 255;
+            }
+        }
     }
 
     pub fn draw(&self, context: &CanvasRenderingContext2d, block_rect: &Rect, dest_point: &Point) {
