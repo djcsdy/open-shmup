@@ -1,6 +1,6 @@
 use crate::rect::Rect;
 use crate::screen::Screen;
-use crate::tile::{TileBlockMap, TileBlockSet};
+use crate::tile::{TileMap, TileSet};
 use open_shmup_data::palette::SrgbPalette;
 use open_shmup_data::GameData;
 use wasm_bindgen::JsValue;
@@ -10,14 +10,14 @@ pub struct Game {
     frame: u32,
     screen: Screen,
     palette: SrgbPalette<16>,
-    tile_block_map: TileBlockMap,
+    tile_block_map: TileMap,
 }
 
 impl Game {
     pub async fn new(data: GameData) -> Self {
         let palette = SrgbPalette::new_colodore();
-        let tile_block_set = TileBlockSet::new(&palette, &data.tile_set).await;
-        let tile_block_map = TileBlockMap::new(&tile_block_set, &data.background_scroll_data);
+        let tile_block_set = TileSet::new(&palette, &data.tile_set).await;
+        let tile_block_map = TileMap::new(&tile_block_set, &data.background_scroll_data);
 
         Self {
             screen: Screen::C64_PAL,
@@ -44,7 +44,7 @@ impl Game {
             context,
             &Rect {
                 x: 0,
-                y: TileBlockMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
+                y: TileMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
                 width: 320,
                 height: 192,
             },

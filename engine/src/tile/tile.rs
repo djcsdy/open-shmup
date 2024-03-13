@@ -8,9 +8,9 @@ use web_sys::{
 };
 
 #[derive(Clone)]
-pub struct TileBlock(ImageBitmap);
+pub struct Tile(ImageBitmap);
 
-impl TileBlock {
+impl Tile {
     pub async fn new(bitmap: &SrgbaBitmap) -> Self {
         Self(
             JsFuture::from(

@@ -1,17 +1,17 @@
 use crate::point::Point;
 use crate::rect::Rect;
-use crate::tile::{TileBlock, TileBlockSet};
+use crate::tile::{Tile, TileSet};
 use web_sys::CanvasRenderingContext2d;
 
-pub struct TileBlockMap {
-    tile_blocks: Vec<Vec<TileBlock>>,
+pub struct TileMap {
+    tile_blocks: Vec<Vec<Tile>>,
 }
 
-impl TileBlockMap {
+impl TileMap {
     pub const HEIGHT_PX: u32 = 512 * 40;
 
-    pub fn new(tile_block_set: &TileBlockSet, map_data: &[u8; 4096]) -> Self {
-        TileBlockMap {
+    pub fn new(tile_block_set: &TileSet, map_data: &[u8; 4096]) -> Self {
+        TileMap {
             tile_blocks: (0..512)
                 .map(|row_index| {
                     (0..8)
