@@ -1,6 +1,8 @@
 use crate::c64::tile::hires_tile_block::C64HiresTileBlockData;
 use crate::c64::tile::multicolour_tile_block::C64MulticolourTileBlockData;
-use crate::c64::{C64TileData, C64TileSetData};
+use crate::c64::{C64TileData, C64TileDecode, C64TileSetData};
+use crate::image::SrgbaBitmap;
+use crate::palette::SrgbPalette;
 use byteorder::{ReadBytesExt, WriteBytesExt};
 use std::io;
 use std::io::{Read, Write};
@@ -42,14 +44,27 @@ impl C64TileBlockData {
         writer.write_all(&self.tile_indices)
     }
 
-    pub fn as_multicolour<'tile_block, 'tile_set>(
+    pub fn to_srgba_bitmap(
+        &self,
+        palettes: &[SrgbPalette<4>; 8],
+        tile_set: &C64TileSetData,
+    ) -> SrgbaBitmap {
+        let palette = &palettes[(self.colour_data & 7) as usize];
+        if self.colour_data & 8 == 8 {
+            self.as_multicolour(tile_set).to_srgba_bitmap(palette)
+        } else {
+            self.as_hires(tile_set).to_srgba_bitmap(palette)
+        }
+    }
+
+    fn as_multicolour<'tile_block, 'tile_set>(
         &'tile_block self,
         tile_set: &'tile_set C64TileSetData,
     ) -> C64MulticolourTileBlockData<'tile_block, 'tile_set> {
         C64MulticolourTileBlockData::new(self, tile_set)
     }
 
-    pub fn as_hires<'tile_block, 'tile_set>(
+    fn as_hires<'tile_block, 'tile_set>(
         &'tile_block self,
         tile_set: &'tile_set C64TileSetData,
     ) -> C64HiresTileBlockData<'tile_block, 'tile_set> {

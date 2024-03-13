@@ -1,6 +1,6 @@
 use crate::point::Point;
 use crate::rect::Rect;
-use open_shmup_data::c64::{C64TileBlockData, C64TileDecode, C64TileSetData};
+use open_shmup_data::c64::{C64TileBlockData, C64TileSetData};
 use open_shmup_data::palette::SrgbPalette;
 use wasm_bindgen::Clamped;
 use wasm_bindgen_futures::JsFuture;
@@ -17,19 +17,7 @@ impl TileBlock {
         palettes: &[SrgbPalette<4>; 8],
         tile_block_data: &C64TileBlockData,
     ) -> Self {
-        let palette = &palettes[(tile_block_data.colour_data & 7) as usize];
-        if tile_block_data.colour_data & 8 == 8 {
-            Self::decode_internal(palette, tile_block_data.as_multicolour(tile_set)).await
-        } else {
-            Self::decode_internal(palette, tile_block_data.as_hires(tile_set)).await
-        }
-    }
-
-    async fn decode_internal<D: C64TileDecode>(
-        palette: &SrgbPalette<4>,
-        tile_block_decode: D,
-    ) -> Self {
-        let bitmap = tile_block_decode.to_srgba_bitmap(palette);
+        let bitmap = tile_block_data.to_srgba_bitmap(palettes, tile_set);
 
         Self(
             JsFuture::from(
