@@ -1,7 +1,6 @@
 use crate::point::Point;
 use crate::rect::Rect;
-use open_shmup_data::c64::{C64TileBlockData, C64TileSetData};
-use open_shmup_data::palette::SrgbPalette;
+use open_shmup_data::image::SrgbaBitmap;
 use wasm_bindgen::Clamped;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{
@@ -12,13 +11,7 @@ use web_sys::{
 pub struct TileBlock(ImageBitmap);
 
 impl TileBlock {
-    pub async fn decode(
-        tile_set: &C64TileSetData,
-        palettes: &[SrgbPalette<4>; 8],
-        tile_block_data: &C64TileBlockData,
-    ) -> Self {
-        let bitmap = tile_block_data.to_srgba_bitmap(palettes, tile_set);
-
+    pub async fn new(bitmap: &SrgbaBitmap) -> Self {
         Self(
             JsFuture::from(
                 window()
