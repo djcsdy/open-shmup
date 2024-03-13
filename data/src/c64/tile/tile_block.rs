@@ -1,3 +1,4 @@
+use byteorder::{ReadBytesExt, WriteBytesExt};
 use std::io;
 use std::io::{Read, Write};
 
@@ -12,7 +13,17 @@ impl C64TileBlockData {
     const HEIGHT_TILES: usize = 5;
     const SIZE_BYTES: usize = Self::WIDTH_TILES * Self::HEIGHT_TILES;
 
-    pub fn read<R: Read>(reader: &mut R, colour_data: u8) -> io::Result<Self> {
+    pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
+        let colour_data = reader.read_u8()?;
+        let mut tile_indices = [0u8; Self::SIZE_BYTES];
+        reader.read_exact(&mut tile_indices)?;
+        Ok(Self {
+            colour_data,
+            tile_indices,
+        })
+    }
+
+    pub fn read_image_data<R: Read>(reader: &mut R, colour_data: u8) -> io::Result<Self> {
         let mut tile_indices = [0u8; Self::SIZE_BYTES];
         reader.read_exact(&mut tile_indices)?;
         Ok(Self {
@@ -22,6 +33,7 @@ impl C64TileBlockData {
     }
 
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+        writer.write_u8(self.colour_data)?;
         writer.write_all(&self.tile_indices)
     }
 }

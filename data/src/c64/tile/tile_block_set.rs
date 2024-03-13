@@ -1,7 +1,6 @@
 use crate::c64::tile::tile_block::C64TileBlockData;
 use crate::c64::tile::C64TileSetData;
 use crate::ext::array::array_from_fallible_fn;
-use byteorder::WriteBytesExt;
 use std::io;
 use std::io::{Read, Write};
 
@@ -17,10 +16,7 @@ impl C64TileBlockSetData {
     const SHARED_COLOUR_COUNT: usize = 3;
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
-        let mut block_colours = [0u8; Self::BLOCK_COUNT];
-        reader.read_exact(&mut block_colours)?;
-
-        let blocks = array_from_fallible_fn(|i| C64TileBlockData::read(reader, block_colours[i]))?;
+        let blocks = array_from_fallible_fn(|_| C64TileBlockData::read(reader))?;
 
         let mut shared_colours = [0u8; Self::SHARED_COLOUR_COUNT];
         reader.read_exact(&mut shared_colours)?;
@@ -35,9 +31,6 @@ impl C64TileBlockSetData {
     }
 
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
-        for block in &self.blocks {
-            writer.write_u8(block.colour_data)?;
-        }
         for block in &self.blocks {
             block.write(writer)?;
         }
