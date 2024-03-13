@@ -1,3 +1,4 @@
+use crate::c64::C64MulticolourTileData;
 use std::io;
 use std::io::{Read, Write};
 
@@ -19,5 +20,9 @@ impl C64TileData {
 
     pub fn as_array(&self) -> &[u8; Self::SIZE_BYTES] {
         &self.0
+    }
+
+    pub fn as_multicolour(&self) -> C64MulticolourTileData {
+        return C64MulticolourTileData::new(self);
     }
 }
