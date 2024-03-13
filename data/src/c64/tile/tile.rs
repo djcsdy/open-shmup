@@ -18,10 +18,6 @@ impl C64TileData {
         writer.write_all(&self.0)
     }
 
-    pub fn as_array(&self) -> &[u8; Self::SIZE_BYTES] {
-        &self.0
-    }
-
     pub fn as_multicolour(&self) -> C64MulticolourTileData {
         return C64MulticolourTileData::new(self);
     }
