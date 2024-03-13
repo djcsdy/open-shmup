@@ -8,14 +8,26 @@ use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct C64TileBlockSetData {
-    pub(in crate::c64) blocks: [C64TileBlockData; Self::BLOCK_COUNT],
-    pub(in crate::c64) shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
-    pub(in crate::c64) tile_set: C64TileSetData,
+    blocks: [C64TileBlockData; Self::BLOCK_COUNT],
+    shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
+    tile_set: C64TileSetData,
 }
 
 impl C64TileBlockSetData {
     const BLOCK_COUNT: usize = 128;
     const SHARED_COLOUR_COUNT: usize = 3;
+
+    pub(in crate::c64) fn new(
+        blocks: [C64TileBlockData; Self::BLOCK_COUNT],
+        shared_colours: [u8; Self::SHARED_COLOUR_COUNT],
+        tile_set: C64TileSetData,
+    ) -> Self {
+        Self {
+            blocks,
+            shared_colours,
+            tile_set,
+        }
+    }
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
         let blocks = array_from_fallible_fn(|_| C64TileBlockData::read(reader))?;

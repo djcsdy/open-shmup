@@ -76,11 +76,7 @@ impl GameData {
         let tile_set = C64TileSetData::read(reader)?;
 
         Ok(Self {
-            tile_set: C64TileBlockSetData {
-                blocks,
-                shared_colours: background_colours,
-                tile_set,
-            },
+            tile_set: C64TileBlockSetData::new(blocks, background_colours, tile_set),
             background_scroll_data,
             object_pointers,
             title_screen,
