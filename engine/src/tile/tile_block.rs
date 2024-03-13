@@ -29,25 +29,18 @@ impl TileBlock {
         palette: &SrgbPalette<4>,
         tile_block_decode: D,
     ) -> Self {
-        let mut image_data_bytes = [0u8; 40 * 40 * 4];
-
-        for y in 0..40 {
-            for x in 0..40 {
-                let colour = palette[tile_block_decode.colour_index_at(x, y) as usize];
-                image_data_bytes[(x + y * 40) * 4] = colour.red();
-                image_data_bytes[(x + y * 40) * 4 + 1] = colour.green();
-                image_data_bytes[(x + y * 40) * 4 + 2] = colour.blue();
-                image_data_bytes[(x + y * 40) * 4 + 3] = 255;
-            }
-        }
+        let bitmap = tile_block_decode.to_srgba_bitmap(palette);
 
         Self(
             JsFuture::from(
                 window()
                     .unwrap()
                     .create_image_bitmap_with_image_data_and_image_bitmap_options(
-                        &ImageData::new_with_u8_clamped_array(Clamped(&image_data_bytes), 40)
-                            .unwrap(),
+                        &ImageData::new_with_u8_clamped_array(
+                            Clamped(&bitmap.bitmap),
+                            bitmap.width as u32,
+                        )
+                        .unwrap(),
                         ImageBitmapOptions::new().premultiply_alpha(PremultiplyAlpha::None),
                     )
                     .unwrap(),
