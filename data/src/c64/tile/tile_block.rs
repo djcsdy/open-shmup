@@ -1,3 +1,4 @@
+use crate::c64::tile::hires_tile_block::C64HiresTileBlockData;
 use crate::c64::tile::multicolour_tile_block::C64MulticolourTileBlockData;
 use crate::c64::C64TileSetData;
 use byteorder::{ReadBytesExt, WriteBytesExt};
@@ -44,5 +45,12 @@ impl C64TileBlockData {
         tile_set: &'tile_set C64TileSetData,
     ) -> C64MulticolourTileBlockData<'tile_block, 'tile_set> {
         C64MulticolourTileBlockData::new(self, tile_set)
+    }
+
+    pub fn as_hires<'tile_block, 'tile_set>(
+        &'tile_block self,
+        tile_set: &'tile_set C64TileSetData,
+    ) -> C64HiresTileBlockData<'tile_block, 'tile_set> {
+        C64HiresTileBlockData::new(self, tile_set)
     }
 }
