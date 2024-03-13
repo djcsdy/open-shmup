@@ -53,4 +53,9 @@ impl C64TileBlockData {
     ) -> C64HiresTileBlockData<'tile_block, 'tile_set> {
         C64HiresTileBlockData::new(self, tile_set)
     }
+
+    pub(super) fn get_tile_index(&self, x: usize, y: usize) -> usize {
+        let tile_index_in_block = x + y * Self::WIDTH_TILES;
+        self.tile_indices[tile_index_in_block] as usize
+    }
 }
