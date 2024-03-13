@@ -1,4 +1,5 @@
 pub mod c64;
+mod ext;
 mod game_data;
 pub mod image;
 pub mod palette;
