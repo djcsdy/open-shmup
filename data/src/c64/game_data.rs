@@ -37,7 +37,7 @@ impl GameData {
 
         reader.seek(SeekFrom::Start(BLOCK_DATA - PRG_START))?;
         let blocks = array_from_fallible_fn(|i| {
-            C64TileBlockData::read_image_data(reader, block_colours[i])
+            C64TileBlockData::read_tile_indices(reader, block_colours[i])
         })?;
 
         let mut object_pointers = [0u8; 1412];

@@ -30,7 +30,7 @@ impl C64TileBlockData {
         })
     }
 
-    pub fn read_image_data<R: Read>(reader: &mut R, colour_data: u8) -> io::Result<Self> {
+    pub fn read_tile_indices<R: Read>(reader: &mut R, colour_data: u8) -> io::Result<Self> {
         let mut tile_indices = [0u8; Self::SIZE_BYTES];
         reader.read_exact(&mut tile_indices)?;
         Ok(Self {
