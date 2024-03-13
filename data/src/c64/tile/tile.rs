@@ -3,7 +3,7 @@ use std::io;
 use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
-pub struct C64TileData([u8; Self::SIZE_BYTES]);
+pub struct C64TileData(pub(super) [u8; Self::SIZE_BYTES]);
 
 impl C64TileData {
     const SIZE_BYTES: usize = 8;
