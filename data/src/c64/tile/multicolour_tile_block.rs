@@ -1,4 +1,3 @@
-use crate::c64::tile::hires_tile_block::C64HiresTileBlockData;
 use crate::c64::{C64TileBlockData, C64TileData, C64TileDecode, C64TileSetData};
 
 pub struct C64MulticolourTileBlockData<'tile_block, 'tile_set> {

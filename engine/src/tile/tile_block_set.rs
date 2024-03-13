@@ -1,7 +1,6 @@
 use crate::tile::TileBlock;
-use crate::tile::TileSet;
 use futures::future;
-use open_shmup_data::c64::C64TileBlockData;
+use open_shmup_data::c64::C64TileBlockSetData;
 use open_shmup_data::palette::SrgbPalette;
 use std::ops::Index;
 
@@ -10,21 +9,12 @@ pub struct TileBlockSet(Vec<TileBlock>);
 
 impl TileBlockSet {
     pub async fn new(
-        tile_set: &TileSet,
         palettes: &[SrgbPalette<4>; 8],
-        blocks: &[C64TileBlockData; 128],
+        tile_block_set_data: &C64TileBlockSetData,
     ) -> Self {
         Self(
-            future::join_all(blocks.iter().map(|block| {
-                let palette = &palettes[(block.colour_data & 7) as usize];
-
-                async move {
-                    if (block.colour_data & 8) == 8 {
-                        TileBlock::decode_multicolour(&tile_set, palette, &block.tile_indices).await
-                    } else {
-                        TileBlock::decode_hires(&tile_set, palette, &block.tile_indices).await
-                    }
-                }
+            future::join_all(tile_block_set_data.blocks.iter().map(|block| async move {
+                TileBlock::decode(&tile_block_set_data.tile_set, palettes, block).await
             }))
             .await,
         )
