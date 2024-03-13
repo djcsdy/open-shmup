@@ -1,3 +1,5 @@
+use crate::c64::tile::multicolour_tile_block::C64MulticolourTileBlockData;
+use crate::c64::C64TileSetData;
 use byteorder::{ReadBytesExt, WriteBytesExt};
 use std::io;
 use std::io::{Read, Write};
@@ -35,5 +37,12 @@ impl C64TileBlockData {
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write_u8(self.colour_data)?;
         writer.write_all(&self.tile_indices)
+    }
+
+    pub fn as_multicolour<'tile_block, 'tile_set>(
+        &'tile_block self,
+        tile_set: &'tile_set C64TileSetData,
+    ) -> C64MulticolourTileBlockData<'tile_block, 'tile_set> {
+        C64MulticolourTileBlockData::new(self, tile_set)
     }
 }

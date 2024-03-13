@@ -1,5 +1,6 @@
 mod hires_tile;
 mod multicolour_tile;
+mod multicolour_tile_block;
 mod tile;
 mod tile_block;
 mod tile_block_set;
