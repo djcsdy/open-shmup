@@ -17,7 +17,6 @@ mod game;
 mod point;
 mod rect;
 mod screen;
-mod stage;
 mod tile;
 
 #[global_allocator]

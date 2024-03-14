@@ -1,5 +1,4 @@
-use crate::stage::EndBehaviour;
-use crate::stage::ScrollType;
+use crate::stage::{EndBehaviour, ScrollType};
 use binary_layout::prelude::*;
 
 pub type Stage<S> = layout::View<S>;

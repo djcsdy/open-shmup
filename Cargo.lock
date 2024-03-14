@@ -397,7 +397,10 @@ checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
 name = "open_shmup_data"
 version = "0.0.0"
 dependencies = [
+ "binary-layout",
+ "bitflags",
  "byteorder",
+ "num_enum",
 ]
 
 [[package]]
@@ -405,12 +408,9 @@ name = "open_shmup_engine"
 version = "0.0.0"
 dependencies = [
  "base64",
- "binary-layout",
- "bitflags",
  "console_error_panic_hook",
  "futures",
  "gloo-console",
- "num_enum",
  "open_shmup_data",
  "url",
  "wasm-bindgen",

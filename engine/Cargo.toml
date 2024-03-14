@@ -11,12 +11,9 @@ default = ["console_error_panic_hook"]
 
 [dependencies]
 base64 = "=0.21.7"
-binary-layout = "=4.0.1"
-bitflags = "=2.4.2"
 console_error_panic_hook = { version = "=0.1.7", optional = true }
 futures = "=0.3.30"
 gloo-console = "=0.3.0"
-num_enum = "=0.7.2"
 open_shmup_data = { path = "../data" }
 wasm-bindgen = { version = "=0.2.91" }
 wasm-bindgen-futures = "=0.4.41"
