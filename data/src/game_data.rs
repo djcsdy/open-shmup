@@ -1,3 +1,4 @@
+use crate::c64::stage::StageDataSet;
 use crate::c64::C64TileBlockSetData;
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use std::io;
@@ -10,7 +11,7 @@ pub struct GameData {
     pub object_pointers: [u8; 1412],
     pub title_screen: [u8; 480],
     pub attack_wave_patterns: [u8; 3100],
-    pub stage_data: [u8; 154],
+    pub stage_data: StageDataSet,
     pub sound_effects: [u8; 2432],
     pub sprite_graphics: [u8; 8192],
     pub title_font: [u8; 512],
@@ -46,8 +47,7 @@ impl GameData {
         let mut attack_wave_patterns = [0u8; 3100];
         reader.read_exact(&mut attack_wave_patterns)?;
 
-        let mut stage_data = [0u8; 154];
-        reader.read_exact(&mut stage_data)?;
+        let stage_data = StageDataSet::read(reader)?;
 
         let mut sound_effects = [0u8; 2432];
         reader.read_exact(&mut sound_effects)?;
@@ -79,7 +79,7 @@ impl GameData {
         writer.write_all(&self.object_pointers)?;
         writer.write_all(&self.title_screen)?;
         writer.write_all(&self.attack_wave_patterns)?;
-        writer.write_all(&self.stage_data)?;
+        self.stage_data.write(writer)?;
         writer.write_all(&self.sound_effects)?;
         writer.write_all(&self.sprite_graphics)?;
         writer.write_all(&self.title_font)?;
