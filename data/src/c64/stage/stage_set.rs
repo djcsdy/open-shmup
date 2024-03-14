@@ -3,6 +3,7 @@ use crate::ext::ReadExt;
 use std::io;
 use std::io::Read;
 
+#[derive(Eq, PartialEq, Clone, Hash)]
 pub struct StageDataSet([u8; Self::SIZE_BYTES]);
 
 impl StageDataSet {
