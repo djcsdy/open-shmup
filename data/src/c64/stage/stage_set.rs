@@ -1,7 +1,7 @@
 use crate::c64::stage::StageData;
 use crate::ext::ReadExt;
 use std::io;
-use std::io::Read;
+use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
 pub struct StageDataSet([u8; Self::SIZE_BYTES]);
@@ -12,6 +12,10 @@ impl StageDataSet {
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
         Ok(Self(reader.read_u8_array()?))
+    }
+
+    pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+        writer.write_all(&self.0)
     }
 
     pub fn get(&self, index: usize) -> StageData {
