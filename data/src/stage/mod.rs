@@ -5,5 +5,5 @@ mod stage_set;
 
 pub use end_behaviour::EndBehaviour;
 pub use scroll_type::ScrollType;
-pub use stage::Stage;
-pub use stage_set::StageSet;
+pub use stage::StageData;
+pub use stage_set::StageDataSet;

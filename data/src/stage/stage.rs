@@ -1,7 +1,7 @@
 use crate::stage::{EndBehaviour, ScrollType};
 use binary_layout::prelude::*;
 
-pub type Stage<S> = layout::View<S>;
+pub type StageData<S> = layout::View<S>;
 
 binary_layout!(layout, LittleEndian, {
     start_position: u16,
