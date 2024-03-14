@@ -10,3 +10,7 @@ binary_layout!(layout, LittleEndian, {
     scroll_type: ScrollType as u8,
     end_behaviour: EndBehaviour as u8
 });
+
+impl StageData<'_> {
+    pub(super) const SIZE_BYTES: usize = 7;
+}
