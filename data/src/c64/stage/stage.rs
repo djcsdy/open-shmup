@@ -1,7 +1,7 @@
 use crate::c64::stage::{EndBehaviour, ScrollType};
 use binary_layout::prelude::*;
 
-pub type StageData<'stage_set> = layout::View<&'stage_set [u8]>;
+pub type C64StageData<'stage_set> = layout::View<&'stage_set [u8]>;
 
 binary_layout!(layout, LittleEndian, {
     start_position: u16,
@@ -11,6 +11,6 @@ binary_layout!(layout, LittleEndian, {
     end_behaviour: EndBehaviour as u8
 });
 
-impl StageData<'_> {
+impl C64StageData<'_> {
     pub(crate) const SIZE_BYTES: usize = 7;
 }
