@@ -1,4 +1,5 @@
 use crate::c64::{C64HiresTileData, C64MulticolourTileData};
+use crate::ext::ReadExt;
 use std::io;
 use std::io::{Read, Write};
 
@@ -11,9 +12,7 @@ impl C64TileData {
     const SIZE_BYTES: usize = Self::HEIGHT;
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
-        let mut buffer = [0u8; Self::SIZE_BYTES];
-        reader.read_exact(&mut buffer)?;
-        Ok(Self(buffer))
+        Ok(Self(reader.read_u8_array()?))
     }
 
     pub fn write<W: Write>(&self, writer: &mut W) -> io::Result<()> {
