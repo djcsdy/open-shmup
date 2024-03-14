@@ -7,7 +7,7 @@ impl StageDataSet {
         Self(stage_data)
     }
 
-    pub fn get(&self, index: usize) -> StageData<&[u8]> {
+    pub fn get(&self, index: usize) -> StageData {
         StageData::new(&self.0[index * 7..(index + 1) * 7])
     }
 }
