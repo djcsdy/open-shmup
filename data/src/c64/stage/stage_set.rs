@@ -4,9 +4,9 @@ use std::io;
 use std::io::{Read, Write};
 
 #[derive(Eq, PartialEq, Clone, Hash)]
-pub struct StageDataSet([u8; Self::SIZE_BYTES]);
+pub struct StageSetData([u8; Self::SIZE_BYTES]);
 
-impl StageDataSet {
+impl StageSetData {
     const STAGE_COUNT: usize = 22;
     const SIZE_BYTES: usize = Self::STAGE_COUNT * StageData::SIZE_BYTES;
 

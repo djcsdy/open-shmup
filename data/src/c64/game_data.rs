@@ -1,4 +1,4 @@
-use crate::c64::stage::StageDataSet;
+use crate::c64::stage::StageSetData;
 use crate::c64::tile::C64TileSetData;
 use crate::c64::{C64TileBlockData, C64TileBlockSetData};
 use crate::ext::array::array_from_fallible_fn;
@@ -58,7 +58,7 @@ impl GameData {
         reader.read_exact(&mut background_colours)?;
 
         reader.seek(SeekFrom::Start(STAGE_DATA - PRG_START))?;
-        let stage_data = StageDataSet::read(reader)?;
+        let stage_data = StageSetData::read(reader)?;
 
         let mut sound_effects = [0u8; 2432];
         reader.seek(SeekFrom::Start(SOUND_EFFECTS - PRG_START))?;
