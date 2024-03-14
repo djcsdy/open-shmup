@@ -1,4 +1,4 @@
-use crate::stage::StageData;
+use crate::c64::stage::StageData;
 
 pub struct StageDataSet([u8; Self::SIZE_BYTES]);
 

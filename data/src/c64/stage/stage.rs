@@ -1,4 +1,4 @@
-use crate::stage::{EndBehaviour, ScrollType};
+use crate::c64::stage::{EndBehaviour, ScrollType};
 use binary_layout::prelude::*;
 
 pub type StageData<'stage_data_set> = layout::View<&'stage_data_set [u8]>;
@@ -12,5 +12,5 @@ binary_layout!(layout, LittleEndian, {
 });
 
 impl StageData<'_> {
-    pub(super) const SIZE_BYTES: usize = 7;
+    pub(crate) const SIZE_BYTES: usize = 7;
 }
