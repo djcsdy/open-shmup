@@ -1,7 +1,7 @@
 use crate::rect::Rect;
 use crate::screen::Screen;
 use crate::tile::{TileMap, TileSet};
-use open_shmup_data::palette::SrgbPalette;
+use open_shmup_data::palette::{SrgbColour, SrgbPalette};
 use open_shmup_data::GameData;
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
@@ -9,7 +9,7 @@ use web_sys::CanvasRenderingContext2d;
 pub struct Game {
     frame: u32,
     screen: Screen,
-    palette: SrgbPalette<16>,
+    background_colour: SrgbColour,
     tile_block_map: TileMap,
 }
 
@@ -22,7 +22,7 @@ impl Game {
         Self {
             screen: Screen::C64_PAL,
             frame: 0,
-            palette,
+            background_colour: palette[0],
             tile_block_map,
         }
     }
@@ -32,7 +32,7 @@ impl Game {
     }
 
     pub fn draw(&self, context: &CanvasRenderingContext2d) {
-        context.set_fill_style(&JsValue::from(self.palette[0].css()));
+        context.set_fill_style(&JsValue::from(self.background_colour.css()));
         context.fill_rect(
             0.0,
             0.0,
