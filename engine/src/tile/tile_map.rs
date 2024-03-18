@@ -30,10 +30,11 @@ impl TileMap {
         let row_count = bottom_row - top_row + 1;
 
         let top_rect = Rect::from_top_left_width_height(
-            Point {
-                x: src_rect.left(),
-                y: src_rect.top() - top_row * 40,
-            },
+            src_rect.top_left()
+                + Point {
+                    x: 0,
+                    y: top_row * -40,
+                },
             src_rect.width(),
             if row_count == 1 {
                 src_rect.height()
@@ -77,11 +78,11 @@ impl TileMap {
                 } else {
                     mid_rect
                 },
-                Point {
-                    x: dest_pos.x,
-                    y: dest_pos.y + row_index * 40
-                        - if row_index == 0 { 0 } else { top_rect.top() },
-                },
+                dest_pos
+                    + Point {
+                        x: 0,
+                        y: row_index * 40 - if row_index == 0 { 0 } else { top_rect.top() },
+                    },
             );
         }
     }
@@ -98,10 +99,11 @@ impl TileMap {
         let tile_count = right_tile - left_tile + 1;
 
         let left_rect = Rect::from_top_left_width_height(
-            Point {
-                x: src_rect.left() - left_tile * 40,
-                y: src_rect.top(),
-            },
+            src_rect.top_left()
+                + Point {
+                    x: left_tile * -40,
+                    y: 0,
+                },
             if tile_count == 1 {
                 src_rect.width()
             } else {
@@ -144,11 +146,11 @@ impl TileMap {
                 } else {
                     mid_rect
                 },
-                Point {
-                    x: dest_pos.x + tile_index * 40
-                        - if tile_index == 0 { 0 } else { left_rect.left() },
-                    y: dest_pos.y,
-                },
+                dest_pos
+                    + Point {
+                        x: tile_index * 40 - if tile_index == 0 { 0 } else { left_rect.left() },
+                        y: 0,
+                    },
             )
         }
     }
