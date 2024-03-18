@@ -42,6 +42,13 @@ impl Rect {
         }
     }
 
+    pub fn bottom_right(&self) -> Point {
+        Point {
+            x: self.right,
+            y: self.bottom,
+        }
+    }
+
     pub fn left(&self) -> i32 {
         self.left
     }
