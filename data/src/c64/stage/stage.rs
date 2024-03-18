@@ -20,11 +20,7 @@ impl C64StageData<'_> {
 
     pub fn map_rect(&self) -> Rect {
         let bottom = Self::translate_position(self.start_position().read());
-        let top = if self
-            .scroll_type()
-            .read()
-            .contains(ScrollType::SCROLL | ScrollType::PUSH)
-        {
+        let top = if self.scroll_type().read().contains(ScrollType::SCROLL) {
             Self::translate_position(self.end_position().read())
         } else {
             bottom - 192
