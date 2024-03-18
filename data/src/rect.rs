@@ -65,4 +65,16 @@ impl Rect {
     pub fn height(&self) -> i32 {
         self.bottom - self.top
     }
+
+    pub fn intersection(&self, other: Rect) -> Self {
+        let top_left = Point {
+            x: self.left().max(other.left()),
+            y: self.top().max(other.top()),
+        };
+        let bottom_right = Point {
+            x: self.right().clamp(top_left.x, other.right()),
+            y: self.bottom().clamp(top_left.y, other.bottom()),
+        };
+        Self::from_top_left_bottom_right(top_left, bottom_right)
+    }
 }
