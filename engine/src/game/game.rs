@@ -42,7 +42,7 @@ impl Game {
 
         self.tile_block_map.draw(
             context,
-            &Rect::from_top_left_width_height(
+            Rect::from_top_left_width_height(
                 Point {
                     x: 0,
                     y: TileMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
