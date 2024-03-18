@@ -1,4 +1,4 @@
-use std::ops::Add;
+use std::ops::{Add, Sub};
 
 #[derive(Eq, PartialEq, Clone, Copy, Debug)]
 pub struct Point {
@@ -7,10 +7,10 @@ pub struct Point {
 }
 
 impl Add for Point {
-    type Output = Point;
+    type Output = Self;
 
     fn add(self, rhs: Point) -> Self::Output {
-        Point {
+        Self {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
         }
