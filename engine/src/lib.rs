@@ -25,12 +25,11 @@ pub async fn start(game: Vec<u8>, canvas: Option<HtmlCanvasElement>) -> Result<(
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
 
-    let document = window().unwrap().document().unwrap();
-    let body = document.body().unwrap();
-
     let screen = Screen::C64_PAL;
 
     let canvas2 = canvas.unwrap_or_else(|| {
+        let document = window().unwrap().document().unwrap();
+        let body = document.body().unwrap();
         let canvas = document.create_canvas_element();
         body.append_child(&canvas).unwrap();
         canvas
