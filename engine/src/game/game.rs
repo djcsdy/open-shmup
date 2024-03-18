@@ -1,8 +1,8 @@
 use crate::screen::Screen;
 use crate::tile::{TileMap, TileSet};
 use open_shmup_data::palette::{SrgbColour, SrgbPalette};
-use open_shmup_data::GameData;
 use open_shmup_data::Rect;
+use open_shmup_data::{GameData, Point};
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
 
@@ -42,12 +42,14 @@ impl Game {
 
         self.tile_block_map.draw(
             context,
-            &Rect {
-                x: 0,
-                y: TileMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
-                width: 320,
-                height: 192,
-            },
+            &Rect::from_top_left_width_height(
+                Point {
+                    x: 0,
+                    y: TileMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
+                },
+                320,
+                192,
+            ),
             &self.screen.play_area.top_left(),
         );
     }

@@ -25,36 +25,46 @@ impl TileMap {
     }
 
     pub fn draw(&self, context: &CanvasRenderingContext2d, src_rect: &Rect, dest_pos: &Point) {
-        let top_row = src_rect.y / 40;
-        let bottom_row = (src_rect.y + src_rect.height as i32 - 1) / 40;
+        let top_row = src_rect.top() / 40;
+        let bottom_row = (src_rect.bottom() - 1) / 40;
         let row_count = bottom_row - top_row + 1;
 
-        let top_rect = Rect {
-            x: src_rect.x,
-            y: src_rect.y - top_row * 40,
-            width: src_rect.width,
-            height: if row_count == 1 { src_rect.height } else { 40 },
-        };
-
-        let mid_rect = Rect {
-            x: src_rect.x,
-            y: 0,
-            width: src_rect.width,
-            height: 40,
-        };
-
-        let src_bottom = src_rect.y as u32 + src_rect.height;
-
-        let bottom_rect = Rect {
-            x: src_rect.x,
-            y: 0,
-            width: src_rect.width,
-            height: if src_bottom % 40 == 0 {
-                40
-            } else {
-                src_bottom % 40
+        let top_rect = Rect::from_top_left_width_height(
+            Point {
+                x: src_rect.left(),
+                y: src_rect.top() - top_row * 40,
             },
-        };
+            src_rect.width(),
+            if row_count == 1 {
+                src_rect.height()
+            } else {
+                40
+            },
+        );
+
+        let mid_rect = Rect::from_top_left_width_height(
+            Point {
+                x: src_rect.left(),
+                y: 0,
+            },
+            src_rect.width(),
+            40,
+        );
+
+        let bottom_rect = Rect::from_top_left_bottom_right(
+            Point {
+                x: src_rect.left(),
+                y: 0,
+            },
+            Point {
+                x: src_rect.right(),
+                y: if src_rect.bottom() % 40 == 0 {
+                    40
+                } else {
+                    src_rect.bottom() % 40
+                },
+            },
+        );
 
         for row_index in 0..row_count {
             self.draw_row(
@@ -69,7 +79,8 @@ impl TileMap {
                 },
                 &Point {
                     x: dest_pos.x,
-                    y: dest_pos.y + row_index * 40 - if row_index == 0 { 0 } else { top_rect.y },
+                    y: dest_pos.y + row_index * 40
+                        - if row_index == 0 { 0 } else { top_rect.top() },
                 },
             );
         }
@@ -82,36 +93,46 @@ impl TileMap {
         src_rect: &Rect,
         dest_pos: &Point,
     ) {
-        let left_tile = src_rect.x / 40;
-        let right_tile = (src_rect.x + src_rect.width as i32 - 1) / 40;
+        let left_tile = src_rect.left() / 40;
+        let right_tile = (src_rect.right() - 1) / 40;
         let tile_count = right_tile - left_tile + 1;
 
-        let left_rect = Rect {
-            x: src_rect.x - left_tile * 40,
-            y: src_rect.y,
-            width: if tile_count == 1 { src_rect.width } else { 40 },
-            height: src_rect.height,
-        };
-
-        let mid_rect = Rect {
-            x: 0,
-            y: src_rect.y,
-            width: 40,
-            height: src_rect.height,
-        };
-
-        let src_right = src_rect.x as u32 + src_rect.width;
-
-        let right_rect = Rect {
-            x: 0,
-            y: src_rect.y,
-            width: if src_right % 40 == 0 {
-                40
-            } else {
-                src_right % 40
+        let left_rect = Rect::from_top_left_width_height(
+            Point {
+                x: src_rect.left() - left_tile * 40,
+                y: src_rect.top(),
             },
-            height: src_rect.height,
-        };
+            if tile_count == 1 {
+                src_rect.width()
+            } else {
+                40
+            },
+            src_rect.height(),
+        );
+
+        let mid_rect = Rect::from_top_left_width_height(
+            Point {
+                x: 0,
+                y: src_rect.top(),
+            },
+            40,
+            src_rect.height(),
+        );
+
+        let right_rect = Rect::from_top_left_bottom_right(
+            Point {
+                x: 0,
+                y: src_rect.top(),
+            },
+            Point {
+                x: if src_rect.right() % 40 == 0 {
+                    40
+                } else {
+                    src_rect.right() % 40
+                },
+                y: src_rect.bottom(),
+            },
+        );
 
         for tile_index in 0..tile_count {
             self.tile_blocks[row][(left_tile + tile_index) as usize].draw(
@@ -124,7 +145,8 @@ impl TileMap {
                     &mid_rect
                 },
                 &Point {
-                    x: dest_pos.x + tile_index * 40 - if tile_index == 0 { 0 } else { left_rect.x },
+                    x: dest_pos.x + tile_index * 40
+                        - if tile_index == 0 { 0 } else { left_rect.left() },
                     y: dest_pos.y,
                 },
             )

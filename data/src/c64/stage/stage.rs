@@ -1,6 +1,6 @@
 use crate::c64::stage::{EndBehaviour, ScrollType};
 use crate::c64::tile::C64TileBlockData;
-use crate::Rect;
+use crate::{Point, Rect};
 use binary_layout::prelude::*;
 
 pub type C64StageData<'stage_set> = layout::View<&'stage_set [u8]>;
@@ -15,8 +15,8 @@ binary_layout!(layout, LittleEndian, {
 
 impl C64StageData<'_> {
     pub(crate) const SIZE_BYTES: usize = 7;
-    const MAP_WIDTH_PX: u32 = 320;
-    const MAP_HEIGHT_PX: u32 = 512 * C64TileBlockData::HEIGHT_PX as u32;
+    const MAP_WIDTH_PX: i32 = 320;
+    const MAP_HEIGHT_PX: i32 = 512 * C64TileBlockData::HEIGHT_PX as i32;
 
     pub fn map_rect(&self) -> Rect {
         let bottom = Self::translate_position(self.start_position().read());
@@ -29,15 +29,16 @@ impl C64StageData<'_> {
         } else {
             bottom - 192
         };
-        Rect {
-            x: 0,
-            y: top as i32,
-            width: Self::MAP_WIDTH_PX,
-            height: bottom - top,
-        }
+        Rect::from_top_left_bottom_right(
+            Point { x: 0, y: top },
+            Point {
+                x: Self::MAP_WIDTH_PX,
+                y: bottom,
+            },
+        )
     }
 
-    fn translate_position(position: u16) -> u32 {
-        Self::MAP_HEIGHT_PX - (position as u32 * 40)
+    fn translate_position(position: u16) -> i32 {
+        Self::MAP_HEIGHT_PX - (position as i32 * 40)
     }
 }

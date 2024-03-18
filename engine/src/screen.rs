@@ -1,4 +1,4 @@
-use open_shmup_data::Rect;
+use open_shmup_data::{Point, Rect};
 
 #[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Screen {
@@ -11,11 +11,6 @@ impl Screen {
     pub const C64_PAL: Self = Self {
         width: 384,
         height: 288,
-        play_area: Rect {
-            x: 32,
-            y: 48,
-            width: 320,
-            height: 192,
-        },
+        play_area: Rect::from_top_left_width_height(Point { x: 32, y: 48 }, 320, 192),
     };
 }

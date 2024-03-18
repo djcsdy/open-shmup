@@ -2,17 +2,67 @@ use crate::Point;
 
 #[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Rect {
-    pub x: i32,
-    pub y: i32,
-    pub width: u32,
-    pub height: u32,
+    left: i32,
+    top: i32,
+    right: i32,
+    bottom: i32,
 }
 
 impl Rect {
+    pub const fn from_top_left_width_height(top_left: Point, width: i32, height: i32) -> Self {
+        if width < 0 || height < 0 {
+            panic!("Invalid Rect");
+        }
+
+        Self {
+            left: top_left.x,
+            top: top_left.y,
+            right: top_left.x + width,
+            bottom: top_left.y + height,
+        }
+    }
+
+    pub const fn from_top_left_bottom_right(top_left: Point, bottom_right: Point) -> Self {
+        if bottom_right.x < top_left.x || bottom_right.y < top_left.y {
+            panic!("Invalid Rect");
+        }
+
+        Self {
+            left: top_left.x,
+            top: top_left.y,
+            right: bottom_right.x,
+            bottom: bottom_right.y,
+        }
+    }
+
     pub fn top_left(&self) -> Point {
         Point {
-            x: self.x,
-            y: self.y,
+            x: self.left,
+            y: self.top,
         }
+    }
+
+    pub fn left(&self) -> i32 {
+        self.left
+    }
+
+    pub fn top(&self) -> i32 {
+        self.top
+    }
+
+    pub fn right(&self) -> i32 {
+        self.right
+    }
+
+    pub fn bottom(&self) -> i32 {
+        self.bottom
+    }
+
+    pub fn width(&self) -> i32 {
+        self.right - self.left
+    }
+
+    pub fn height(&self) -> i32 {
+        self.bottom - self.top
     }
 }

@@ -35,14 +35,14 @@ impl Tile {
         context
             .draw_image_with_image_bitmap_and_sw_and_sh_and_dx_and_dy_and_dw_and_dh(
                 &self.0,
-                block_rect.x as f64,
-                block_rect.y as f64,
-                block_rect.width as f64,
-                block_rect.height as f64,
+                block_rect.left() as f64,
+                block_rect.top() as f64,
+                block_rect.width() as f64,
+                block_rect.height() as f64,
                 dest_point.x as f64,
                 dest_point.y as f64,
-                block_rect.width as f64,
-                block_rect.height as f64,
+                block_rect.width() as f64,
+                block_rect.height() as f64,
             )
             .unwrap();
     }
