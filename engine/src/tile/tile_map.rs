@@ -7,8 +7,6 @@ pub struct TileMap {
 }
 
 impl TileMap {
-    pub const HEIGHT_PX: u32 = 512 * 40;
-
     pub fn new(tile_block_set: &TileSet, map_data: &[u8; 4096]) -> Self {
         TileMap {
             tile_blocks: (0..512)

@@ -1,8 +1,7 @@
+use crate::game::Stage;
 use crate::screen::Screen;
-use crate::tile::{TileMap, TileSet};
 use open_shmup_data::palette::{SrgbColour, SrgbPalette};
-use open_shmup_data::Rect;
-use open_shmup_data::{GameData, Point};
+use open_shmup_data::GameData;
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
 
@@ -10,24 +9,26 @@ pub struct Game {
     frame: u32,
     screen: Screen,
     background_colour: SrgbColour,
-    tile_block_map: TileMap,
+    stage: Stage,
 }
 
 impl Game {
     pub async fn new(data: GameData) -> Self {
         let palette = SrgbPalette::new_colodore();
-        let tile_block_set = TileSet::new(&palette, &data.tile_set).await;
-        let tile_block_map = TileMap::new(&tile_block_set, &data.background_scroll_data);
+        let stage = Stage::new(&palette, &data).await;
 
         Self {
             screen: Screen::C64_PAL,
             frame: 0,
             background_colour: palette[0],
-            tile_block_map,
+            stage,
         }
     }
 
     pub fn update(&mut self, frame: u32) {
+        for _ in 0..(frame - self.frame).clamp(0, 4) {
+            self.stage.update();
+        }
         self.frame = frame;
     }
 
@@ -40,17 +41,6 @@ impl Game {
             self.screen.height as f64,
         );
 
-        self.tile_block_map.draw(
-            context,
-            Rect::from_top_left_width_height(
-                Point {
-                    x: 0,
-                    y: TileMap::HEIGHT_PX as i32 - 192 - self.frame as i32,
-                },
-                320,
-                192,
-            ),
-            self.screen.play_area.top_left(),
-        );
+        self.stage.draw(&self.screen, context);
     }
 }
