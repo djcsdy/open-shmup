@@ -106,6 +106,6 @@ impl Add<Rect> for Point {
     type Output = Rect;
 
     fn add(self, rhs: Rect) -> Self::Output {
-        Rect::from_top_left_bottom_right(self + rhs.top_left(), self + rhs.bottom_right())
+        rhs.move_top_left_to(self + rhs.top_left())
     }
 }

@@ -71,14 +71,10 @@ impl Stage {
             let map_rect = stage.map_rect();
             self.tile_map.draw(
                 context,
-                map_rect.intersection(Rect::from_top_left_width_height(
-                    Point {
-                        x: 0,
-                        y: map_rect.bottom() - self.scroll_position + 8,
-                    },
-                    screen.play_area.width(),
-                    screen.play_area.height(),
-                )),
+                map_rect.intersection(screen.play_area.move_top_left_to(Point {
+                    x: 0,
+                    y: map_rect.bottom() - self.scroll_position + 8,
+                })),
                 screen.play_area.top_left(),
             );
         }
@@ -89,14 +85,10 @@ impl Stage {
             if self.scroll_position < 8 {
                 self.tile_map.draw(
                     context,
-                    map_rect.intersection(Rect::from_top_left_width_height(
-                        Point {
-                            x: 0,
-                            y: map_rect.top() - self.scroll_position + 8,
-                        },
-                        screen.play_area.width(),
-                        screen.play_area.height(),
-                    )),
+                    map_rect.intersection(screen.play_area.move_top_left_to(Point {
+                        x: 0,
+                        y: map_rect.top() - self.scroll_position + 8,
+                    })),
                     screen.play_area.top_left(),
                 );
             } else if self.scroll_position < 192 {
