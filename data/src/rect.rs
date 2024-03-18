@@ -79,11 +79,15 @@ impl Rect {
             x: self.left().max(other.left()),
             y: self.top().max(other.top()),
         };
-        let bottom_right = Point {
-            x: self.right().clamp(top_left.x, other.right()),
-            y: self.bottom().clamp(top_left.y, other.bottom()),
-        };
-        Self::from_top_left_bottom_right(top_left, bottom_right)
+        if top_left.x > other.right() || top_left.y > other.bottom() {
+            Self::from_top_left_width_height(top_left, 0, 0)
+        } else {
+            let bottom_right = Point {
+                x: self.right().clamp(top_left.x, other.right()),
+                y: self.bottom().clamp(top_left.y, other.bottom()),
+            };
+            Self::from_top_left_bottom_right(top_left, bottom_right)
+        }
     }
 }
 
