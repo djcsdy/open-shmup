@@ -1,8 +1,8 @@
-use crate::rect::Rect;
 use crate::screen::Screen;
 use crate::tile::{TileMap, TileSet};
 use open_shmup_data::palette::{SrgbColour, SrgbPalette};
 use open_shmup_data::GameData;
+use open_shmup_data::Rect;
 use wasm_bindgen::JsValue;
 use web_sys::CanvasRenderingContext2d;
 

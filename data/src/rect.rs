@@ -1,4 +1,4 @@
-use crate::point::Point;
+use crate::Point;
 
 #[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Rect {

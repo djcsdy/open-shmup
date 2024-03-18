@@ -1,6 +1,5 @@
-use crate::point::Point;
-use crate::rect::Rect;
 use crate::tile::{Tile, TileSet};
+use open_shmup_data::{Point, Rect};
 use web_sys::CanvasRenderingContext2d;
 
 pub struct TileMap {

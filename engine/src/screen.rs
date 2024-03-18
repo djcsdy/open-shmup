@@ -1,4 +1,4 @@
-use crate::rect::Rect;
+use open_shmup_data::Rect;
 
 #[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Screen {
