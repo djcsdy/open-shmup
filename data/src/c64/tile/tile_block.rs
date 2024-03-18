@@ -17,7 +17,7 @@ impl C64TileBlockData {
     const WIDTH_TILES: usize = 5;
     const HEIGHT_TILES: usize = 5;
     pub(super) const WIDTH_PX: usize = Self::WIDTH_TILES * C64TileData::WIDTH;
-    pub(super) const HEIGHT_PX: usize = Self::HEIGHT_TILES * C64TileData::HEIGHT;
+    pub(crate) const HEIGHT_PX: usize = Self::HEIGHT_TILES * C64TileData::HEIGHT;
     const SIZE_BYTES: usize = Self::WIDTH_TILES * Self::HEIGHT_TILES;
 
     pub fn read<R: Read>(reader: &mut R) -> io::Result<Self> {
