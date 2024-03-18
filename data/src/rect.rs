@@ -1,4 +1,5 @@
 use crate::Point;
+use std::ops::Add;
 
 #[derive(Eq, PartialEq, Clone, Copy, Debug)]
 pub struct Rect {
@@ -83,5 +84,13 @@ impl Rect {
             y: self.bottom().clamp(top_left.y, other.bottom()),
         };
         Self::from_top_left_bottom_right(top_left, bottom_right)
+    }
+}
+
+impl Add<Rect> for Point {
+    type Output = Rect;
+
+    fn add(self, rhs: Rect) -> Self::Output {
+        Rect::from_top_left_bottom_right(self + rhs.top_left(), self + rhs.bottom_right())
     }
 }
