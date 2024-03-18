@@ -23,8 +23,8 @@ impl C64StageData<'_> {
         let top = if self.scroll_type().read().contains(ScrollType::SCROLL) {
             Self::translate_position(self.end_position().read())
         } else {
-            bottom - 192
-        };
+            bottom
+        } - 200;
         Rect::from_top_left_bottom_right(
             Point { x: 0, y: top },
             Point {
