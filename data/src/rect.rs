@@ -74,6 +74,10 @@ impl Rect {
         self.bottom - self.top
     }
 
+    pub fn move_top_left_to(&self, top_left: Point) -> Self {
+        Self::from_top_left_width_height(top_left, self.width(), self.height())
+    }
+
     pub fn intersection(&self, other: Rect) -> Self {
         self.offset_and_intersection(other).1
     }
