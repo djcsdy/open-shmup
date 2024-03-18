@@ -24,7 +24,7 @@ impl TileMap {
         }
     }
 
-    pub fn draw(&self, context: &CanvasRenderingContext2d, src_rect: &Rect, dest_pos: &Point) {
+    pub fn draw(&self, context: &CanvasRenderingContext2d, src_rect: &Rect, dest_pos: Point) {
         let top_row = src_rect.top() / 40;
         let bottom_row = (src_rect.bottom() - 1) / 40;
         let row_count = bottom_row - top_row + 1;
@@ -77,7 +77,7 @@ impl TileMap {
                 } else {
                     &mid_rect
                 },
-                &Point {
+                Point {
                     x: dest_pos.x,
                     y: dest_pos.y + row_index * 40
                         - if row_index == 0 { 0 } else { top_rect.top() },
@@ -91,7 +91,7 @@ impl TileMap {
         context: &CanvasRenderingContext2d,
         row: usize,
         src_rect: &Rect,
-        dest_pos: &Point,
+        dest_pos: Point,
     ) {
         let left_tile = src_rect.left() / 40;
         let right_tile = (src_rect.right() - 1) / 40;
@@ -144,7 +144,7 @@ impl TileMap {
                 } else {
                     &mid_rect
                 },
-                &Point {
+                Point {
                     x: dest_pos.x + tile_index * 40
                         - if tile_index == 0 { 0 } else { left_rect.left() },
                     y: dest_pos.y,

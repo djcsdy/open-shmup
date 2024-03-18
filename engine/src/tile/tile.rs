@@ -31,7 +31,7 @@ impl Tile {
         )
     }
 
-    pub fn draw(&self, context: &CanvasRenderingContext2d, block_rect: &Rect, dest_point: &Point) {
+    pub fn draw(&self, context: &CanvasRenderingContext2d, block_rect: &Rect, dest_point: Point) {
         context
             .draw_image_with_image_bitmap_and_sw_and_sh_and_dx_and_dy_and_dw_and_dh(
                 &self.0,

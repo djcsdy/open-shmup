@@ -50,7 +50,7 @@ impl Game {
                 320,
                 192,
             ),
-            &self.screen.play_area.top_left(),
+            self.screen.play_area.top_left(),
         );
     }
 }
