@@ -10,7 +10,7 @@ pub struct GameData {
     pub background_scroll_data: [u8; 4096],
     pub object_pointers: [u8; 1412],
     pub title_screen: [u8; 480],
-    pub attack_wave_patterns: [u8; 3100],
+    pub attack_wave_patterns: [u8; 3012],
     pub sound_effects: [u8; 2432],
     pub stage_data: C64StageSetData,
     pub sprite_graphics: [u8; 8192],
@@ -44,7 +44,7 @@ impl GameData {
         let mut title_screen = [0u8; 480];
         reader.read_exact(&mut title_screen)?;
 
-        let mut attack_wave_patterns = [0u8; 3100];
+        let mut attack_wave_patterns = [0u8; 3012];
         reader.read_exact(&mut attack_wave_patterns)?;
 
         let mut sound_effects = [0u8; 2432];

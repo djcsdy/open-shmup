@@ -13,7 +13,7 @@ const BLOCK_COLOURS: u64 = 0x1900;
 const BLOCK_DATA: u64 = 0x1a00;
 const OBJECT_POINTERS: u64 = 0x2c80;
 const TITLE_SCREEN: u64 = 0x3204;
-const ATTACK_WAVE_PATTERNS: u64 = 0x33e0;
+const ATTACK_WAVE_PATTERNS: u64 = 0x340c;
 const BACKGROUND_COLOURS: u64 = 0x4085;
 const SOUND_EFFECTS: u64 = 0xb680;
 const STAGE_DATA: u64 = 0xb776;
@@ -49,7 +49,7 @@ impl GameData {
         reader.seek(SeekFrom::Start(TITLE_SCREEN - PRG_START))?;
         reader.read_exact(&mut title_screen)?;
 
-        let mut attack_wave_patterns = [0u8; 3100];
+        let mut attack_wave_patterns = [0u8; 3012];
         reader.seek(SeekFrom::Start(ATTACK_WAVE_PATTERNS - PRG_START))?;
         reader.read_exact(&mut attack_wave_patterns)?;
 
