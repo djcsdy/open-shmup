@@ -1,8 +1,9 @@
 use crate::screen::Screen;
 use crate::tile::{TileMap, TileSet};
 use open_shmup_data::c64::stage::{C64StageSetData, EndBehaviour, ScrollType};
+use open_shmup_data::geometry::{Point, Rect};
 use open_shmup_data::palette::SrgbPalette;
-use open_shmup_data::{GameData, Point, Rect};
+use open_shmup_data::GameData;
 use web_sys::CanvasRenderingContext2d;
 
 pub struct Stage {

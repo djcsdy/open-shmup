@@ -1,4 +1,4 @@
-use open_shmup_data::{Point, Rect};
+use open_shmup_data::geometry::{Point, Rect};
 
 #[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Screen {

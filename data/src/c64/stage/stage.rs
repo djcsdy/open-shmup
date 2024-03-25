@@ -1,6 +1,6 @@
 use crate::c64::stage::{EndBehaviour, ScrollType};
 use crate::c64::tile::C64TileBlockData;
-use crate::{Point, Rect};
+use crate::geometry::{Point, Rect};
 use binary_layout::prelude::*;
 
 pub type C64StageData<'stage_set> = layout::View<&'stage_set [u8]>;

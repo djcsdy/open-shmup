@@ -1,5 +1,5 @@
+use open_shmup_data::geometry::{Point, Rect};
 use open_shmup_data::image::SrgbaBitmap;
-use open_shmup_data::{Point, Rect};
 use wasm_bindgen::Clamped;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{

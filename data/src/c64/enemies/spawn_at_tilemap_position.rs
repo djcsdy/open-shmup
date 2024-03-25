@@ -1,4 +1,4 @@
-use crate::Point;
+use crate::geometry::Point;
 use binary_layout::binary_layout;
 use std::io;
 use std::io::Read;

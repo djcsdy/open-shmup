@@ -1,4 +1,4 @@
-use crate::Point;
+use crate::geometry::Point;
 use std::ops::Add;
 
 #[derive(Eq, PartialEq, Clone, Copy, Debug)]
