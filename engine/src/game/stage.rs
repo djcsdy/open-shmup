@@ -44,9 +44,10 @@ impl Stage {
             }
         }
 
-        let stage_complete = match scroll_type {
-            ScrollType::SCROLL => self.scroll_position > stage.map_rect().height(),
-            _ => self.scroll_frame_count > stage.duration().read() as u16 * 50,
+        let stage_complete = if scroll_type.contains(ScrollType::SCROLL) {
+            self.scroll_position > stage.map_rect().height()
+        } else {
+            self.scroll_frame_count > stage.duration().read() as u16 * 50
         };
 
         if stage_complete {
