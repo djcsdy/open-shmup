@@ -16,7 +16,7 @@ impl LayoutAs<u8> for ScrollType {
     type WriteError = Infallible;
 
     fn try_read(v: u8) -> Result<Self, Self::ReadError> {
-        Ok(Self::from_bits_retain(v))
+        Ok(Self::from_bits_truncate(v))
     }
 
     fn try_write(v: Self) -> Result<u8, Self::WriteError> {
