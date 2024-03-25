@@ -1,15 +1,25 @@
 use binary_layout::LayoutAs;
-use num_enum::{FromPrimitive, IntoPrimitive};
+use num_enum::IntoPrimitive;
 use std::convert::Infallible;
 
 #[repr(u8)]
-#[derive(Eq, PartialEq, Clone, Hash, Debug, FromPrimitive, IntoPrimitive)]
+#[derive(Eq, PartialEq, Clone, Hash, Debug, IntoPrimitive)]
 pub enum EndBehaviour {
     Redraw = 0,
     Continue = 0x80,
     Loop = 0xff,
-    #[num_enum(catch_all)]
-    Invalid(u8) = 1,
+}
+
+impl From<u8> for EndBehaviour {
+    fn from(value: u8) -> Self {
+        if value == 0xff {
+            Self::Loop
+        } else if value & 0x80 == 0x80 {
+            Self::Continue
+        } else {
+            Self::Redraw
+        }
+    }
 }
 
 impl LayoutAs<u8> for EndBehaviour {
