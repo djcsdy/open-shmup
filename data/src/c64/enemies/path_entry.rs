@@ -1,7 +1,7 @@
-use crate::c64::enemies::C64EnemyDirection;
+use crate::geometry::EightWayDirection;
 
 #[derive(Eq, PartialEq, Clone, Hash, Debug)]
 pub struct C64EnemyPathEntry {
-    direction: C64EnemyDirection,
+    direction: EightWayDirection,
     distance: u8,
 }
