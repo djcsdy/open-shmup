@@ -142,6 +142,12 @@ jobs:
           path: ${{needs.find-yarn-cache.outputs.dir}}
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
+      - name: Cache cargo cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
+          restore-keys: ${{runner.os}}-cargo-cache-
       - name: Install dependencies
         run: yarn
       - name: Lint
