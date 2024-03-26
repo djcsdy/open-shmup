@@ -1,0 +1,123 @@
+name: CI
+on: [push, pull_request]
+env:
+  CI: true
+  CARGO_TERM_COLOR: always
+jobs:
+  build-native:
+    name: Build native code
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v4
+      - name: Cache cargo cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
+          restore-keys: ${{runner.os}}-cargo-cache-
+      - name: Cache build output
+        uses: actions/cache@v4
+        with:
+          path: "**/target"
+          key: ${{runner.os}}-cargo-target-${{github.sha}}
+      - name: cargo build
+        run: cargo build --verbose
+  test-native:
+    name: Test native code
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v4
+      - name: Cache cargo cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
+          restore-keys: ${{runner.os}}-cargo-cache-
+      - name: Cache build output
+        uses: actions/cache@v4
+        with:
+          path: "**/target"
+          key: ${{runner.os}}-cargo-target-${{github.sha}}
+      - name: cargo test
+        run: cargo test --verbose
+  find-yarn-cache:
+    name: Find yarn cache
+    runs-on: ubuntu-latest
+    outputs:
+      dir: ${{steps.find-yarn-cache.outputs.dir}}
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Find yarn cache
+        id: find-yarn-cache
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+  build-wasm:
+    name: Build WebAssembly
+    runs-on: ubuntu-latest
+    needs:
+      - find-yarn-cache
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: git checkout
+        uses: actions/checkout@v4
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{needs.find-yarn-cache.outputs.dir}}
+          key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
+          restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
+      - name: Install dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+  test-wasm:
+    name: Test WebAssembly
+    runs-on: ubuntu-latest
+    needs:
+      - find-yarn-cache
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: git checkout
+        uses: actions/checkout@v4
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{needs.find-yarn-cache.outputs.dir}}
+          key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
+          restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
+      - name: Install dependencies
+        run: yarn
+      - name: Test
+        run: yarn test
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs:
+      - find-yarn-cache
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: git checkout
+        uses: actions/checkout@v4
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{needs.find-yarn-cache.outputs.dir}}
+          key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
+          restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
+      - name: Install dependencies
+        run: yarn
+      - name: Lint
+        run: yarn lint
