@@ -10,13 +10,13 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v4
-      - name: Cache cargo cache
+      - name: cargo cache
         uses: actions/cache@v4
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
-      - name: Cache build output
+      - name: cargo build output cache
         uses: actions/cache@v4
         with:
           path: "**/target"
@@ -31,13 +31,13 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v4
-      - name: Cache cargo cache
+      - name: cargo cache
         uses: actions/cache@v4
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
-      - name: Cache build output
+      - name: cargo build output cache
         uses: actions/cache@v4
         with:
           path: "**/target"
@@ -54,19 +54,19 @@ jobs:
           node-version: 20
       - name: git checkout
         uses: actions/checkout@v4
-      - name: Cache yarn cache
+      - name: yarn cache
         uses: actions/cache@v4
         with:
           path: ~/.yarn/berry/cache
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-yarn-
-      - name: Cache cargo cache
+      - name: cargo cache
         uses: actions/cache@v4
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
-      - name: Cache cargo build output
+      - name: cargo build output cache
         uses: actions/cache@v4
         with:
           path: "**/target"
@@ -87,19 +87,19 @@ jobs:
           node-version: 20
       - name: git checkout
         uses: actions/checkout@v4
-      - name: Cache yarn cache
+      - name: yarn cache
         uses: actions/cache@v4
         with:
           path: ~/.yarn/berry/cache
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-yarn-
-      - name: Cache cargo cache
+      - name: cargo cache
         uses: actions/cache@v4
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
-      - name: Cache cargo build output
+      - name: cargo build output cache
         uses: actions/cache@v4
         with:
           path: "**/target"
@@ -118,13 +118,13 @@ jobs:
           node-version: 20
       - name: git checkout
         uses: actions/checkout@v4
-      - name: Cache yarn cache
+      - name: yarn cache
         uses: actions/cache@v4
         with:
           path: ~/.yarn/berry/cache
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
-      - name: Cache cargo cache
+      - name: cargo cache
         uses: actions/cache@v4
         with:
           path: ~/.cargo
