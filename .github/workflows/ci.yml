@@ -21,6 +21,7 @@ jobs:
         with:
           path: "**/target"
           key: ${{runner.os}}-native-cargo-target-${{github.sha}}
+          restore-keys: ${{runner.os}}-native-cargo-target-
       - name: cargo build
         run: cargo build --verbose
   test-native:
@@ -42,6 +43,7 @@ jobs:
         with:
           path: "**/target"
           key: ${{runner.os}}-native-cargo-target-${{github.sha}}
+          restore-keys: ${{runner.os}}-native-cargo-target-
       - name: cargo test
         run: cargo test --verbose
   build-wasm:
@@ -73,6 +75,7 @@ jobs:
             **/target
             **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
+          restore-keys: ${{runner.os}}-wasm-cargo-target-
       - name: Install dependencies
         run: yarn
       - name: Build
@@ -108,6 +111,7 @@ jobs:
             **/target
             **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
+          restore-keys: ${{runner.os}}-wasm-cargo-target-
       - name: Install dependencies
         run: yarn
       - name: Test
