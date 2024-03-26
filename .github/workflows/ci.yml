@@ -102,7 +102,9 @@ jobs:
       - name: cargo build output cache
         uses: actions/cache@v4
         with:
-          path: "**/target"
+          path: |
+            "**/target"
+            "**/dist"
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
@@ -130,6 +132,13 @@ jobs:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
+      - name: cargo WebAssembly build output cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            "**/target"
+            "**/dist"
+          key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
       - name: Check Rust formatting
