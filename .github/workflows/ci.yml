@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "**/target"
-          key: ${{runner.os}}-cargo-target-${{github.sha}}
+          key: ${{runner.os}}-native-cargo-target-${{github.sha}}
       - name: cargo build
         run: cargo build --verbose
   test-native:
@@ -39,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "**/target"
-          key: ${{runner.os}}-cargo-target-${{github.sha}}
+          key: ${{runner.os}}-native-cargo-target-${{github.sha}}
       - name: cargo test
         run: cargo test --verbose
   find-yarn-cache:
@@ -73,6 +73,17 @@ jobs:
           path: ${{needs.find-yarn-cache.outputs.dir}}
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
+      - name: Cache cargo cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
+          restore-keys: ${{runner.os}}-cargo-cache-
+      - name: Cache cargo build output
+        uses: actions/cache@v4
+        with:
+          path: "**/target"
+          key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
       - name: Build
@@ -95,6 +106,17 @@ jobs:
           path: ${{needs.find-yarn-cache.outputs.dir}}
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
+      - name: Cache cargo cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
+          restore-keys: ${{runner.os}}-cargo-cache-
+      - name: Cache cargo build output
+        uses: actions/cache@v4
+        with:
+          path: "**/target"
+          key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
       - name: Test
