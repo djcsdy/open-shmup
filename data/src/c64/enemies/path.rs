@@ -1,4 +1,4 @@
-use crate::c64::enemies::C64EnemyPathEntry;
+use crate::c64::enemies::EightWayPathEntry;
 
 #[derive(Eq, PartialEq, Clone, Hash, Debug)]
-pub struct C64EnemyPath(Vec<C64EnemyPathEntry>);
+pub struct C64EnemyPath(Vec<EightWayPathEntry>);
