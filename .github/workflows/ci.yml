@@ -141,12 +141,16 @@ jobs:
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: cargo WebAssembly build output cache
+        id: cache-wasm-build-output
         uses: actions/cache@v4
         with:
           path: |
             **/target
             **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
+      - name: Build WebAssembly packages
+        if: ${{steps.cache-wasm-build-output != 'true'}}
+        run: yarn workspace open-shmup-engine build
       - name: Install dependencies
         run: yarn
       - name: Check Rust formatting
