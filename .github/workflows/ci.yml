@@ -150,5 +150,7 @@ jobs:
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: Install dependencies
         run: yarn
-      - name: Lint
-        run: yarn lint
+      - name: Check Rust formatting
+        run: cargo fmt --check
+      - name: Lint TypeScript
+        run: yarn workspace open-shmup-sample-game lint
