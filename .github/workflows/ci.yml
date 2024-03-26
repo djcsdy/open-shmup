@@ -148,11 +148,11 @@ jobs:
             **/target
             **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
+      - name: Install dependencies
+        run: yarn
       - name: Build WebAssembly packages
         if: ${{steps.cache-wasm-build-output != 'true'}}
         run: yarn workspace open-shmup-engine build
-      - name: Install dependencies
-        run: yarn
       - name: Check Rust formatting
         run: cargo fmt --check
       - name: Lint TypeScript
