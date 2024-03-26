@@ -70,8 +70,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            "**/target"
-            "**/dist"
+            **/target
+            **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
@@ -105,8 +105,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            "**/target"
-            "**/dist"
+            **/target
+            **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
@@ -140,8 +140,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            "**/target"
-            "**/dist"
+            **/target
+            **/dist
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
