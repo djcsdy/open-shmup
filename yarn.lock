@@ -3215,9 +3215,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:40.1.0":
-  version: 40.1.0
-  resolution: "eslint-plugin-jsdoc@npm:40.1.0"
+"eslint-plugin-jsdoc@npm:40.3.0":
+  version: 40.3.0
+  resolution: "eslint-plugin-jsdoc@npm:40.3.0"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.37.0"
     comment-parser: "npm:1.3.1"
@@ -3228,7 +3228,7 @@ __metadata:
     spdx-expression-parse: "npm:^3.0.1"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
-  checksum: 10c0/3f3978842027a4fda48401fcda2a806cc6e248235c8a80a9cd44ba5a13db3e0bf2a4236487cab8cb22fac98c311493a6b8da1df052dcd34122155a6e1ac01f14
+  checksum: 10c0/9385176a6da34856beaa082a19197e6f717187297eaa7b723b719152f2a1126fb417c46e987aa8ca05b22a9f3f9cd5ff1a5094a035473199978bf534e1a01160
   languageName: node
   linkType: hard
 
@@ -5571,7 +5571,7 @@ __metadata:
     eslint: "npm:8.57.0"
     eslint-config-prettier: "npm:8.10.0"
     eslint-plugin-import: "npm:2.29.1"
-    eslint-plugin-jsdoc: "npm:40.1.0"
+    eslint-plugin-jsdoc: "npm:40.3.0"
     eslint-plugin-prefer-arrow: "npm:1.2.3"
     eslint-plugin-sonarjs: "npm:0.24.0"
     open-shmup-engine: "workspace:^"
