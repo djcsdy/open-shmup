@@ -151,7 +151,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Build WebAssembly packages
-        if: ${{steps.cache-wasm-build-output != 'true'}}
+        if: ${{steps.cache-wasm-build-output.outputs.cache-hit != 'true'}}
         run: yarn workspace open-shmup-engine build
       - name: Check Rust formatting
         run: cargo fmt --check
