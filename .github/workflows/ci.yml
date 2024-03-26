@@ -69,7 +69,9 @@ jobs:
       - name: cargo build output cache
         uses: actions/cache@v4
         with:
-          path: "**/target"
+          path: |
+            "**/target"
+            "**/dist"
           key: ${{runner.os}}-wasm-cargo-target-${{github.sha}}
       - name: Install dependencies
         run: yarn
