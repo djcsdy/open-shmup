@@ -18,7 +18,7 @@
     "@types/webpack-env": "1.18.4",
     "domready": "1.0.8",
     "open-shmup-engine": "workspace:^",
-    "tslib": "2.5.0"
+    "tslib": "2.6.2"
   },
   "devDependencies": {
     "@softwareventures/eslint-config": "7.4.1",
