@@ -5593,7 +5593,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "open-shmup-engine@workspace:engine"
   dependencies:
-    wasm-pack: "npm:0.12.1"
+    wasm-pack: "npm:0.13.0"
   languageName: unknown
   linkType: soft
 
@@ -7763,14 +7763,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wasm-pack@npm:0.12.1":
-  version: 0.12.1
-  resolution: "wasm-pack@npm:0.12.1"
+"wasm-pack@npm:0.13.0":
+  version: 0.13.0
+  resolution: "wasm-pack@npm:0.13.0"
   dependencies:
     binary-install: "npm:^1.0.1"
   bin:
     wasm-pack: run.js
-  checksum: 10c0/b3b7c33f770cd41872013a5006ba17a103002d250dce1b637062ed83ca7eb252e57111c4dbdf2fc0bdcfc1cd6c692fd933bc0dda3324adf3714b4196ed5bbbe6
+  checksum: 10c0/71ed64c9b0082d51098ec71041ce68a9323d7a0027e3a9c0b694c5931f83ce2a58f1df7255c68239ca4ab702e2daf5c550a7886f8af048f0cb76945a510268b6
   languageName: node
   linkType: hard
 
