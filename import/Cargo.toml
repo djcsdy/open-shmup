@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 byteorder = "=1.5.0"
-clap = { version = "=4.5.10", features = ["derive"] }
+clap = { version = "=4.5.11", features = ["derive"] }
 open_shmup_data = { path = "../data" }
