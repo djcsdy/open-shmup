@@ -363,9 +363,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@softwareventures/webpack-config@npm:5.2.2":
-  version: 5.2.2
-  resolution: "@softwareventures/webpack-config@npm:5.2.2"
+"@softwareventures/webpack-config@npm:5.2.3":
+  version: 5.2.3
+  resolution: "@softwareventures/webpack-config@npm:5.2.3"
   dependencies:
     "@softwareventures/array": "npm:^7.0.0"
     "@softwareventures/dictionary": "npm:^2.1.1"
@@ -394,7 +394,7 @@ __metadata:
     typescript: ^4.2.0 || ^5.0.0
     webpack: ^5.21.2
     webpack-dev-server: ^4.0.0 || ^5.0.0
-  checksum: 10c0/b67c4a3c44842959e15aca895bc6cdc32949f7730c39904c999f3c9b1e26d28a32bf459a4a7342455e269b4ef02e00a9a2e3b20c2ea0a25a360accc917bd40a3
+  checksum: 10c0/b25c5e50a3b45384755c194b304e64afe8470a439d66088256c56e86a1cb437dbbf1bddb5831e7af53297249b485559b1fe79bc4b4b670e6e4d28d7fb05fa3a3
   languageName: node
   linkType: hard
 
@@ -5613,7 +5613,7 @@ __metadata:
   dependencies:
     "@softwareventures/eslint-config": "npm:7.6.0"
     "@softwareventures/prettier-config": "npm:4.0.0"
-    "@softwareventures/webpack-config": "npm:5.2.2"
+    "@softwareventures/webpack-config": "npm:5.2.3"
     "@types/domready": "npm:1.0.2"
     "@types/node": "npm:17.0.45"
     "@types/webpack-env": "npm:1.18.5"
