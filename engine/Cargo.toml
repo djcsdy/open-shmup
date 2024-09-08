@@ -16,7 +16,7 @@ futures = "=0.3.30"
 gloo-console = "=0.3.0"
 open_shmup_data = { path = "../data" }
 wasm-bindgen = { version = "=0.2.92" }
-wasm-bindgen-futures = "=0.4.42"
+wasm-bindgen-futures = "=0.4.43"
 wee_alloc = "=0.4.5"
 url = "2.5.0"
 
