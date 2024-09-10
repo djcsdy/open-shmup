@@ -21,7 +21,7 @@
     "tslib": "2.7.0"
   },
   "devDependencies": {
-    "@softwareventures/eslint-config": "7.6.0",
+    "@softwareventures/eslint-config": "7.9.0",
     "@softwareventures/prettier-config": "4.0.0",
     "@softwareventures/webpack-config": "6.0.0",
     "@types/node": "17.0.45",
