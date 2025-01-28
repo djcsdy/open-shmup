@@ -2069,10 +2069,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack-env@npm:1.18.7":
-  version: 1.18.7
-  resolution: "@types/webpack-env@npm:1.18.7"
-  checksum: 10c0/9e5736d2ae5848482e4d6406557eb17883bb8d112dccf45d54204110534d6331e53975b8eafe090b5da683eecd9f2b35f9814938e19c8f2c6d63c6e5dd640a92
+"@types/webpack-env@npm:1.18.8":
+  version: 1.18.8
+  resolution: "@types/webpack-env@npm:1.18.8"
+  checksum: 10c0/527a5d1eb75c5243e4f3665d956c7c340f899955dd25d16c9fd9750406f32e95a3a17d207640295038e8235c0c2a2daf084f420e088e58b965d82fc74f6012d7
   languageName: node
   linkType: hard
 
@@ -7647,7 +7647,7 @@ __metadata:
     "@softwareventures/webpack-config": "npm:6.0.0"
     "@types/domready": "npm:1.0.2"
     "@types/node": "npm:17.0.45"
-    "@types/webpack-env": "npm:1.18.7"
+    "@types/webpack-env": "npm:1.18.8"
     "@typescript-eslint/eslint-plugin": "npm:8.22.0"
     "@typescript-eslint/parser": "npm:8.22.0"
     domready: "npm:1.0.8"
