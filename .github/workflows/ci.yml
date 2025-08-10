@@ -53,7 +53,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20 || 22
       - name: git checkout
         uses: actions/checkout@v4
       - name: yarn cache
@@ -89,7 +89,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20 || 22
       - name: git checkout
         uses: actions/checkout@v4
       - name: yarn cache
@@ -125,7 +125,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20 || 22
       - name: git checkout
         uses: actions/checkout@v4
       - name: yarn cache
