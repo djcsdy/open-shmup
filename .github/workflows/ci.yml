@@ -11,13 +11,13 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v6
       - name: cargo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: cargo build output cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: "**/target"
           key: ${{runner.os}}-native-cargo-target-${{github.sha}}
@@ -33,13 +33,13 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v6
       - name: cargo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: cargo build output cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: "**/target"
           key: ${{runner.os}}-native-cargo-target-${{github.sha}}
@@ -57,19 +57,19 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v6
       - name: yarn cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.yarn/berry/cache
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-yarn-
       - name: cargo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: cargo build output cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             **/target
@@ -93,19 +93,19 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v6
       - name: yarn cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.yarn/berry/cache
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-yarn-
       - name: cargo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: cargo build output cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             **/target
@@ -129,20 +129,20 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v6
       - name: yarn cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.yarn/berry/cache
           key: ${{runner.os}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-node${{matrix.node-version}}-yarn-
       - name: cargo cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.cargo
           key: ${{runner.os}}-cargo-cache-${{hashFiles('**/Cargo.toml', '**/Cargo.lock')}}
           restore-keys: ${{runner.os}}-cargo-cache-
       - name: cargo WebAssembly build output cache
         id: cache-wasm-build-output
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             **/target
