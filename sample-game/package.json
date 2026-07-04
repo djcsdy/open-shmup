@@ -38,7 +38,7 @@
     "typescript": "5.9.3",
     "webpack": "5.108.1",
     "webpack-cli": "7.1.0",
-    "webpack-dev-server": "5.2.5"
+    "webpack-dev-server": "5.2.6"
   },
   "eslintConfig": {
     "root": true,
