@@ -15,13 +15,13 @@ console_error_panic_hook = { version = "=0.1.7", optional = true }
 futures = "=0.3.33"
 gloo-console = "=0.4.0"
 open_shmup_data = { path = "../data" }
-wasm-bindgen = { version = "=0.2.126" }
-wasm-bindgen-futures = "=0.4.76"
+wasm-bindgen = { version = "=0.2.127" }
+wasm-bindgen-futures = "=0.4.77"
 wee_alloc = "=0.4.5"
 url = "2.5.0"
 
 [dependencies.web-sys]
-version = "=0.3.103"
+version = "=0.3.104"
 features = [
     "Blob",
     "BlobPropertyBag",
@@ -44,7 +44,7 @@ features = [
 ]
 
 [dev-dependencies]
-wasm-bindgen-test = "=0.3.76"
+wasm-bindgen-test = "=0.3.77"
 
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = ["-Os"]
